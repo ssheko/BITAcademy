@@ -1,4 +1,5 @@
 #include <stdio.h>
+#pragma warning(disable:4996)	// 새문법을 쓰지 않겠다.
 
 //int main()
 //{
@@ -11,9 +12,10 @@
 //	a = b;
 //	b = t;
 //
+// XOR로 스왑
 //	// 속도 느리지만 메모리 덜 소모
 //	printf("%d %d\n", a, b);
-//	a = a ^ b;	// a ^= b;
+//	a = a ^ b;	// a ^= b;	// t = a^b; -> b = t^a;    a = t^b;
 //	b = a ^ b;
 //	a = a ^ b;
 //	printf("%d %d\n", a, b);
@@ -314,7 +316,116 @@
 //
 //}
 
+/* 1차원 배열로 문자열 처리 가능 */
+//main() {
+//	char arr[] = "abc";			// 4	문자열은 마지막에 null 추가
+//	char brr[4] = "abc";		// 4
+//	char crr[] = { 'a', 'b', 'c' };		// 3
+//	char drr[4] = { 'a', 'b', 'c' };	// 4	// 마지막 요소가 초기화되지 않았으므로 null이 들어감 (초기화리스트의 개수가 모자를 때 나머진 0이 들어감)
+//
+//	char err[2][10] = {"aaa", "bbbbb"};
+//
+//	printf("%s\n", arr);
+//	printf("%s\n", brr);
+//	printf("%s\n", crr);	// \n, 즉 null이 나올때까지 출력하는 것이라 null이 없는 crr은 뒤에 쓰레기값이 함께 출력됨
+//	printf("%s\n", drr);
+//	printf("%s\n", err[0]);
+//	printf("%s\n", err[1]);
+//}
 
-main() {
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-}
+/* 배열 문제 */
+/* 
+1차원 배열
+int a[5] = {3,4,1,5,2};
+a 배열 안의 가장 큰 값인 5를 찾아 출력
+
+2차원 배열 
+int a[2][3] = {1,2,3,4,5,6};
+배열 a의 값을 행과 열의 합으로 구하여 다음과 같이 출력
+1 2 3 | 6
+4 5 6 | 15
+------
+5 7 9
+*/
+//main()
+//{
+//	int a[5] = { 3,4,1,5,2 };
+//	int b[2][3] = { 1,2,3,4,5,6 };
+//
+//	int max = a[0];
+//	for (int i = 0; i < 5; i++) {
+//		if (max < a[i])
+//			max = a[i];
+//	}
+//	printf("%d\n", max);
+//
+//	int col = 3, row = 2;
+//	int sum = 0;
+//	for (int j = 0; j < row; j++) {
+//		for (int i = 0; i < col; i++) {
+//			printf("%d ", b[j][i]);
+//			sum += b[j][i];
+//		}
+//		printf("| %d\n", sum);
+//		sum = 0;
+//	}
+//
+//	printf("----------\n");
+//
+//	for (int j = 0; j < col; j++) {
+//		for (int i = 0; i < row; i++) {
+//			sum += b[i][j];
+//		}
+//		printf("%d ", sum);
+//		sum = 0;
+//	}
+//
+//}
+
+
+/* 간접 연산자 */	
+//int get_num(void) {
+//	return 40;
+//}
+//main()
+//{
+//	int a = 10; // 변수를 정의하면서 초기화
+//
+//	a = 20; // 대입연산자를 이용한 대입
+//
+//	scanf("%d", &a);	// 키보드입력(표준입력) 통한 입력 30
+//
+//	a = get_num(); // 함수의 리턴값을 a에 대입 40
+//
+//	*&a = 50;
+//
+//	printf("%d %d\n", a, *&a);
+//}
+
+/* 다른 메모리 주소를 담는 변수 = 포인터 */
+//main()
+//{
+//	int a = 10;
+//	int *pa; // int형 메모리의 주소를 담는 변수 pa
+//
+//	pa = &a;	// a의 주소를 pa에 대입
+//
+//	//scanf("%d", &a);
+//	//printf("%d\n", a);
+//
+//	//// pa를 이용해서 a에 scanf와 printf 해보시오.	
+//	//scanf("%d", pa);
+//	//printf("%d %d\n", *pa, a); // *pa = *&a
+//
+//	int b = 5;
+//	int *pb = &b;
+//
+//	int* tmp= pa;
+//	*pa = *pb;
+//	*pb = tmp;
+//
+//
+//	printf("%d %d\n", a, b); // *pa = *&a
+//
+//}
+

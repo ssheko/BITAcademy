@@ -18,5 +18,14 @@
     <ClCompile Include="main.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="prob1.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="prob2.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="prob3.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
