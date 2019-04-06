@@ -1,0 +1,1 @@
+int passbook = 100;	// 정의.	// int passbook; --> 임시정의

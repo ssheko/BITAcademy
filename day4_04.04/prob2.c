@@ -6,6 +6,7 @@
 
 #pragma warning(disable:4996)	// 새문법을 쓰지 않겠다.
 
+/* 빙고 게임 */
 //void putRandom(int (*board)[5], int maxRow, int maxCol) {
 //	int curr = 0;
 //	short isIn = 0;
