@@ -75,67 +75,89 @@
 
 /* 구조체 문제 */
 // 국어점수, 영어점수, 수학점수, 총점, 랭킹(순위)를 매기고 출력
-struct subject {
-	int subname[5];	// 국어, 영어, 수학, 총점, 랭킹
-};
-
-struct sung {
-	char name[10];
-	float avg; // 평균
-	struct subject sub;
-};
-
-main()
-{
-	struct sung man[3];
-	int rank[2][3];
-	
-	for (int i = 0; i < 3; i++) {
-		printf("%d번째 사람 이름: ", i);
-		scanf("%s", &man[i].name);
-		printf("국어점수 : ");
-		scanf("%d", &man[i].sub.subname[0]);
-		printf("영어점수 : ");
-		scanf("%d", &man[i].sub.subname[1]);
-		printf("수학점수 : ");
-		scanf("%d", &man[i].sub.subname[2]);
-
-		man[i].sub.subname[3] = (man[i].sub.subname[0] + man[i].sub.subname[1] + man[i].sub.subname[2]);
-		man[i].avg = man[i].sub.subname[3]/3;
-
-		rank[0][i] = i+1;
-		rank[1][i] = man[i].sub.subname[3];
-	}
-	
-	for (int i = 0; i < 2; i++) {
-		for (int j = 1; j < 3; j++) {
-			if (rank[1][i] == rank[1][j]) {
-				int tmp = (rank[0][i] > rank[0][j]) ? rank[0][j] : rank[0][i];
-				rank[0][i] = rank[0][j] = tmp;
-			}
-			else if (rank[1][i] < rank[1][j]) {
-				int tmp = rank[0][i];
-				rank[0][i] = rank[0][j];
-				rank[0][j] = tmp;
-			}
-		}
-	}
-
-	for (int i = 0; i < 3; i++)
-		man[i].sub.subname[4] = rank[0][i];
-
-	printf("성명\t국어\t영어\t수학\t총점\t순위\t평균\n");
-	printf("-------------------------------------------------\n");
-	for (int i = 0; i < 3; i++) {
-		printf("%s\t", man[i].name);
-		printf("%d\t", man[i].sub.subname[0]);
-		printf("%d\t", man[i].sub.subname[1]);
-		printf("%d\t", man[i].sub.subname[2]);
-		printf("%d\t", man[i].sub.subname[3]);
-		printf("%d\t", man[i].sub.subname[4]);
-		printf("%.1f\n", man[i].avg);
-	}
-}
+//struct subject {
+//	int subname[5];	// 국어, 영어, 수학, 총점, 랭킹
+//};
+//
+//struct sung {
+//	char name[10];
+//	float avg; // 평균
+//	struct subject sub;
+//};
+//
+//char *su[] = { "국어", "영어", "수학" };
+//
+//
+//void print(struct sung *p) {
+//	printf("성명\t%s\t%s\t%s\t총점\t순위\t평균\n", su[0], su[1], su[2]);
+//	printf("-------------------------------------------------\n");
+//	for (int i = 0; i < 3; i++) {
+//		printf("%s\t", (p + i)->name);	//  p[i].name
+//		for (int j = 0; j < 5; j++)
+//			printf("%d\t", (p + i)->sub.subname[j]);	// p[i].sub.subname[j]
+//		printf("%.1f\n", (p + i)->avg);	// p[i].avg)
+//	}
+//}
+//
+//
+//main()
+//{
+//	struct sung man[3];
+//	//int rank[2][3];
+//
+//	for (int i = 0; i < 3; i++) {
+//		printf("%d번째 사람 이름: ", i);
+//		scanf("%s", &man[i].name);
+//
+//		man[i].sub.subname[3] = 0;	// 총점의 초기화
+//		man[i].sub.subname[4] = 1;	// 랭킹 초기화
+//		for (int j = 0; j < 3; j++) {
+//			printf("%s점수: ", su[j]);
+//			scanf("%d", &man[i].sub.subname[j]);
+//			man[i].sub.subname[3] += man[i].sub.subname[j];	// 총점
+//		}
+//		/*printf("국어점수 : ");
+//		scanf("%d", &man[i].sub.subname[0]);
+//		printf("영어점수 : ");
+//		scanf("%d", &man[i].sub.subname[1]);
+//		printf("수학점수 : ");
+//		scanf("%d", &man[i].sub.subname[2]);
+//
+//		man[i].sub.subname[3] = (man[i].sub.subname[0] + man[i].sub.subname[1] + man[i].sub.subname[2]);
+//		*/
+//		man[i].avg = man[i].sub.subname[3] / (float)3;
+//		/*
+//				rank[0][i] = i+1;
+//				rank[1][i] = man[i].sub.subname[3];*/
+//	}
+//
+//	for (int i = 0; i < 3; i++) {
+//		for (int j = 0; j < 3; j++) {
+//			if (man[i].sub.subname[3] < man[j].sub.subname[3])	// 본인보다 큰 점수를 만날때마다 등수 +1씩
+//				man[i].sub.subname[4]++;
+//		}
+//	}
+//	/*
+//	for (int i = 0; i < 2; i++) {
+//		for (int j = 1; j < 3; j++) {
+//			if (rank[1][i] == rank[1][j]) {
+//				int tmp = (rank[0][i] > rank[0][j]) ? rank[0][j] : rank[0][i];
+//				rank[0][i] = rank[0][j] = tmp;
+//			}
+//			else if (rank[1][i] < rank[1][j]) {
+//				int tmp = rank[0][i];
+//				rank[0][i] = rank[0][j];
+//				rank[0][j] = tmp;
+//			}
+//		}
+//	}
+//
+//	for (int i = 0; i < 3; i++)
+//		man[i].sub.subname[4] = rank[0][i];
+//*/
+//
+//	print(man);	// 구조체 배열의 이름을 던짐 : 배열명은 선두 요소의 주소
+//}
 
 /* 
  자료구조 (자료를 어떻게 저장할 것인가) 의 종류
@@ -172,15 +194,98 @@ main()
 //// 좌우 기둥 만들기
 //List *head, *tail;	// struct _list *head, *tail;
 //
-//void list_init(void) {
-//	head = (List *)malloc(sizeof(List));
-//	tail = (List *)malloc(sizeof(List));
+//void list_init(void) {	// 빨래를 널기 위한 초기화
+//	head = (List *)malloc(sizeof(List));	// 좌측 기둥
+//	tail = (List *)malloc(sizeof(List));	// 우측 기둥
 //
-//	head->next = tail;
+//	head->next = tail;	// 빨래줄
+//	tail->next = tail;	// 우측 빨래줄 매듭
+//}
+//
+//// head 뒤에 계속 추가
+//void list_add(int data) {
+//	List *newNode;
+//	newNode = (List *)malloc(sizeof(List));	// 새 노드	// 함수가 끝날 때 List는 사라지지만 heap 영역에 해당 데이터 값은 존재함.
+//	newNode->key = data;
+//
+//	newNode->next = head->next;	// 좌측 기둥이 보고 있는 주소를 복사
+//	head->next = newNode;	// 좌측기둥이 새 노드를 가리킨다.
+//}
+//
+//void list_view(void) {
+//	List *wk;	// 빨래 걷는 친구
+//	wk = head->next;	// 첫 번째 빨래의 주소 (첫 노드)
+//	while (wk != tail) {
+//		printf("%d ", wk->key);
+//		wk = wk->next;
+//	}
+//}
+//
+//void list_delete(void) {
+//	List *kill = head->next;	// 삭제할 노드의 주소를 kill에게
+//	
+//	head->next = kill->next;
+//	free(kill);
+//}
+//
+//void list_find(int data) {
+//	List *find = head->next;
+//
+//	while (find->key != data && find != tail) {	// 못 찾고 끝이 아닐 때
+//		find = find->next;
+//	}
+///*
+//	if (find->key == data)
+//		printf("%d 찾음", data);
+//*/
+//	if (find == tail)	// 찾는 친구 (find) 가장 우측 기둥까지 가봤다.
+//		printf("%d 없음", data);
+//	else
+//		printf("%d 찾음", data);
+//}
+//
+//// move to front
+//// 찾은 노드를 제일 앞으로 옮김
+//void list_moveToFront(int data) {
+//	List *wk = head->next;
+//	List *prev = head->next;
+//
+//	while (wk->key != data && wk != tail) {
+//		prev = wk;
+//		wk = wk->next;
+//	}
+//
+//	if (wk != tail) {
+//		prev->next = wk->next;
+//		wk->next = head->next;
+//		head->next = wk;
+//	}
 //}
 //
 //main()
 //{
 //	// 모든 자료구조는 반드시 초기화 함수가 있다.
 //	list_init();
+//
+//	// 첫 번째 빨래 널기
+//	list_add(7);
+//	list_add(3);
+//	list_add(2);
+//	list_add(1);
+//
+//	list_view();	// 입력된 데이터들의 확인
+//
+//	puts("");
+//	list_delete();
+//	list_view();
+//	puts("");
+//
+//	// 삽입, 보기, 삭제, 찾기
+//	list_find(3);	// 3을 찾음		// head -> 2 -> 3 -> tail
+//	puts("");
+//	list_find(5);	// 5는 없습니다.
+//	puts("");
+//
+//	list_moveToFront(7);
+//	list_view();
 //}
