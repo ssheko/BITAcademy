@@ -155,5 +155,4 @@ main()
 		transpose(num);
 		print();
 	}
-
 }
