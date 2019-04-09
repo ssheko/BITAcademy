@@ -168,7 +168,7 @@ void printList() {
 		sum += traverse->total;
 	}
 	printf("============================================\n");
-	printf("매출합계\t\t\n");
+	printf("매출합계\t\t%d\n", sum);
 }
 
 //================

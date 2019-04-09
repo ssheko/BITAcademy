@@ -1,9 +1,9 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <string.h>
+//#include <stdlib.h>
+//#include <time.h>
+//#include <string.h>
 
-#pragma warning(disable:4996)	// 새문법을 쓰지 않겠다.
+//#pragma warning(disable:4996)	// 새문법을 쓰지 않겠다.
 
 /*
  자료구조 (자료를 어떻게 저장할 것인가) 의 종류
@@ -96,51 +96,83 @@
 
 	리스트로 구현 (배열, 싱글 혹은 더블로 구현 가능)
 */
+//
+//#define STACK_SIZE 5
+//
+//int STACK[STACK_SIZE];
+//int top;
+//
+//void init_stack(void) {
+//	top = -1;	// 0일 수도 있음. -1이면 증가시키고 삽입, 0이면 삽입시킨 후 증가시켜야 함.
+//}
+//
+//void push(int data) {
+//	if (top >= STACK_SIZE-1)
+//	{
+//		printf("Stack Overflow\n");
+//		return;
+//	}
+//	STACK[++top] = data;
+//	printf("%d %d in\n", top, data );
+//}
+//
+//int pop() {
+//	if (top <= -1) {
+//		printf("Stack Empty\n");
+//		return -1;
+//	}
+//	return STACK[top--];
+//}
+//
+//main()
+//{
+//	init_stack();
+//	printf("%d\n", pop());
+//	push(8);
+//	push(5);
+//	push(1);
+//	push(2);
+//	push(3);
+//	push(4);
+//	push(6);
+//	printf("%d\n", pop());
+//	printf("%d\n", pop());
+//	printf("%d\n", pop());
+//	printf("%d\n", pop());
+//	printf("%d\n", pop());
+//	printf("%d\n", pop());
+//	printf("%d\n", pop());
+//	printf("%d\n", pop());
+//}
 
-#define STACK_SIZE 5
-
-int STACK[STACK_SIZE];
-int top;
-
-void init_stack(void) {
-	top = -1;	// 0일 수도 있음. -1이면 증가시키고 삽입, 0이면 삽입시킨 후 증가시켜야 함.
-}
-
-void push(int data) {
-	if (top >= STACK_SIZE-1)
-	{
-		printf("Stack Overflow\n");
-		return;
-	}
-	STACK[++top] = data;
-	printf("%d %d in\n", top, data );
-}
-
-int pop() {
-	if (top <= -1) {
-		printf("Stack Empty\n");
-		return -1;
-	}
-	return STACK[top--];
-}
-
-main()
-{
-	init_stack();
-	printf("%d\n", pop());
-	push(8);
-	push(5);
-	push(1);
-	push(2);
-	push(3);
-	push(4);
-	push(6);
-	printf("%d\n", pop());
-	printf("%d\n", pop());
-	printf("%d\n", pop());
-	printf("%d\n", pop());
-	printf("%d\n", pop());
-	printf("%d\n", pop());
-	printf("%d\n", pop());
-	printf("%d\n", pop());
-}
+/* 함수 콜스택 내부 */
+////#include <stdarg.h>
+//typedef char *  va_list;	// x86, x64
+//#define _INTSIZEOF(n)   ( (sizeof(n) + sizeof(int) - 1) & ~(sizeof(int) - 1) )
+//#define va_start(ap,v)  ( ap = (va_list)&v + _INTSIZEOF(v) )
+//#define va_arg(ap,t)    ( *(t *)((ap += _INTSIZEOF(t)) - _INTSIZEOF(t)) )
+//#define va_end(ap)      ( ap = (va_list)0 )
+//
+//
+//float average(int num, ...)
+//{
+//	va_list arg_ptr;
+//	int cnt, total = 0;
+//
+//	va_start(arg_ptr, num);
+//
+//	for (cnt = 0; cnt < num; cnt++)
+//		total += va_arg(arg_ptr, int);
+//
+//	va_end(arg_ptr);
+//
+//	return ((float)total / num);
+//}
+//
+//main()
+//{
+//	float x;
+//
+//	x = average(10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+//	printf("first avg is %f\n", x);
+//}

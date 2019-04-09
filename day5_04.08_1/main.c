@@ -598,3 +598,4 @@ void Selectionsort2(int A[], int n)
 //
 //	printf("%s ", *dp[1]);
 //}
+
