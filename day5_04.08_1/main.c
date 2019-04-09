@@ -10,7 +10,7 @@
 	* 모든 자료구조는 반드시 초기화 함수가 있다.
 	1. list (순서가 있는 구조)
 		1-1. 정렬: select, bubble, insert, indirect-insert, shell, merge, quick Sort
-		1-2. circuler list, double linked list
+		1-2. circular list, double linked list
 		1-3. linux kernel (linked list)
 	2. stack (last input first out : LIFO)
 		2-1. 함수 콜 스택 내부 구조 (콜백 함수의 형태)
@@ -276,7 +276,8 @@ void Selectionsort2(int A[], int n)
 //	printf("%d %d %d\n", hi.sedan->piston, hi.sedan->fan, hi.sedan->pipe);
 //}
 
-#define swap(a, b) do{int t; t=a; a=b; b=t;}while(0)
+//#define swap(a, b) do{int t; t=a; a=b; b=t;}while(0)	// 한 번만 반복되게
+#define swap(a, b) {int t; t=a; a=b; b=t;}	// 한 번만 반복되게
 /* 정렬 문제 */
 //#define swap(a, b) do{int t; t=a; a=b; b=t;}while(0)
 //

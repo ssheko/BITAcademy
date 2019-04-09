@@ -13,8 +13,8 @@
 //	change(a);	// call by value
 //	printf("%d\n", a);	// 7 출력
 //}
-
-/* call by reference */
+//
+///* call by reference */
 //void change(int *a)
 //{
 //	*a = 100;
@@ -30,8 +30,8 @@
 //	printf("%d\n", a);
 //
 //}
-
-/* pointer */
+//
+///* pointer */
 //void swap(int *a, int *b)
 //{
 //	int tmp = *a;
@@ -46,8 +46,8 @@
 //	swap(&a, &b);
 //	printf("%d %d\n", a, b);
 //}
-
-/* 배열, 포인터 */
+//
+///* 배열, 포인터 */
 //void check(int *p) {
 //	// p를 이용해 a의 모든 값 출력
 //	for (int i = 0; i < 5; i++)
@@ -59,7 +59,7 @@
 //
 //	printf("\n ");
 //	while(*p != NULL)
-//		printf("%d ", *p++);*/
+//		printf("%d ", *p++);
 //}
 //
 //// check 수정버전
@@ -81,10 +81,10 @@
 //	int *p;
 //	p = a;	// a == &a[0] // 배열명은  선두요소의 주소
 //}
-
-
-/* 배열, 포인터 2 */
-// 형식매개변수 *p를 사용하여 알파벳 k가 나오기 전까지 출력하는 함수
+//
+//
+///* 배열, 포인터 2 */
+//// 형식매개변수 *p를 사용하여 알파벳 k가 나오기 전까지 출력하는 함수
 //void put_a(char *p) {
 //	// 출력: abcdefghij
 //	//for (int i = 0; i < 26; i++) {
@@ -126,10 +126,10 @@
 //	puts(a);	// 마지막에 개행문자 존재
 //	put_a(a);
 //}
-
-#include <string.h>
-
-/* mystrcpy */
+//
+//#include <string.h>
+//
+///* mystrcpy */
 //void mystrcpy(char *dst, char *src) {
 //	//while (*src)
 //	////for (int i = 0; src[i] != '\0'; i++) 
@@ -150,9 +150,9 @@
 //
 //	puts(dst);	// abcde
 //}
-
-
-/* mystrcat */
+//
+//
+///* mystrcat */
 //void mystrcpy(char *dst, char *src) {
 //	while (*dst++ = *src++);
 //}
@@ -176,8 +176,8 @@
 //
 //	puts(dst);	// abcde
 //}
-
-/* 더블 포인터 1 */
+//
+///* 더블 포인터 1 */
 //main()
 //{
 //	int a;
@@ -195,8 +195,8 @@
 //	scanf("%d", *k);	// k표현으로 a에 입력
 //	printf("%d\n", **k);
 //}
-
-/* 더블 포인터 2 */
+//
+///* 더블 포인터 2 */
 //void connect(int *a, int **p) {
 //	*p = a;	// *(p의 주소) = (a의 값)
 //}
@@ -207,9 +207,9 @@
 //	connect(&a, &p);
 //	printf("%d\n", *p);	// 7출력
 //}
-
-/* 다중 포인터 (swap) */
-//#define A 6
+//
+///* 다중 포인터 (swap) */
+//#define A 4
 //// main에 위치한 a, b변수의 주소를 전달받아 a, b값을 교환하는 함수
 //#if A == 1
 //void swap(int *a, int *b) {
@@ -234,7 +234,7 @@
 //}
 //#elif A == 4
 //// ap,bp 변수의 주소를 전달받아 ap, bp값을 교환하는 함수
-//void swap(int **ap, int **bp) {
+//void swap(int** ap, int **bp) {
 //	int *temp = *ap;
 //	*ap = *bp;
 //	*bp = temp;
@@ -242,14 +242,14 @@
 //#elif A == 5
 //// app,bpp 변수의 주소를 전달받아 ap, bp값을 교환하는 함수
 //void swap(int ***app, int ***bpp) {
-//	int *temp = **app;
+//	int* temp = **app;
 //	**app = **bpp;
 //	**bpp = temp;
 //}
 //#elif A == 6
 //// app,bpp 변수의 주소를 전달받아 app, bpp값을 교환하는 함수
 //void swap(int ***app, int ***bpp) {
-//	int **temp = *app;
+//	int** temp = *app;
 //	*app = *bpp;
 //	*bpp = temp;
 //}
@@ -266,7 +266,7 @@
 //	printf("app: %p bpp: %p\n", app, bpp);
 //	printf("\n");
 //#if A == 1
-//	swap(&ap, &bp);
+//	swap(ap, bp);
 //#elif A == 2
 //	swap(&ap, &bp);
 //#elif A == 3
@@ -282,8 +282,8 @@
 //	printf("ap: %p bp: %p\n", ap, bp);
 //	printf("app: %p bpp: %p\n", app, bpp);
 //}
-
-/* 포인터/다중 포인터로 값 변경 */
+//
+///* 포인터/다중 포인터로 값 변경 */
 //void last(int *ka) {
 //	*ka = 300;	// ka도 a의 주소를 포인트
 //}
@@ -302,7 +302,6 @@
 //}
 //
 //// 둘 다 같은 결과값
-//
 //void last(int **ka) {
 //	**ka = 300;	// **(pa 주소) = * (a 주소) = a = 300
 //}
@@ -319,8 +318,8 @@
 //	middle(&a);
 //	printf("%d\n", a);
 //}
-
-/* array of pointer, pointer to array */
+//
+///* array of pointer, pointer to array */
 //void print(char **pp) {
 //	for (size_t i = 0; i < 3; i++) {
 //		printf("%s\n", pp[i]);
@@ -333,15 +332,15 @@
 //
 //	print(p);	// 배열명 p
 //}
-
-
-/* 포인터와 문자열 */
+//
+//
+///* 포인터와 문자열 */
 //main()
 //{
 //	char a[] = "abc";	// a: 4byte
 //	char b[3] = "abc";	// error. 3byte짜리에 4byte를 넣으려 함
 //	char c[10];
-//	c = "abc";	// error. c는 c의 0번째 요소의 주소. 주소에 값을 넣을 수 없음.
+//	//c = "abc";	// error. c는 c의 0번째 요소의 주소. 주소에 값을 넣을 수 없음.
 //	// "abc" = 문자열. --> 1. c 뒤에 널문자가 있음. 2. 문자열은 주소다.
 //	strcpy(c, "abc");	// 바로 위 에러를 해결하는 방법
 //	c[0] = 'z';	// zbc로 바뀜
@@ -352,8 +351,8 @@
 //	strcpy(k, "abc");	// error. 포인터가 쳐다보고 있는 문자열은 global 영역에 있는 존재. 특히 Read Only인 SA(String Address) 영역에 존재하는 변수에 접근해 수정하는 것은 불가능.
 //	k[0] = 'z';	// error.
 //}
-
-/* 포인터와 문자열 2 */
+//
+///* 포인터와 문자열 2 */
 //char *g = "abc";
 //main() {
 //	char *a = "abc";
@@ -368,9 +367,9 @@
 //	// strcpy(buff, "xyz"); 와 똑같음.
 //
 //}
-
-
-/* 포인터와 문자열 2 */
+//
+//
+///* 포인터와 문자열 2 */
 //void get_num(int(*p)[3])
 //{
 //	int rx, cx;

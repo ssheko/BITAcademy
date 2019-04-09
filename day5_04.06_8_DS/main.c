@@ -164,7 +164,7 @@
 	* 모든 자료구조는 반드시 초기화 함수가 있다.
 	1. list (순서가 있는 구조)
 		1-1. 정렬: select, bubble, insert, indirect-insert, shell, merge, quick Sort
-		1-2. circuler list, double linked list
+		1-2. circular list, double linked list
 		1-3. linux kernel (linked list)
 	2. stack (last input first out : LIFO)
 		2-1. 함수 콜 스택 내부 구조 (콜백 함수의 형태)
