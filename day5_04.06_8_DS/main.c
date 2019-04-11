@@ -75,29 +75,29 @@
 
 /* 구조체 문제 */
 // 국어점수, 영어점수, 수학점수, 총점, 랭킹(순위)를 매기고 출력
-//struct subject {
-//	int subname[5];	// 국어, 영어, 수학, 총점, 랭킹
-//};
-//
-//struct sung {
-//	char name[10];
-//	float avg; // 평균
-//	struct subject sub;
-//};
-//
-//char *su[] = { "국어", "영어", "수학" };
-//
-//
-//void print(struct sung *p) {
-//	printf("성명\t%s\t%s\t%s\t총점\t순위\t평균\n", su[0], su[1], su[2]);
-//	printf("-------------------------------------------------\n");
-//	for (int i = 0; i < 3; i++) {
-//		printf("%s\t", (p + i)->name);	//  p[i].name
-//		for (int j = 0; j < 5; j++)
-//			printf("%d\t", (p + i)->sub.subname[j]);	// p[i].sub.subname[j]
-//		printf("%.1f\n", (p + i)->avg);	// p[i].avg)
-//	}
-//}
+struct subject {
+	int subname[5];	// 국어, 영어, 수학, 총점, 랭킹
+};
+
+struct sung {
+	char name[10];
+	float avg; // 평균
+	struct subject sub;
+};
+
+char *su[] = { "국어", "영어", "수학" };
+
+
+void print(struct sung *p) {
+	printf("성명\t%s\t%s\t%s\t총점\t순위\t평균\n", su[0], su[1], su[2]);
+	printf("-------------------------------------------------\n");
+	for (int i = 0; i < 3; i++) {
+		printf("%s\t", (p + i)->name);	//  p[i].name
+		for (int j = 0; j < 5; j++)
+			printf("%d\t", (p + i)->sub.subname[j]);	// p[i].sub.subname[j]
+		printf("%.1f\n", (p + i)->avg);	// p[i].avg)
+	}
+}
 //
 //
 //main()
@@ -116,6 +116,7 @@
 //			scanf("%d", &man[i].sub.subname[j]);
 //			man[i].sub.subname[3] += man[i].sub.subname[j];	// 총점
 //		}
+//		
 //		/*printf("국어점수 : ");
 //		scanf("%d", &man[i].sub.subname[0]);
 //		printf("영어점수 : ");
@@ -158,6 +159,75 @@
 //
 //	print(man);	// 구조체 배열의 이름을 던짐 : 배열명은 선두 요소의 주소
 //}
+
+
+main()
+{
+	struct sung man[3];
+	//int rank[2][3];
+	struct sung *pman = (struct sung*)malloc(sizeof(struct sung));
+	pman = &man[0];
+
+	for (int i = 0; i < 3; i++) {
+		printf("%d번째 사람 이름: ", i);
+		//scanf("%s", &man[i].name);
+		scanf("%s", pman->name);
+
+		//man[i].sub.subname[3] = 0;	// 총점의 초기화
+		//man[i].sub.subname[4] = 1;	// 랭킹 초기화
+		pman->sub.subname[3] = 0;
+		pman->sub.subname[4] = 1;
+		for (int j = 0; j < 3; j++) {
+			printf("%s점수: ", su[j]);
+			//scanf("%d", &man[i].sub.subname[j]);
+			scanf("%d", &pman->sub.subname[j]);
+			//man[i].sub.subname[3] += man[i].sub.subname[j];	// 총점
+			pman->sub.subname[3] += pman->sub.subname[j];	// 총점
+		}
+		
+		/*printf("국어점수 : ");
+		scanf("%d", &man[i].sub.subname[0]);
+		printf("영어점수 : ");
+		scanf("%d", &man[i].sub.subname[1]);
+		printf("수학점수 : ");
+		scanf("%d", &man[i].sub.subname[2]);
+
+		man[i].sub.subname[3] = (man[i].sub.subname[0] + man[i].sub.subname[1] + man[i].sub.subname[2]);
+		*/
+		pman->avg = pman->sub.subname[3] / (float)3;
+		/*
+				rank[0][i] = i+1;
+				rank[1][i] = man[i].sub.subname[3];*/
+		pman = &man[i + 1];
+	}
+
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			if (man[i].sub.subname[3] < man[j].sub.subname[3])	// 본인보다 큰 점수를 만날때마다 등수 +1씩
+				man[i].sub.subname[4]++;
+		}
+	}
+	/*
+	for (int i = 0; i < 2; i++) {
+		for (int j = 1; j < 3; j++) {
+			if (rank[1][i] == rank[1][j]) {
+				int tmp = (rank[0][i] > rank[0][j]) ? rank[0][j] : rank[0][i];
+				rank[0][i] = rank[0][j] = tmp;
+			}
+			else if (rank[1][i] < rank[1][j]) {
+				int tmp = rank[0][i];
+				rank[0][i] = rank[0][j];
+				rank[0][j] = tmp;
+			}
+		}
+	}
+
+	for (int i = 0; i < 3; i++)
+		man[i].sub.subname[4] = rank[0][i];
+*/
+
+	print(man);	// 구조체 배열의 이름을 던짐 : 배열명은 선두 요소의 주소
+}
 
 /* 
  자료구조 (자료를 어떻게 저장할 것인가) 의 종류
