@@ -81,6 +81,7 @@ public:
 	}
 	//~Student() {
 	//	delete[] p_sub;
+	//	cout << "Student ¼Ò¸ê" << endl;
 	//}
 	void setID(int num) {
 		id_Number = num;
@@ -133,10 +134,11 @@ public:
 	GradeHandler(Student* student, char* universityName) {
 		students = student;
 		strcpy(universityName, "¾îÂ¾´ë");
-	}
+	}*/
 	~GradeHandler() {
 		delete[] students;
-	}*/
+		cout << "GradeHandler ¼Ò¸ê" << endl;
+	}
 
 	Student getStudent(int id) {
 		return students[id];
@@ -346,4 +348,7 @@ int main()
 			break;
 		}
 	}
+	delete[] universityName;
+	delete[] studentName;
+		delete[]  newStudentName;
 }
