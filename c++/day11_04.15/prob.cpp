@@ -22,7 +22,7 @@ public:
 	void setName(const char *name) {
 		strcpy(perName, name);
 	}
-	const char* getName(void) {
+	 char* getName(void) {
 		return perName;
 	}
 	void setAge(int age) {
@@ -69,7 +69,7 @@ protected:
 	float id_Average;
 public:
 	Student() {}
-	Student(char* studentName, int studentAge, int id_Total=0, float id_Average=0) : Person(studentName, studentAge), id_Number(id_Number), id_Total(id_Total), id_Average(id_Average){
+	Student(char* studentName, int studentAge, int id_Total=0, float id_Average=0) : Person(studentName, studentAge),id_Total(id_Total), id_Average(id_Average){
 		p_sub = new Subject[3];
 		Subject subj("±¹¾î");
 		p_sub[0] = subj;
