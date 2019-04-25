@@ -15,10 +15,34 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Exam01.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="p.25.윈도우핸들.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="p.28.작업바제어.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="p.29.Class Long.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="p.32.WindowLong.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="p.39.skeleton코드.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="p.43.사용자 정의 메세지.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="p.44_서로 다른 프로세스끼리의 전송_main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="p.44.서로 다른 프로세스끼리의 전송.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="p.51.DC사용하기.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
