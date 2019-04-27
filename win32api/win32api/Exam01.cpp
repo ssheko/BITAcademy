@@ -75,11 +75,13 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpszCm
 	임의로 WndProc를 호출하는 게 아닌 내부에서 호출하는 것을 의미.
 
 	hWnd: 윈도우 핸들	
+	wParam: 핸들 또는 정수를 받을 때 주로 사용 (unsigned int) (4byte, 32bit를 모두 사용)
+	lparam: 포인터 값 전달 (long) (총 32bit)
 */
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	switch (iMessage) {
-	case WM_DESTROY:
+	case WM_DESTROY:	// WM: Window Message
 		PostQuitMessage(0);	// message queue로 WM_QUIT메세지를 보냄.
 		return 0;
 	}
