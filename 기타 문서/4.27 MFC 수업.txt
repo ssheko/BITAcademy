@@ -1,0 +1,68 @@
+http://blog.naver.com/PostView.nhn?blogId=bitnang&logNo=220059208363&parentCategoryNo=&categoryNo=73&viewDate=&isShowPopularPosts=false&from=postView
+MFC Application Architecture
+MFC 클래스의 기본구조
+
+win32API에서 메세지 처리를 할 때 switch case문으로 처리.
+처음 배울 땐 이해하기 쉽지만 객체지향적 관점에서 큰 장애물이 된다.
+그 대신 쓸 수 있는 message map을 사용.
+
+CCmdTarget: message map 기능 구현.
+모든 클래스가 CCmdTarget을 상속받음.
+
+제일 중요한 CWnd (C Window)클래스
+모든 윈도우의 기본이 되는 default 기능 구현.
+
+CWinApp은 CWinThread를 거쳐서 상속받음.
+CWinApp: 메인 프로그램 객체.
+기본적으로 윈도우 프로그램이 스레드 기반이기 때문에
+스레드를 지원하는 CWinThread를 거쳐서 생성되어야 한다.
+
+캡션바, 메뉴, 아이콘툴바, 상태바 등등을 포함하고 클라이언트 영역을 가지고 있는게 CFrameWnd
+독자적으로 최상위 윈도우가 될 수 있음.
+
+CView: 일반적인 윈도우에서 사용자에게 보여지는 영역. (클라이언트 영역)
+
+CDialog: dialog 만드는 클래스
+
+CDocument: 문서지원용 클래스
+문서: 텍스트, 미디어 등. 알맞게 conversion해서 CView에 뿌려줌.
+file open해서 조작해서 보여준다거나 mp3를 읽어서 소리를 나타내거나. 미디어 사용시 활용
+하지만 file open을 굳이 여기서 하지 않아도됨. CView , CFrameWnd에서도 가능.
+그래도 프로그램 관리 차원에서 Document를 한 클래스에서 관리하기 위해 존재 의미가 있음.
+Document 관리 관련 기능이 기본으로 갖고있지만, 다른 클래스에서 사용할 경우 기능을 본인이 구현해야 하는 단점이 있음.
+
+MainFrm.cpp => CFrameWnd 상속
+MFC.cpp => Cwinapp상속
+MFCDoc.cpp => Cdocument 상속
+MFCView.cpp => Cview 상속
+
+CWinApp::InitInstance() => winmain 호출
+
+
+Message map
+
+
+MFC SDI flow
+
+
+Window message processing
+
+PostMessage() -> Message que3ue -> Message loop -> CMainFrame ( PreTranslateMessage() -> WindowProc() -> message handler function )
+CMainFrame 상속 -> WindowProc() 오버라이딩해서 switch문으로 메세지에 따라 별도 처리 가능.
+
+MessageBox: CWnd 클래스의 멤버함수 -> CWnd를 상속받아야 사용 가능.
+AfxMessageBox: 전역함수 (Afx: Application Frame Work) -> Afx 붙으면 global.
+
+int MessageBox(
+	LPCTSTR lpszText, // 본문내용
+
+
+
+edit control
+-> 텍스트 값 바꾸려면 control 변수 추가해야 함.
+-> 우클릭 > 변수 추가 > 범주: 값 / 이름: edit > 마침
+-> Dlg.h 에 CString edit; 이 추가되어 있음.
+
+
+
+
