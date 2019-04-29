@@ -1,0 +1,132 @@
+< 비트맵 확대/축소 프로그램(HandleBmp) >
+
+1. 대화상자 기반으로 프로젝트 생성
+
+2. 다이얼로그 편집
+   버튼 추가(IDC_BUTTON_EXIT, 나가기)
+
+3. 메뉴 추가
+	[File]( Caption : &File)
+	[File] - [Exit] (ID_FILE_EXIT, Caption: &Exit)
+
+	[Zoom] ( Caption: Zoom)
+	[Zoom] - [Zoom In](ID_ZOOM_IN)
+	[Zoom] - [Zoom Out](ID_ZOOM_OUT)
+
+	[Help] (Caption : &Help)
+	[Help] - [About] (ID_HELP_ABOUT, Caption: &About)
+
+4. 다이얼로그에 메뉴 삽입
+	- 다이얼로그 화면에서 우클릭, 속성
+	- [Menu] 항목에 IDR_MENU1 선택
+
+5. [File] - [Exit] 에 이벤트함수 추가
+	- CHandleBmpDlg 에 추가
+	- OnFileExit() 에 다음 코드 추가
+	void CHandleBmpDlg::OnFileExit()
+	{
+		// TODO: 여기에 명령 처리기 코드를 추가합니다.
+		OnOK();
+	}
+
+6. [Help] - [About] 에 멤버함수 추가
+	- CHandleBmpDlg 에 추가
+	- OnHelpAbout() 에 다음 코드 추가
+	void CHandleBmpDlg::OnHelpAbout()
+	{
+		// TODO: 여기에 명령 처리기 코드를 추가합니다.
+		CAboutDlg dlg;
+		dlg.DoModal();
+	}
+
+7. 비트맵 이미지 추가
+	[리소스 뷰] - [HandleBmp.rc] 에서 리소스 추가, Bitmap 가져오기
+
+8. 인스턴스 핸들용 멤버 변수 생성
+	- HandleBmpDlg.h 파일에 public 영역에 다음 코드 추가
+		HINSTANCE hInstance;
+	
+9. CHandleBmpApp 클래스의 InitInstance() 멤버함수 수정
+	
+	CHandleBmpDlg dlg;
+	===========================================
+	= dlg.hInstance = m_hInstance; <== 추가 =
+	===========================================
+10. HandleBmpDlg.h 파일에 다음 변수 추가
+	int width;
+	int height;
+	int menuID;
+
+11. 클래스 마법사를 사용하여 CHandleBmpDlg 클래스에 메시지 WM_SIZE에 대한 OnSize() 함수 추가하여 내용 추가
+
+	void CHandleBmpDlg::OnSize(UINT nType, int cx, int cy)
+	{
+		CDialogEx::OnSize(nType, cx, cy);
+	
+		// TODO: 여기에 메시지 처리기 코드를 추가합니다.
+		width = cx;
+		height = cy;
+		Invalidate();
+	}
+
+
+12. CHandleBmpDlg 클래스의 OnPaint() 함수에 아래 내용 추가
+
+	else
+	{
+		===============================================================================================
+		CPaintDC dc(this);
+		HBITMAP hbitmap = LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP1));
+		HDC hMemDC = CreateCompatibleDC(NULL);
+		SelectObject(hMemDC, hbitmap);
+
+		switch (menuID)
+		{
+		case ID_ZOOM_IN:
+			StretchBlt(dc.m_hDC, 0, 0, width, height, hMemDC, 0, 0, 300, 300, SRCCOPY);
+			break;
+		case ID_ZOOM_OUT:
+			StretchBlt(dc.m_hDC, 0, 0, 150, 150, hMemDC, 0, 0, 300, 300, SRCCOPY);
+			break;
+		default:
+			StretchBlt(dc.m_hDC, 50, 50, 300, 300, hMemDC, 0, 0, 250, 250, SRCCOPY);
+			break;
+		}
+		DeleteDC(hMemDC);
+		DeleteObject(hbitmap);
+		================================================================================================
+		CDialogEx::OnPaint();
+	}
+
+
+13. [Zoom] - [Zoom In], [Zoom Out] 에 멤버함수 추가 (CHandleBmpDlg 에 추가)
+
+void CHandleBmpDlg::OnZoomIn()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	menuID = ID_ZOOM_IN;
+	Invalidate();
+}
+
+void CHandleBmpDlg::OnZoomIn()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_menuID = ID_ZOOM_IN;
+	Invalidate();
+}
+
+
+void CHandleBmpDlg::OnZoomOut()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	menuID = ID_ZOOM_OUT;
+	Invalidate();
+}
+
+14. 다이얼로그 [나가기] 버튼에 멤버함수 추가
+
+	void CHandleBmpDlg::OnBnClickedButtonExit()
+	{
+		// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+		OnOK();
+	}

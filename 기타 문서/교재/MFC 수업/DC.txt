@@ -1,0 +1,21 @@
+  CObject -- CDC -------------- CClientDC
+			|
+			|------ CMetaFileDC
+			|
+			|------ CPaintDC
+			|
+			|------ CWindowDC
+
+
+1. CDC
+	- GDI를 관장하는 클래스
+	CDC * pDC = GetDC(); // 현재 윈도우의 Client영역에 그래픽객체를 출력할 수 있는 메모리공간을 확보
+
+2. ClientDC
+	- 캡션 바, 메뉴 바, 상태 바를 제외한 클라이언트 영역을 표시하는 DC를 관리
+
+3. CWindowDC
+	- CClientDC가 담당하는 영역외의 캡션 바, 외곽 프레임, 상태 창 등을 포함하는 DC
+
+4. CPaintDC
+	-WM_PAINT 메시지 발생 시 OnPaint 함수 내에서만 사용가능 한 DC

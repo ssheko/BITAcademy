@@ -1,0 +1,266 @@
+< List Control 예제 >
+
+ 프로젝트 생성(LIstControl) - 대화상자기반
+
+1. 다이얼로그 편집
+	- 다이얼로그 Caption 설정 : 시험등록 및 문제유형 선택
+	- 그룹박스 5개 : 등록, 결과, 시험유형선택, 입력/삭제/초기화, 나가기
+	- Static Text : 학번, 이름, 연락처
+	- Edit Control : IDC_EDIT_NUM, IDC_EDIT_NAME, IDC_EDIT_CELL
+	- Static Text : 등록방법
+	- Radio Button : IDC_RADIO_ONLINE, 온라인등록, Group True
+			IDC_RADIO_OFFINE, 방문등록
+
+	- Check Box : IDC_CHECK_A (주관식(20점)), IDC_CHECK_B( 객관식(10점) )
+	- Combo Box : IDC_COMBO_POINT1 - Sort False, IDC_COMBO_POINT2 - Sort False
+	- Static Text : 문항수
+
+	- Button : IDC_BUTTON_INPUT (입력), IDC_BUTTON_DEL (삭제), IDC_BUTTON_INIT(초기화), 
+				IDC_BUTTON_EXIT (나가기)
+	- LIst Control : IDC_LIST_VIEW, Sort none, View Report
+
+** 프로
+
+
+2. Edit Control 변수 추가
+	- strNum, strName, strCell : Value, CString
+	
+3. Check Box 변수 추가
+	- chA, chB : Value, BOOL
+
+4. Radio Button 변수 추가
+	- online, offline : Control, CButton
+
+5. Combo Box 변수 추가
+	- cbPoint1, cbPoint2 : Control, CComboBox
+
+6. List Control 변수 추가
+	- listView : Control, CListCtrl
+
+7. List Control 에서 사용할 전역변수 int numberOfSelected, int nIndex = 0; 를 다이얼로그 클래스에 추가
+
+8. 다이얼로그 클래스의 OnInitDialog() 함수 코딩
+	
+
+
+// TODO: 여기에 추가 초기화 작업을 추가합니다.
+
+	for (int i = 0; i < 11; i++)
+	{
+		CString sIndex;
+		sIndex.Format(_T("%d"), i);
+		cbPoint1.AddString(sIndex);
+	}
+
+	for (int i = 0; i < 11; i++)
+	{
+		CString sIndex;
+		sIndex.Format(_T("%d"), i);
+		cbPoint2.AddString(sIndex);
+	}
+
+	TCHAR *szText[6] = { _T("학번"), _T("이름"), _T("연락처"), _T("등록방법"), _T("시험유형"), _T("총배점") };
+	int nWidth[6] = {50, 70, 100, 70, 70, 70};
+
+	LV_COLUMN iCol;
+	iCol.mask = LVCF_FMT | LVCF_TEXT | LVCF_WIDTH;
+	iCol.fmt = LVCFMT_LEFT;
+
+		/*typedef struct _LVCOLUMN {
+			UINT mask;
+			int fmt;
+			int cx;
+			LPTSTR pszText;
+			int cchTextMax;
+			int iSubItem;
+		} LVCOLUMN
+
+
+		-Mask : 각 멤버가 유효한 정보를 가지고 있는지를 명시하는 변수
+			LVCF_FMT : fmt 변수가 유효한지
+			LVCF_SUBITEM : iSubItem 변수가 유효한지
+			LVCF_TEXT : pszText 변수가 유효한지
+			LVCF_WIDTH : cx 변수가 유효한지
+			LVCF_IMAGE : iImage 변수가 유효한지
+			LVCF_ORDER : iOrder 변수가 유효한지
+		- fmf : 컬럼 헤딩과 컬럼 안의 부 아이템의 정렬
+			LVCFMT_CENTER, LVCFMT_LEFT, LVCFMT_RIGHT
+			LVCFMT_BITMAP_ON_RIGHT, LVCFMT_IMAGE
+		- CX : 컬럼의 너비(단위 : Pixel)
+		- pszText : 컬럼 제목의 문자열
+		- cchTextMax : 칼럼 제목 문자열의 버퍼 크기
+		- iSubItem : 컬럼에 연관되는 부 아이템의 색인*/
+
+	listView.SetExtendedStyle(LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT);
+
+	for (int i = 0; i < 6; i++)
+	{
+		iCol.pszText = (LPTSTR)szText[i];
+		iCol.cx = nWidth[i];
+		listView.InsertColumn(i, &iCol);
+	}
+
+//listView.GetHeaderCtrl()->GetItemCount()
+9. 다이얼로그 클래스에 초기화 용 void Init() 함수 추가
+
+void CLIstControlDlg::Init()
+{
+	// TODO: 여기에 구현 코드 추가.
+	UpdateData();
+	CEdit *pEdit = (CEdit *)GetDlgItem(IDC_EDIT_NUM);
+
+	strNum.Empty();
+	strName.Empty();
+	strCell.Empty();
+
+	chA = chB = FALSE;
+
+	online.SetCheck(BST_UNCHECKED);
+
+	cbPoint1.SetCurSel(0);
+	cbPoint2.SetCurSel(0);
+
+	pEdit->SetFocus();
+
+	UpdateData(FALSE);
+}
+	
+
+10. 버튼에 이벤트 함수 추가
+
+
+
+void CLIstControlDlg::OnBnClickedButtonInput()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	TCHAR szText[100] = _T("");
+
+	UpdateData();
+	LVITEM item;
+	item.mask = LVIF_TEXT;
+	item.iItem = nIndex;
+
+	/*LVITEM
+	- List view 에서 속성을 받는 구조체
+	¨ LVITEM의 멤버 변수
+	- mask : 각 멤버가 유효한 정보를 가지고 있는지를 명시하는 변수
+	- iItem : 구조체를 참조하는 아이템의 제로 베이스 색인
+	- iSubItem : 컬럼 정보
+	- pszText : 아이템 텍스트를 명시하는 스트링의 주소*/
+
+	item.iSubItem = 0;
+	wsprintf(szText, _T("%s"), strNum);
+	item.pszText = (LPTSTR)szText;
+	listView.InsertItem(&item);
+
+	item.iSubItem = 1;
+	wsprintf(szText, _T("%s"), strName);
+	item.pszText = (LPTSTR)szText;
+	listView.SetItem(&item);
+
+	item.iSubItem = 2;
+	wsprintf(szText, _T("%s"), strCell);
+	item.pszText = (LPTSTR)szText;
+	listView.SetItem(&item);
+
+	item.iSubItem = 3;
+	if (online.GetCheck() == BST_CHECKED)
+		wsprintf(szText, _T("%s"), _T("온라인"));
+	else
+		wsprintf(szText, _T("%s"), _T("방문등록"));
+	item.pszText = (LPTSTR)szText;
+	listView.SetItem(&item);
+
+
+	CString selCombo1, selCombo2;
+
+	if (chA == TRUE && chB == FALSE)
+	{
+		cbPoint1.GetLBText(cbPoint1.GetCurSel(), selCombo1);
+
+		int cb = _ttoi(selCombo1);
+		int sum = cb * 20;
+
+		item.iSubItem = 4;
+		wsprintf(szText, _T("%s"), _T("주관식"));
+		item.pszText = (LPTSTR)szText;
+		listView.SetItem(&item);
+
+		item.iSubItem = 5;
+		wsprintf(szText, _T("%d"), sum);
+		item.pszText = (LPTSTR)szText;
+		listView.SetItem(&item);
+	}
+	else if (chA == FALSE && chB == TRUE)
+	{
+		cbPoint2.GetLBText(cbPoint2.GetCurSel(), selCombo2);
+
+		int cb = _ttoi(selCombo2);
+		int sum = cb * 10;
+
+		item.iSubItem = 4;
+		wsprintf(szText, _T("%s"), _T("객관식"));
+		item.pszText = (LPTSTR)szText;
+		listView.SetItem(&item);
+
+		item.iSubItem = 5;
+		wsprintf(szText, _T("%d"), sum);
+		item.pszText = (LPTSTR)szText;
+		listView.SetItem(&item);
+	}
+	else if (chA == TRUE && chB == TRUE)
+	{
+		cbPoint1.GetLBText(cbPoint1.GetCurSel(), selCombo1);
+		cbPoint2.GetLBText(cbPoint2.GetCurSel(), selCombo2);
+
+		int cb1 = _ttoi(selCombo1);
+		int cb2 = _ttoi(selCombo2);
+		int sum = cb1 * 20 + cb2 * 10;
+
+		item.iSubItem = 4;
+		wsprintf(szText, _T("%s"), _T("혼합형"));
+		item.pszText = (LPTSTR)szText;
+		listView.SetItem(&item);
+
+		item.iSubItem = 5;
+		wsprintf(szText, _T("%d"), sum);
+		item.pszText = (LPTSTR)szText;
+		listView.SetItem(&item);
+	}
+	else if (chA == FALSE && chB == FALSE)
+		MessageBox(_T("시험 유형을 선택하세요"), _T("입력에러"), MB_ICONSTOP | MB_OK);
+
+	Init();
+	nIndex++;
+	UpdateData(FALSE);
+}
+
+
+
+void CLIstControlDlg::OnBnClickedButtonDel()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	for (int nItem = 0; nItem < listView.GetItemCount();)
+	{
+		if (listView.GetItemState(nItem, LVIS_SELECTED) == LVIS_SELECTED)
+			listView.DeleteItem(nItem);
+		else
+			++nItem;
+	}
+	UpdateData(FALSE);
+	nIndex--;
+}
+
+
+void CLIstControlDlg::OnBnClickedButtonInit()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	Init();
+}
+
+
+void CLIstControlDlg::OnBnClickedButtonExit()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	OnOK();
+}

@@ -1,0 +1,277 @@
+- 새 프로젝트 생성 => 응용 프로그램 종류 : 단일문서
+- '문서/뷰 아키텍처 지원' 체크 해제
+
+1. 기존 메뉴 삭제
+	- [리소스 뷰] - [EditGraphic.rc] - [Menu] - [IDR_MAINFRAME] 더블 클릭
+	- [파일] [편집] 등 모든 메뉴를 삭제
+
+2. 새로운 메뉴 작성
+	- [문자열 입력]- [입력](ID : ID_DATA_INPUT, Prompt: 문자열 입력)
+	- [글자색] - [빨간색 글자](ID: ID_COLOR_RED, Prompt: 글자색이 빨간색)
+	- [글자색] - [파란색 글자] (ID: ID_COLOR_BLUE, Prompt: 글자색이 파란색)
+	- [글자색] - [노란색 글자] (ID: ID_COLOR_YELLOW, Prompt: 글자색이 노란색)
+	- [도형] - [원] (ID_FIG_CIR, Prompt: 원모양)
+	- [도형] - [사각형] (ID_FIG_RECT, Prompt: 사각형모양)
+	- [도형] - [선] (ID_FIG_LINE, Prompt: 선모양)
+	- [도형] - 구분선 삽입(Seperator : TRUE)
+	- [도형] - [십자무늬 패턴] (ID_FIG_CROSS, Prompt: 십자무늬 패턴)
+	- [도형] - [사과무늬 패턴] (ID_FIG_APPLE, Prompt: 사과무늬 패턴)
+
+3. 문자입력 대화상자 생성
+	- [리소스 뷰] - [SimGraphiEditor.rc] - [Dialog] 에서 [Dialog 삽입]
+	- ID: IDD_DIALOG_TEXT, Caption: 문자열 입력
+	- Static Text(Caption: 입력)
+	- Edit Control ( ID: IDC_EDIT_TEXT_INPUT )
+	- 확인, 취소 버튼은 디폴트 사용
+
+4. 생성된 대화상자 클래스 추가
+	- 클래스명 : CTextDlg
+	- MainFrm.h 에 다음 코드 추가
+		#include "CTextDlg.h"
+	- CMainFrame 클래스에 멤버변수 strData (public, CString) 추가 (일반 멤버변수. 마법사말고 직접 추가 가능)
+
+5. CMainFrame 클래스에 함수 추가
+	- 이름: GetText, 반환형식: CString
+	CString CMainFrame::GetText()
+	{
+		// TODO: 여기에 구현 코드 추가.
+		return strData;
+	}
+
+	- 이름: SetText, 반환형식: void
+	void CMainFrame::SetText(CString strInput)
+	{
+		// TODO: 여기에 구현 코드 추가.
+		strData = strInput;
+		Invalidate();
+	}
+
+6. CTextDlg 클래스 IDC_EDIT_TEXT_INPUT 에 멤버변수 추가
+	- strTextInput (범주: Value, 변수형식: CString, 최대문자: 30)
+
+
+7. [문자열 입력] 메뉴에 멤버함수 추가
+	- [리소스 뷰] 에서 IDR_MAINFRAME 선택 후 [문자열 입력]의 [입력]메뉴를 마우스 우클릭
+	- [이벤트 처리기 추가] 선택
+	- [메시지 형식]은 COMMAND, [클래스 목록] 에서 CMainFrame 선택, [추가 및 편집] 클릭
+
+	void CMainFrame::OnDataInput()
+	{
+		// TODO: 여기에 명령 처리기 코드를 추가합니다.
+		CTextDlg textDlg;
+		textDlg.strTextInput = GetText();
+		if (textDlg.DoModal() == IDOK)
+		{
+			SetText(textDlg.strTextInput);
+		}
+	}
+
+7.5  CChildView.cpp 파일에 다음 내용 추가
+
+#include "MainFrm.h"
+
+
+8. CChildView 클래스의 OnPaint() 에 아래 코드 추가
+
+	void CChildView::OnPaint() 
+	{
+		CPaintDC dc(this); // 그리기를 위한 디바이스 컨텍스트입니다.
+	
+		// TODO: 여기에 메시지 처리기 코드를 추가합니다.
+		CMainFrame *pMainFrame = (CMainFrame*)AfxGetMainWnd();
+		CFont font, *pOldFont;
+		font.CreatePointFont(300, _T("Broadway"));
+		pOldFont = (CFont *)dc.SelectObject(&font);
+		CString strInput1 = _T(" << Input Data >> ");
+		CString strInput2 = pMainFrame->GetText();
+		dc.SetTextColor(RGB(0, 0, 0));
+		dc.TextOutW(0, 20, strInput1);
+		dc.TextOutW(50, 100, strInput2);
+	
+		// 그리기 메시지에 대해서는 CWnd::OnPaint()를 호출하지 마십시오.
+	}
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+9. 색 정의
+	- MainFrm.cpp 에 색 정의 코드 추가
+	#define BLACK	RGB(0, 0, 0)
+	#define RED		RGB(255, 0, 0)
+	#define BLUE	RGB(51, 51, 255)
+	#define YELLOW	RGB(255, 204, 51)
+
+
+10. CMainFrame 클래스에 변수 추가
+	- 이름: curColor
+	- 형식: COLORREF
+
+11. CMainFrame 클래스에 함수 추가
+	void CMainFrame::ColorSet(COLORREF color)
+	{
+		// TODO: 여기에 구현 코드 추가.
+		curColor = color;
+		Invalidate();
+	}
+
+	COLORREF CMainFrame::ColorGet()
+	{
+		// TODO: 여기에 구현 코드 추가.
+		return curColor;
+	}
+
+
+12. 글자색 변경 메뉴에 이벤트 함수 추가
+	- CMainFrame 클래스에 3개 색 메뉴 이벤트 추가
+
+	void CMainFrame::OnColorRed()
+	{
+		// TODO: 여기에 명령 처리기 코드를 추가합니다.
+		ColorSet(RED);
+	}
+
+	void CMainFrame::OnColorBlue()
+	{
+		// TODO: 여기에 명령 처리기 코드를 추가합니다.
+		ColorSet(BLUE);
+	}
+
+	void CMainFrame::OnColorYellow()
+	{
+		// TODO: 여기에 명령 처리기 코드를 추가합니다.
+		ColorSet(YELLOW);
+	}
+
+13. 글자색 변경을 위해 CChildView 클래스의 OnPaint() 함수에 다음 내용 추가
+	
+	dc.TextOutW(0, 20, strInput1);
+	============================================ 추가 시작
+	dc.SetBkColor(RGB(255, 255, 255));
+	dc.SetTextColor(pMainFrame->ColorGet());
+	============================================ 추가 종료
+	dc.TextOutW(50, 100, strInput2);	
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+14. 글자색 변경 popup 메뉴 작성
+	- [리소스 뷰] - [Menu] 마우스 우클릭 [리소스 추가] 선택
+	- Menu 선택하고 [새로만들기] 클릭
+	- 기존 [글자색] 메뉴와 동일하게 지정
+
+	- CMainFrame 선택 후 속성창을 연다
+	- 속성창의 메시지 버튼 클릭하여 윈도우 메시지 목록을 연다
+	- 항목 중 WM_CONTEXTMENU 에 <Add> OnContetMenu 선택
+	- CMainFrame 클래스의 OnContextMenu 내용 코딩
+
+	void CMainFrame::OnContextMenu(CWnd* pWnd, CPoint point)
+	{
+		// TODO: 여기에 메시지 처리기 코드를 추가합니다.
+		CMenu popup;
+		CMenu * pMenu;
+		popup.LoadMenuW(IDR_MENU1);
+		pMenu = popup.GetSubMenu(0);
+		pMenu->TrackPopupMenu(TPM_LEFTALIGN || TPM_RIGHTBUTTON, point.x, point.y, this);
+	}
+	
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+15. 사과모양 패턴 작성
+	- [리소스 뷰] - [EditGraphic.rc] 에서 마우스 우클릭 [리소스 추가] 선택
+	- Bitmap 선택하고 [새로 만들기] 클릭
+	- 사과모양 제작
+	- CChildView 에 멤버변수 option(int 타입) 설정
+	- CChildView 클래스의 OnPaint() 함수에 다음 코드 추가
+
+
+	switch (option)
+	{
+	case 1:
+	{
+		CBrush brush(RGB(0, 255, 0));
+		dc.SelectObject(&brush);
+		dc.Ellipse(200, 200, 400, 400);
+		brush.DeleteObject();
+		break;
+	}
+	case 2:
+	{
+		CBrush brush(RGB(150, 0, 150));
+		dc.SelectObject(&brush);
+		dc.Rectangle(200, 200, 400, 400);
+		brush.DeleteObject();
+		break;
+	}
+	case 3:
+	{
+		int nPenType[] = { PS_SOLID, PS_DOT, PS_DASHDOT, PS_DASH, PS_DASHDOTDOT };
+
+		for (int i = 0; i < sizeof(nPenType) / sizeof(nPenType[0]); i++)
+		{
+			CPen pen(nPenType[i], 1, RGB(0, 0, 255));
+			dc.SelectObject(&pen);
+
+			dc.MoveTo(100, 200 + i * 50);
+			dc.LineTo(500, 200 + i * 50);
+
+			pen.DeleteObject();
+		}
+		break;
+	}
+	case 4:
+	{
+		CBrush brush(HS_DIAGCROSS, RGB(255, 90, 0));
+		dc.SelectObject(&brush);
+		dc.RoundRect(200, 200, 400, 400, 50, 50);
+		brush.DeleteObject();
+		break;
+	}
+	case 5:
+	{
+		CBitmap bitmap;
+		bitmap.LoadBitmapW(IDB_BITMAP1);
+		CBrush brush(&bitmap);
+		dc.SelectObject(&brush);
+		dc.SetBkColor(TRANSPARENT);
+		dc.RoundRect(200, 200, 400, 400, 50, 50);
+		brush.DeleteObject();
+		break;
+	}
+	}
+
+16. 도형메뉴에 이벤트함수 추가( CChildView 에 작성 )
+	
+void CChildView::OnFigCir()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	option = 1;
+	Invalidate();
+}
+
+
+void CChildView::OnFigRect()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	option = 2;
+	Invalidate();
+}
+
+
+void CChildView::OnFigLine()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	option = 3;
+	Invalidate();
+}
+
+
+void CChildView::OnFigCross()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	option = 4;
+	Invalidate();
+}
+
+
+void CChildView::OnFigApple()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	option = 5;
+	Invalidate();
+}

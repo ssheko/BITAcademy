@@ -1,0 +1,47 @@
+1. [리소스 뷰] - [MultiClass.rc] - [DIalog] 우측 마우스 버튼 클릭
+	 "Dialog 삽입" 선택
+	- 새로 생성된 다이얼로그의 속성창에서
+	ID를 변경 - IDD_DIALOG_INPUT
+
+2. IDD_MULTICLASS_DIALOG 에 컨트롤 생성
+	IDD_MULTICLASS_DIALOG Caption 변경 => 메뉴창
+
+	-Button 3개 생성
+	IDC_BUTTON_INPUT : 입력
+	IDC_BUTTON_OUTPUT : 출력
+	IDC_BUTTON_EXIT : 나가기
+
+3. IDD_DIALOG_INPUT 에 컨트롤 생성
+	IDD_DIALOG_INPUT Caption 변경 => 입력창
+	
+	Static Text 2개
+	학번, 이름
+
+	Edit Control 2개
+	IDC_EDIT_NUM
+	IDC_EDIT_NAME
+
+	Button 1개
+	IDOK : 확인
+
+4. 추가한 다이얼로그 IDD_DIALOG_INPUT 에 클래스를 추가
+	클래스 이름 : CInputDlg
+
+5. 솔루션 탐색기에서 MultiClassDlg.h 파일을 열어서 다음의 내용 추가
+	#include "CInputDlg.h"
+
+	public 영역에 멤버 변수 선언
+	CInputDlg inputDlg;
+
+6. CInputDlg 클래스의 컨트롤에 멤버 변수 추가
+	IDC_EDIT_NAME에 strName 추가
+	IDC_EDIT_NUM에 strNum 추가
+
+
+7. IDD_MULTICLASS_DIALOG 의 버튼 3개 멤버함수 추기
+	
+	OnClickedButtonInput() => inputDlg.DoModal();
+	OnClickedButtonOutput()
+	=> MessageBox(_T("학번: ") + inputDlg.strNum
+		+ _T(",  이름: ") + inputDlg.strName);
+
