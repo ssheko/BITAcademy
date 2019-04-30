@@ -20,11 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{447A190A-01B1-4559-AABE-5BDA4022800A}</ProjectGuid>
+    <ProjectGuid>{CACA1FF2-62CB-4402-B7E4-05DFF3E56C0A}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
-    <RootNamespace>MFC</RootNamespace>
+    <RootNamespace>day2204302</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-    <ProjectName>MFC(기본)</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -184,21 +183,19 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ChildView.h" />
     <ClInclude Include="CUIThread.h" />
+    <ClInclude Include="day22_04.30_2.h" />
     <ClInclude Include="MainFrm.h" />
-    <ClInclude Include="MFC.h" />
-    <ClInclude Include="MFCDoc.h" />
-    <ClInclude Include="MFCView.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ChildView.cpp" />
     <ClCompile Include="CUIThread.cpp" />
+    <ClCompile Include="day22_04.30_2.cpp" />
     <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="MFC.cpp" />
-    <ClCompile Include="MFCDoc.cpp" />
-    <ClCompile Include="MFCView.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -207,14 +204,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MFC.rc" />
+    <ResourceCompile Include="day2204302.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\MFC.rc2" />
+    <None Include="res\day2204302.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\MFC.ico" />
-    <Image Include="res\MFCDoc.ico" />
+    <Image Include="res\day22_04.30_2.ico" />
     <Image Include="res\Toolbar.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

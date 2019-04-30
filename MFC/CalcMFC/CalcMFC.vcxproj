@@ -20,11 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{447A190A-01B1-4559-AABE-5BDA4022800A}</ProjectGuid>
+    <ProjectGuid>{6B273724-384C-4706-858A-6FD33C11CBDF}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
-    <RootNamespace>MFC</RootNamespace>
+    <RootNamespace>CalcMFC</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-    <ProjectName>MFC(기본)</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -184,21 +183,15 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CUIThread.h" />
-    <ClInclude Include="MainFrm.h" />
-    <ClInclude Include="MFC.h" />
-    <ClInclude Include="MFCDoc.h" />
-    <ClInclude Include="MFCView.h" />
+    <ClInclude Include="CalcMFC.h" />
+    <ClInclude Include="CalcMFCDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CUIThread.cpp" />
-    <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="MFC.cpp" />
-    <ClCompile Include="MFCDoc.cpp" />
-    <ClCompile Include="MFCView.cpp" />
+    <ClCompile Include="CalcMFC.cpp" />
+    <ClCompile Include="CalcMFCDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -207,15 +200,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MFC.rc" />
+    <ResourceCompile Include="CalcMFC.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\MFC.rc2" />
+    <None Include="res\CalcMFC.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\MFC.ico" />
-    <Image Include="res\MFCDoc.ico" />
-    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\CalcMFC.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

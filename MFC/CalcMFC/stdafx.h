@@ -32,7 +32,6 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 #include <afxcontrolbars.h>     // MFC의 리본 및 컨트롤 막대 지원
-#include <afxwin.h>
 
 
 
@@ -53,3 +52,5 @@
 #endif
 
 
+//__declspec(dllexport) int WINAPI Calculate(int fir, int sec, CString &op);
+//#pragma comment(lib, "CalcDLL")

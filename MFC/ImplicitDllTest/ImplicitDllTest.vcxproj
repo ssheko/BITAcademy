@@ -20,11 +20,10 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{447A190A-01B1-4559-AABE-5BDA4022800A}</ProjectGuid>
+    <ProjectGuid>{E2133278-2CAA-4961-8B13-757CF70E7160}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
-    <RootNamespace>MFC</RootNamespace>
+    <RootNamespace>ImplicitDllTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-    <ProjectName>MFC(기본)</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -184,21 +183,15 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CUIThread.h" />
-    <ClInclude Include="MainFrm.h" />
-    <ClInclude Include="MFC.h" />
-    <ClInclude Include="MFCDoc.h" />
-    <ClInclude Include="MFCView.h" />
+    <ClInclude Include="ImplicitDllTest.h" />
+    <ClInclude Include="ImplicitDllTestDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CUIThread.cpp" />
-    <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="MFC.cpp" />
-    <ClCompile Include="MFCDoc.cpp" />
-    <ClCompile Include="MFCView.cpp" />
+    <ClCompile Include="ImplicitDllTest.cpp" />
+    <ClCompile Include="ImplicitDllTestDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -207,15 +200,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MFC.rc" />
+    <ResourceCompile Include="ImplicitDllTest.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\MFC.rc2" />
+    <None Include="res\ImplicitDllTest.rc2" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\MFC.ico" />
-    <Image Include="res\MFCDoc.ico" />
-    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\ImplicitDllTest.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

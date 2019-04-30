@@ -1,0 +1,31 @@
+* 사용자 인터페이스 쓰레드
+
+생성하려면 CWinThread 클래스나 그 파생 클래스를 프로젝트에 등록한 후
+InitInstance 가상함수를 재정의하여 CWinApp 클래스 객체의
+InitInstance  함수와 같거나 유사한 코드를 작성하고,
+AfxBeginThread() 함수와 RUNTIME_CLASS() 매크로를 이용하여 해당 스레드의 인스턴스를 생성해야 함
+
+
+* DLL
+실행파일을 만들 때 동적으로 라이브러리를 가져와서 이용하는 것.
+
+2가지 방식
+1. Implicity DLL 암시적
+
+MFC 확장 DLL
+: MFC 전용 DLL
+
+공유 MFC DLL을 사용하는 기본 DLL
+: Win32 API로 이루어진 DLL
+
+Portable Executable (PE)
+PE Header (사용해야 할 암시적 dll 정보) + 실행파일
+PE 헤더를 만들기 위해 .lib 파일을 참조해야 함.
+dll을 참조하는 실행파일을 실행하는 순간 PE 헤더를 확인해 dll 파일을 찾는다.
+따라서 lib는 실행파일과 동일한 경로 안에 있어야 한다.
+일반 dll은 system path에 잡혀있기 때문에 굳이 dll을 실행파일과 함께 둘 필요가 없다.
+
+2.. Explicity DLL 명시적
+
+PE Header에 dll이 암시적으로 들어가있지 않음.
+

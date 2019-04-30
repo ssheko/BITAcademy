@@ -5,6 +5,7 @@
 
 #pragma once
 
+
 #ifndef VC_EXTRALEAN
 #define VC_EXTRALEAN            // 거의 사용되지 않는 내용은 Windows 헤더에서 제외합니다.
 #endif
@@ -32,7 +33,6 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 #include <afxcontrolbars.h>     // MFC의 리본 및 컨트롤 막대 지원
-#include <afxwin.h>
 
 
 
@@ -53,3 +53,6 @@
 #endif
 
 
+
+BOOL WINAPI GetModulePath(CString& strPath);	//__declspec(dllexport)
+#pragma comment(lib, "ImplicitDllDemo")
