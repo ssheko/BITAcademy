@@ -47,7 +47,7 @@ public:
 	CPoint oldPoint;
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+//	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* /*pWnd*/, CPoint /*point*/);
 	afx_msg void OnBnClickedButtonAirbrush();
 	COLORREF penColor;
@@ -55,4 +55,5 @@ public:
 	afx_msg void OnColorBlue();
 	afx_msg void OnColorGreen();
 	afx_msg void OnNewfile();
+	afx_msg void OnSaveasBmp();
 };

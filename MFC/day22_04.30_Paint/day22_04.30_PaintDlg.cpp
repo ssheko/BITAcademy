@@ -79,13 +79,14 @@ BEGIN_MESSAGE_MAP(Cday220430PaintDlg, CDialogEx)
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
-	ON_WM_RBUTTONDOWN()
+//	ON_WM_RBUTTONDOWN()
 	ON_WM_CONTEXTMENU()
 	ON_BN_CLICKED(IDC_BUTTON_AIRBRUSH, &Cday220430PaintDlg::OnBnClickedButtonAirbrush)
 	ON_COMMAND(ID_COLOR_RED, &Cday220430PaintDlg::OnColorRed)
 	ON_COMMAND(ID_COLOR_BLUE, &Cday220430PaintDlg::OnColorBlue)
 	ON_COMMAND(ID_COLOR_GREEN, &Cday220430PaintDlg::OnColorGreen)
 	ON_COMMAND(ID_NEWFILE, &Cday220430PaintDlg::OnNewfile)
+	ON_COMMAND(ID_SAVEAS_BMP, &Cday220430PaintDlg::OnSaveasBmp)
 END_MESSAGE_MAP()
 
 
@@ -208,9 +209,61 @@ void Cday220430PaintDlg::defaultSave(LPCTSTR lpszDefExt)
 		DWORD dwRead;
 
 		// 파일 저장 시작
-		hFile = CreateFile(fileSave, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		//hFile = CreateFile(fileSave, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 		//WriteFile(hFile, )
+
+		CDC *pDC1 = GetDlgItem(IDC_PICTURE)->GetDC();
+		HDC hDC = pDC1->m_hDC;
+
+		RECT rc;
+		GetDlgItem(IDC_PICTURE)->GetClientRect(&rc);
+
+		HDC hMemDc = CreateCompatibleDC(hDC);
+		HBITMAP hBitmap = CreateCompatibleBitmap(hDC, rc.right, rc.bottom);
+		HBITMAP HBmpOld = (HBITMAP)SelectObject(hMemDc, hBitmap);
+		BitBlt(hMemDc, 0, 0, rc.right, rc.bottom, hDC, 0, 0, SRCCOPY);
+		SelectObject(hMemDc, HBmpOld);
+
+		BITMAPINFOHEADER bmih;
+		ZeroMemory(&bmih, sizeof(BITMAPINFOHEADER));
+		bmih.biSize = sizeof(BITMAPINFOHEADER);
+		bmih.biWidth = rc.right;
+		bmih.biHeight = rc.bottom;
+		bmih.biPlanes = 1;
+		bmih.biBitCount = 24;
+		bmih.biCompression = BI_RGB;
+
+		GetDIBits(hDC, hBitmap, 0, rc.bottom, NULL, (LPBITMAPINFO)&bmih, DIB_RGB_COLORS);
+		LPBYTE lpBits = new BYTE[bmih.biSizeImage];
+		GetDIBits(hDC, hBitmap, 0, rc.bottom, lpBits, (LPBITMAPINFO)&bmih, DIB_RGB_COLORS);
+		ReleaseDC(pDC1);
+		DeleteObject(hBitmap);
+
+		BITMAPFILEHEADER bmfh;
+		bmfh.bfType = 'MB';
+		bmfh.bfSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPFILEHEADER) + bmih.biSizeImage;
+		bmfh.bfReserved1 = 0;
+		bmfh.bfReserved2 = 0;
+
+		bmfh.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
+
+		SYSTEMTIME time;
+		GetLocalTime(&time);
+		CString Name;
+
+		Name.Format(pathName, time.wYear, time.wMonth, time.wDay, time.wHour, time.wMinute, time.wSecond);
+		_bstr_t gg(Name);
+		BSTR lpszFileName = gg.copy();
+
+		DWORD dwWritten;
+		hFile = CreateFile(lpszFileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		WriteFile(hFile, &bmfh, sizeof(BITMAPFILEHEADER), &dwWritten, NULL);
+		WriteFile(hFile, &bmih, sizeof(BITMAPINFOHEADER), &dwWritten, NULL);
+		WriteFile(hFile, lpBits, bmih.biSizeImage, &dwWritten, NULL);
+
+		CloseHandle(hFile);
+		delete[] lpBits;
 
 
 		MessageBox(pathName);
@@ -306,14 +359,6 @@ void Cday220430PaintDlg::OnLButtonUp(UINT nFlags, CPoint point)
 }
 
 
-void Cday220430PaintDlg::OnRButtonDown(UINT nFlags, CPoint point)
-{
-	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	
-	CDialogEx::OnRButtonDown(nFlags, point);
-}
-
-
 void Cday220430PaintDlg::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
@@ -321,7 +366,7 @@ void Cday220430PaintDlg::OnContextMenu(CWnd* pWnd, CPoint point)
 	CMenu *pMenu;
 	
 	popup.LoadMenuW(IDR_MENU_COLOR);
-	pMenu = popup.GetSubMenu(0);
+	pMenu = popup.GetSubMenu(0);	// 메뉴 표시줄에서 하위 메뉴를 구하는 함수. 하위 메뉴는 0부터 시작.
 	pMenu->TrackPopupMenu(TPM_LEFTALIGN || TPM_RIGHTBUTTON, point.x, point.y, this);
 }
 
@@ -358,4 +403,11 @@ void Cday220430PaintDlg::OnNewfile()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	Invalidate(TRUE);
+}
+
+
+void Cday220430PaintDlg::OnSaveasBmp()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	defaultSave(_T("*.bmp"));
 }
