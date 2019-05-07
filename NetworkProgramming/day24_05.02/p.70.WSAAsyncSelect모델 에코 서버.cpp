@@ -13,6 +13,10 @@ struct SOCKETINFO
 	char buf[BUFFERSIZE];
 	int recvbytes;
 	int sendbytes;
+
+	// 클라이언트가 보내준 데이터를 서버가 아직 덜 보낸 상태에서 FD_READ 네트워크 이벤트가 발생하면\
+		기존 받은 데이터를 아직 보내지 않았기 때문에 기존 데이터를 모두 에코한 후 수동으로 다시\
+		FD_READ 네트워크 이벤트를 발생시키기 위해 필요.
 	BOOL recvdelayed;
 };
 
