@@ -21,5 +21,8 @@
     <ClCompile Include="p.100.Overlapped 입출력 모델 에코 서버.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="다중 WSAEventSelect 서버.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
