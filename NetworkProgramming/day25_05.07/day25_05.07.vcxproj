@@ -119,10 +119,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="p.100.Overlapped 입출력 모델 에코 서버.cpp" />
-    <ClCompile Include="p.85.WSAEventSelect 모델 에코 서버.cpp">
+    <ClCompile Include="p.100.Overlapped 입출력 모델 에코 서버.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="p.85.WSAEventSelect 모델 에코 서버.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="다중 WSAEventSelect 서버.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

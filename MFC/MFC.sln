@@ -37,6 +37,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalcMFC", "CalcMFC\CalcMFC.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "day22_04.30_Paint", "day22_04.30_Paint\day22_04.30_Paint.vcxproj", "{FB62073F-E235-437A-BB4A-FB5EED9ABE89}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChatClient", "ChatClient\ChatClient.vcxproj", "{57B11575-ED8E-4B34-93E9-EEE5BE9271E3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SocketChatClient", "SocketChatClient\SocketChatClient.vcxproj", "{8DF8E59E-68A5-4E70-8349-C08D124D2543}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -181,6 +185,22 @@ Global
 		{FB62073F-E235-437A-BB4A-FB5EED9ABE89}.Release|x64.Build.0 = Release|x64
 		{FB62073F-E235-437A-BB4A-FB5EED9ABE89}.Release|x86.ActiveCfg = Release|Win32
 		{FB62073F-E235-437A-BB4A-FB5EED9ABE89}.Release|x86.Build.0 = Release|Win32
+		{57B11575-ED8E-4B34-93E9-EEE5BE9271E3}.Debug|x64.ActiveCfg = Debug|x64
+		{57B11575-ED8E-4B34-93E9-EEE5BE9271E3}.Debug|x64.Build.0 = Debug|x64
+		{57B11575-ED8E-4B34-93E9-EEE5BE9271E3}.Debug|x86.ActiveCfg = Debug|Win32
+		{57B11575-ED8E-4B34-93E9-EEE5BE9271E3}.Debug|x86.Build.0 = Debug|Win32
+		{57B11575-ED8E-4B34-93E9-EEE5BE9271E3}.Release|x64.ActiveCfg = Release|x64
+		{57B11575-ED8E-4B34-93E9-EEE5BE9271E3}.Release|x64.Build.0 = Release|x64
+		{57B11575-ED8E-4B34-93E9-EEE5BE9271E3}.Release|x86.ActiveCfg = Release|Win32
+		{57B11575-ED8E-4B34-93E9-EEE5BE9271E3}.Release|x86.Build.0 = Release|Win32
+		{8DF8E59E-68A5-4E70-8349-C08D124D2543}.Debug|x64.ActiveCfg = Debug|x64
+		{8DF8E59E-68A5-4E70-8349-C08D124D2543}.Debug|x64.Build.0 = Debug|x64
+		{8DF8E59E-68A5-4E70-8349-C08D124D2543}.Debug|x86.ActiveCfg = Debug|Win32
+		{8DF8E59E-68A5-4E70-8349-C08D124D2543}.Debug|x86.Build.0 = Debug|Win32
+		{8DF8E59E-68A5-4E70-8349-C08D124D2543}.Release|x64.ActiveCfg = Release|x64
+		{8DF8E59E-68A5-4E70-8349-C08D124D2543}.Release|x64.Build.0 = Release|x64
+		{8DF8E59E-68A5-4E70-8349-C08D124D2543}.Release|x86.ActiveCfg = Release|Win32
+		{8DF8E59E-68A5-4E70-8349-C08D124D2543}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

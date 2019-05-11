@@ -24,5 +24,8 @@
     <ClCompile Include="p.70.WSAAsyncSelect모델 에코 서버.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="다중 Select 서버.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
