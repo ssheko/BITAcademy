@@ -271,10 +271,10 @@ void CSocketChatClientDlg::OnBnClickedButtonConnect()
 	CString ipAddress;
 	ipAddress.Format(_T("%d.%d.%d.%d"), IPfirst, IPSecond, IPThird, IPFourth);
 
-	if (IPfirst == NULL || IPSecond == NULL || IPThird == NULL || IPFourth == NULL)
-	{
-		AfxMessageBox(_T("Wrong IP Address"));
-	}
+	//if (IPfirst == NULL || IPSecond == NULL || IPThird == NULL || IPFourth == NULL)
+	//{
+	//	AfxMessageBox(_T("Wrong IP Address"));
+	//}
 	//AfxMessageBox(ipAddress);
 	InitSocket(ipAddress);
 }

@@ -46,8 +46,15 @@ namespace Net_Framework
             remainder = a % b;
         }
 
+        static int Func()
+        {
+            int retval=0;
+
+            return retval;
+        }
         static void Main(string[] args)
         {
+            
             /* 1 */
             ////Console.WriteLine("Hellow World!");
             //WriteLine("Hellow World!"); // system namespace 안의 console 클래스의 static 메소드 사용
@@ -439,8 +446,6 @@ namespace Net_Framework
             Divide(a, b, out c, out d); // out int c, out int d 가능
 
             WriteLine($"a:{a},  b:{b},  a/b:{c},  a%b:{d}");
-
-
 
         }
     }
