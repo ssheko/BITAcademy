@@ -36,7 +36,7 @@ namespace day29_05._13
     //    }
     //}
 
-    /* Static Field */
+    ///* Static Field */
     //class StaticField
     //{
     //    public static int count = 0;
@@ -62,7 +62,7 @@ namespace day29_05._13
     //    }
     //}
 
-    /* ShallowDeepCopy */
+    ///* ShallowDeepCopy */
     //class ShallowDeepCopy
     //{
     //    public int field1;
@@ -78,7 +78,7 @@ namespace day29_05._13
     //    }
     //}
 
-    /* this, get, set */
+    ///* this, get, set */
     //class Employee
     //{
     //    private string name;
@@ -105,7 +105,7 @@ namespace day29_05._13
     //    }
     //}
 
-    /* constructor */
+    ///* constructor */
     //class ThisConstructor
     //{
     //    // 초기화하지 않으면 숫자타입은 0, char 타입은 '\0', reference타입은 Null로 초기화시켜줌.
@@ -133,83 +133,83 @@ namespace day29_05._13
     //    }
     //}
 
-    /* 상속 */
-    //class Parent
-    //{
-    //    protected string name;
+    ///* 상속 */
+    class Parent
+    {
+        protected string name;
 
-    //    public Parent()
-    //    {
-    //        name = "김철수";
-    //        WriteLine($"{this.name}.Parent()");
-    //    }
-    //    public Parent(string name)
-    //    {
-    //        this.name = name;
-    //        WriteLine($"{this.name}.Parent(string)");
-    //    }
+        public Parent()
+        {
+            name = "김철수";
+            WriteLine($"{this.name}.Parent()");
+        }
+        public Parent(string name)
+        {
+            this.name = name;
+            WriteLine($"{this.name}.Parent(string)");
+        }
 
-    //    ~Parent()
-    //    {
-    //        WriteLine($"{this.name}.~Parent()");
-    //    }
-    //    public void ParentMethod()
-    //    {
-    //        WriteLine($"{this.name}.ParentMethod()");
-    //    }
+        ~Parent()
+        {
+            WriteLine($"{this.name}.~Parent()");
+        }
+        public void ParentMethod()
+        {
+            WriteLine($"{this.name}.ParentMethod()");
+        }
 
-    //}
+    }
 
-    //class Child : Parent
-    //{
-    //    public Child()
-    //    {
-    //        WriteLine($"{this.name}.Child()");
-    //    }
+    class Child : Parent
+    {
+        public Child()
+        {
+            WriteLine($"{this.name}.Child()");
+        }
 
-    //    public Child(string name) : base(name)  // 부모 생성자 호출
-    //    {
-    //        WriteLine($"{this.name}.Child(string)");
-    //    }
-    //    ~Child()
-    //    {
-    //        WriteLine($"{this.name}.~Child()");
-    //    }
+        public Child(string name) : base(name)  // 부모 생성자 호출
+        {
+            WriteLine($"{this.name}.Child(string)");
+        }
+        ~Child()
+        {
+            WriteLine($"{this.name}.~Child()");
+        }
 
-    //    public void ChildMethod()
-    //    {
-    //        WriteLine($"{this.name}.ChildMethod()");
-    //    }
-    //}
+        public void ChildMethod()
+        {
+            WriteLine($"{this.name}.ChildMethod()");
+        }
+    }
 
-    /* 다형성 */
-    //class Mammal
-    //{
-    //    public void Nurse()
-    //    {
-    //        WriteLine("Nursing~~");
-    //    }
-    //}
+    ///* 다형성 */
+    class Mammal
+    {
+        public void Nurse()
+        {
+            WriteLine("Nursing~~");
+        }
+    }
 
-    //class Dog : Mammal
-    //{
-    //    public void Bark()
-    //    {
-    //        WriteLine("Barking~~");
-    //    }
-    //}
-    //class Human : Mammal
-    //{
-    //    public void Speak()
-    //    {
-    //        WriteLine("Speaking~~");
-    //    }
-    //}
+    class Dog : Mammal
+    {
+        public void Bark()
+        {
+            WriteLine("Barking~~");
+        }
+    }
+    class Human : Mammal
+    {
+        public void Speak()
+        {
+            WriteLine("Speaking~~");
+        }
+    }
 
-    /* override 
-     * -> public override void 형식으로 override를 명시해줘야 한다.
-     */
-    /* ver.1 override */
+    ///* override 
+    // * -> public override void 형식으로 override를 명시해줘야 한다.
+    // */
+    ///* ver.1 override */
     //class Car
     //{
     //    protected string model;
@@ -257,7 +257,7 @@ namespace day29_05._13
     //    }
     //}
 
-    /* ver.2 부모 클래스 숨기기 */
+    ///* ver.2 부모 클래스 숨기기 */
     //class Car
     //{
     //    protected string model;
@@ -303,7 +303,7 @@ namespace day29_05._13
     //    }
     //}
 
-    /* 클래스 안의 클래스 */
+    ///* 클래스 안의 클래스 */
     //class Configuration
     //{
     //    List<ItemValue> listConfig = new List<ItemValue>();
@@ -365,9 +365,9 @@ namespace day29_05._13
     //    }
     //}
 
-    /// <summary>
-    /// partial class
-    /// </summary>
+    ///// <summary>
+    ///// partial class
+    ///// </summary>
     //partial class AAA
     //{
     //    public void Method1()
@@ -391,7 +391,7 @@ namespace day29_05._13
     //    }
     //}
 
-    /* (this int input) */
+    ///* (this int input) */
     //public static class EnhancedInteger // class의 기본속성은 internal
     //{
     //    public static int Square(this int input)
@@ -408,14 +408,14 @@ namespace day29_05._13
     //    }
     //}
 
-    /// <summary>
-    /// 구조체
-    /// 구조체는 값형식(클래스는 참조 형식)
-    /// 선언만으로도 생성 가능
-    /// Deep Copy
-    /// 매개변수 없는 생성자 선언 불가능
-    /// 상속 불가능
-    /// </summary>    
+    ///// <summary>
+    ///// 구조체
+    ///// 구조체는 값형식(클래스는 참조 형식)
+    ///// 선언만으로도 생성 가능
+    ///// Deep Copy
+    ///// 매개변수 없는 생성자 선언 불가능
+    ///// 상속 불가능
+    ///// </summary>    
     //struct Point3D
     //{
     //    public int x;
@@ -436,30 +436,55 @@ namespace day29_05._13
     //}
 
 
-    /* 추상 클래스 */
-    abstract class AbstractBase
-    {
-        protected void PrivateMethodA()
-        {
-            Console.WriteLine("AbstractBase.PrivateMethodA()");
-        }
+    ///// <summary>
+    /////  추상 클래스
+    ///// </summary>
+    ///* 추상 클래스 
+    // * abstract 메소드를 사용하려면 클래스도 반드시 abstract 클래스여야 한다.
+    // * abstarct 메소드나 속성은 본문을 정의할 수 없고, 반드시 접근 한정자는 public, internal 또는 protected 중 하나.
+    // * 
+    // * -> abstract 키워드로 표시한 속성/메서드는 파생 클래스에서 반드시 구현해야 한다.
+    // *    일반 클래스의 virtual 속성/메서드를 abstract로 재정의 가능
+    // *    abstract 키워드로 표시된 클래스는 파생 클래스의 생성자를 통해서 사용해야만 개체 (instance) 생성 가능.
+    // *    절대 자기 자신의 개체를 생성할 수 없음.
+    // * 
+    // * virtual
+    // *  정적 클래스 (static class)를 제외한 모든 클래스에서 사용 가능.
+    // *  속성, 메서드는 본문 정의 가능.
+    // *  abstract와 마찬가지로 접근 한정자는 public, internal, protected 중 하나.
+    // *  
+    // *  -> virtual 키워드로 표시한 속성 / 메서드는 파생 클래스에서 따로 재정의 (구현)할 필요 없음.
+    // *      (이미 부모 클래스에서 본문 정의했기 때문)
+    // *     클래스에는 사용할 수 없고 오직 속성, 메서드에만 사용 가능.
+    // *  
+    // *  override
+    // *    abstract 또는 virtual 키워드로 표시된 속성 / 메서드에서만 사용 가능.
+    // *    어떤 클래스를 상속하는 하위 클래스에서만 사용 가능.
+    // */
+    //abstract class AbstractBase
+    //{
+    //    protected void PrivateMethodA()
+    //    {
+    //        Console.WriteLine("AbstractBase.PrivateMethodA()");
+    //    }
 
-        public void PublicMethodA()
-        {
-            Console.WriteLine("AbstractBase.PublicMethodA()");
-        }
-        public abstract void AbstractMethodA();
-    }
+    //    public void PublicMethodA()
+    //    {
+    //        Console.WriteLine("AbstractBase.PublicMethodA()");
+    //    }
+    //    public abstract void AbstractMethodA(); 
 
-    class Derived : AbstractBase    // 자식 입장에서 부모의 메서드를 상속받을 수 있는 경우는 abstract이거나 virtual로 선언되었을 경우 두 가지밖에 없다.
-    {
-        public override void AbstractMethodA()
-        {
-            //throw new NotImplementedException();
-            Console.WriteLine("Derived.AbstractMethodA()");
-            PrivateMethodA();
-        }
-    }
+    //}
+
+    //class Derived : AbstractBase    // 자식 입장에서 부모의 메서드를 상속받을 수 있는 경우는 abstract이거나 virtual로 선언되었을 경우 두 가지밖에 없다.
+    //{
+    //    public override void AbstractMethodA()
+    //    {
+    //        throw new NotImplementedException();
+    //        Console.WriteLine("Derived.AbstractMethodA()");
+    //        PrivateMethodA();
+    //    }
+    //}
 
 
     class MainApp
@@ -468,7 +493,7 @@ namespace day29_05._13
         //static int Sum(params int[] args)
         //{
         //    int sum = 0;
-        //    for(int i=0;i<args.Length; i++)
+        //    for (int i = 0; i < args.Length; i++)
         //    {
         //        if (i > 0)
         //            Write(", ");
@@ -479,7 +504,7 @@ namespace day29_05._13
         //    return sum;
         //}
 
-        /* parameter = "" */
+        ///* parameter = "" */
         //static void PrintProfile(string name, string phone = "")
         //{
         //    WriteLine($"Name: {name}, Phone: {phone}");
@@ -489,12 +514,12 @@ namespace day29_05._13
         //static string ToLowerString(string str)
         //{
         //    var arr = str.ToCharArray();
-        //    for(int i=0; i<arr.Length; i++)
+        //    for (int i = 0; i < arr.Length; i++)
         //    {
         //        arr[i] = ToLowerChar(i);
         //    }
 
-        //    char ToLowerChar(int i)
+        //    char m (int i)
         //    {
         //        // 메소드 내에 속한 지역변수를 자유자재로 사용 가능
         //        if (arr[i] < 65 || arr[i] > 90)
@@ -504,7 +529,7 @@ namespace day29_05._13
         //    }
 
         //    return new string(arr);
-        //}        
+        //}
 
 
         static void Main(string[] args)
@@ -513,30 +538,30 @@ namespace day29_05._13
             //int sum = Sum(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
             //WriteLine($"Sum: {sum}");
 
-            /* parameter = "" */
+            ///* parameter = "" */
             //PrintProfile("홍길동");
             //PrintProfile("홍길동", "010-1111-2222");
             //PrintProfile(name: "김유신");
-            //PrintProfile(name: "이순신", phone:"010-5555-6666");
+            //PrintProfile(name: "이순신", phone: "010-5555-6666");
 
-            /* 함수 안의 함수 (로컬 함수) */
+            ///* 함수 안의 함수 (로컬 함수) */
             //WriteLine(ToLowerString("Hello"));
             //WriteLine(ToLowerString("World"));
             //WriteLine(ToLowerString("C# Programming"));
-
-            /* class
-             * C#는 garbage collector가 작동해서 참조를 잃어버린 객체는 CPU의 알고리즘을 통해 객체를 알아서 삭제해줌.
-             * --> CPU가 바뀌면 작동이 안 될수도 있음. (원하는 타이밍에 소멸자가 실행이 안 될 수도 있음)
-             * 따라서 소멸자 안에 반드시 실행되어야 할 메서드를 사용하지 않는 게 좋음.
-             */
+            
+            ///* class
+            // * C#는 garbage collector가 작동해서 참조를 잃어버린 객체는 CPU의 알고리즘을 통해 객체를 알아서 삭제해줌.
+            // * --> CPU가 바뀌면 작동이 안 될수도 있음. (원하는 타이밍에 소멸자가 실행이 안 될 수도 있음)
+            // * 따라서 소멸자 안에 반드시 실행되어야 할 메서드를 사용하지 않는 게 좋음.
+            // */
             //Car myCar = new Car();
             //Car yourCar = new Car("SUV", "블랙");
             //myCar.ShowStatus();
             //yourCar.ShowStatus();
 
-            /* Static Field
-             * static field는 .을 통해 직접 접근 가능
-             */
+            ///* Static Field
+            // * static field는 .을 통해 직접 접근 가능
+            // */
             //StaticField.ShowCount();
 
             //new ClassA();
@@ -546,7 +571,7 @@ namespace day29_05._13
 
             //StaticField.ShowCount();
 
-            /* ShallowDeepCopy */
+            ///* ShallowDeepCopy */
             //WriteLine("Shallow Copy");
             //// stack에 source가, heap 영역에 ShallowDeepCopy 객체가 생성됨. source가 ShallowDeepCopy 객체를 가리키는 중.
             //ShallowDeepCopy source = new ShallowDeepCopy();
@@ -574,13 +599,13 @@ namespace day29_05._13
             //WriteLine($"{deepSource.field1} {deepSource.field2}");
             //WriteLine($"{deepTarget.field1} {deepTarget.field2}");
 
-            /* this, get, set */
+            ///* this, get, set */
             //Employee worker = new Employee();
             //worker.SetName("홍길동");
             //worker.SetPosition("Guard");
             //WriteLine($"{worker.GetName()} {worker.GetPosition()} ");
 
-            /* constructor */
+            ///* constructor */
             //ThisConstructor a = new ThisConstructor();
             //a.PrintFields();
             //WriteLine();
@@ -602,14 +627,14 @@ namespace day29_05._13
              * */
 
             /* 상속 */
-            //Parent parent = new Parent("홍길동아버지");
-            //parent.ParentMethod();
-            //WriteLine();
+            Parent parent = new Parent("홍길동아버지");
+            parent.ParentMethod();
+            WriteLine();
 
-            //Child child = new Child("홍길동");
-            //child.ParentMethod();
-            //child.ChildMethod();
-            //WriteLine();
+            Child child = new Child("홍길동");
+            child.ParentMethod();
+            child.ChildMethod();
+            WriteLine();
 
             /* sealed
              *     : 클래스의 상속을 불가능하게 만듬
@@ -621,35 +646,35 @@ namespace day29_05._13
              * 
              * class BBB : AAA --> 불가능
              */
-            //Mammal mammal = new Mammal();
-            //mammal.Nurse();
-            //WriteLine();
+            Mammal mammal = new Mammal();
+            mammal.Nurse();
+            WriteLine();
 
-            //mammal = new Dog();
-            //mammal.Nurse(); // Dog의 메서드는 사용 불가
-            //WriteLine();
+            mammal = new Dog();
+            mammal.Nurse(); // Dog의 메서드는 사용 불가
+            WriteLine();
 
-            //if(mammal is Dog)
-            //{
-            //    Dog dog = (Dog)mammal;  // 강제로 Dog로 캐스팅해야 Dog 메서드 사용 가능
-            //    dog.Nurse();
-            //    dog.Bark();
-            //    WriteLine();
-            //}
+            if (mammal is Dog)
+            {
+                Dog dog = (Dog)mammal;  // 강제로 Dog로 캐스팅해야 Dog 메서드 사용 가능
+                dog.Nurse();
+                dog.Bark();
+                WriteLine();
+            }
 
-            //mammal = new Human();
-            //mammal.Nurse();
-            //WriteLine();
+            mammal = new Human();
+            mammal.Nurse();
+            WriteLine();
 
-            ////Human human = (Human)mammal;
-            //Human human = mammal as Human;  // mammal을 Human으로 형변환. 불가능할 경우 human은 null이 된다.
-            //if (human != null)
-            //{
-            //    human.Nurse();
-            //    human.Speak();
-            //}
-            //else
-            //    WriteLine("human is not Human");
+            //Human human = (Human)mammal;
+            Human human = mammal as Human;  // mammal을 Human으로 형변환. 불가능할 경우 human은 null이 된다.
+            if (human != null)
+            {
+                human.Nurse();
+                human.Speak();
+            }
+            else
+                WriteLine("human is not Human");
 
             /* Override
              * virtual 함수를 선언하지 않아 메소드 오버로딩이 불가능할 경우, new 키워드를 사용해 본인의 메소드를 선언할 수 있지만,
@@ -664,7 +689,7 @@ namespace day29_05._13
             //Car hybridCar = new HybridCar("프리우스", "가솔린엔진, 전기모터");
             //hybridCar.drive();
 
-            /* ver.2 */
+            ///* ver.2 */
             //GasolineCar gasolineCar = new GasolineCar("소나타", "가솔린엔진");
             //gasolineCar.drive();
 
@@ -672,7 +697,7 @@ namespace day29_05._13
             //hybridCar.drive();
 
 
-            /* 클래스 안의 클래스 */
+            ///* 클래스 안의 클래스 */
             //Configuration config = new Configuration();
             //config.SetConfig("Version", "V5.0");
             //config.SetConfig("Size", "655, 324 KB");
@@ -683,19 +708,19 @@ namespace day29_05._13
             //config.SetConfig("Version", "V5.1");
             //WriteLine(config.GetConfig("Version"));
 
-            /* partial class */
+            ///* partial class */
             //AAA obj = new AAA();
             //obj.Method1();
             //obj.Method2();
             //obj.Method3();
             //obj.Method4();
 
-            /* (this int input) */
+            ///* (this int input) */
             //WriteLine($"3^2 : {3.Square()}");
             //WriteLine($"3^4 : {3.Power(4)}");
             //WriteLine($"2^10 : {2.Power(10)}");
 
-            /* 구조체 */
+            ///* 구조체 */
             //Point3D point1;
             //point1.x = 10;
             //point1.y = 20;
@@ -743,10 +768,10 @@ namespace day29_05._13
             //b = a;
             //WriteLine($"{b.Name}, {b.Age}");
 
-            /* 추상 클래스 */
-            AbstractBase obj = new Derived();
-            obj.AbstractMethodA();
-            obj.PublicMethodA();
+            ///* 추상 클래스 */
+            //AbstractBase obj = new Derived();
+            //obj.AbstractMethodA();
+            //obj.PublicMethodA();
         }
     }
 }
