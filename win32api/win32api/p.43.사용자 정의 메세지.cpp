@@ -39,7 +39,8 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR lpCmdLine, int nSh
 	wc.lpszClassName = TEXT("First");
 	wc.lpszMenuName = 0;
 	wc.style = 0;
-
+	
+		
 	// 2. 등록 (레지스트리에)
 	RegisterClass(&wc);
 

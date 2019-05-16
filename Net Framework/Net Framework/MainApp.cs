@@ -10,33 +10,33 @@ using System.Collections;
 
 namespace Net_Framework
 {
-    //class Product
-    //{
-    //    private int price = 100;
+    class Product
+    {
+        private int price = 100;
 
-    //    public ref int GetPrice()
-    //    {
-    //        return ref price;
-    //    }
+        public ref int GetPrice()
+        {
+            return ref price;
+        }
 
-    //    public void PrintPrice()
-    //    {
-    //        WriteLine($"Price : {price}");
-    //    }
-    //}
+        public void PrintPrice()
+        {
+            WriteLine($"Price : {price}");
+        }
+    }
     class MainApp
     {
 
         /* enum */
-        //enum ColorCode { RED=10, BLUE, GREEN, ORANGE=100 };
+        enum ColorCode { RED=10, BLUE, GREEN=10, ORANGE=100 };
 
         /* 참조 변수로 swap */
-        //static void Swap(ref int a, ref int b)
-        //{
-        //    int temp = b;
-        //    b = a;
-        //    a = temp;
-        //}
+        static void Swap(ref int a, ref int b)
+        {
+            int temp = b;
+            b = a;
+            a = temp;
+        }
 
 
         static void Divide
@@ -54,12 +54,12 @@ namespace Net_Framework
         }
         static void Main(string[] args)
         {
-            
+
             /* 1 */
-            ////Console.WriteLine("Hellow World!");
+            //Console.WriteLine("Hellow World!");
             //WriteLine("Hellow World!"); // system namespace 안의 console 클래스의 static 메소드 사용
 
-            /* Console WriteLine 보관 */
+            ///* Console WriteLine 보관 */
             //sbyte a = -10;
             //byte b = 40;
 
@@ -81,7 +81,7 @@ namespace Net_Framework
 
             //Console.WriteLine($"g={g}, h={h}"); // 보관
 
-            /* float, double, decimal */
+            ///* float, double, decimal */
             //// decimal 
             //float a = 3.1415_9265_3589_7932_3846_2643_3832_79f;
             //double b = 3.1415_9265_3589_7932_3846_2643_3832_79;
@@ -91,14 +91,14 @@ namespace Net_Framework
             //Console.WriteLine(b);
             //Console.WriteLine(c);
 
-            /* String */
+            ///* String */
             //string a = "독도는 우리땅";
             //string b = "대마도도 우리땅";
 
             //Console.WriteLine(a);
             //Console.WriteLine(b);
 
-            /* object : 어떤 타입이든 다 받음 */
+            ///* object : 어떤 타입이든 다 받음 */
             //object a = 123;
             //object b = 3.14159m;
             //object c = true;
@@ -109,7 +109,7 @@ namespace Net_Framework
             //Console.WriteLine(c);
             //Console.WriteLine(d);
 
-            /* ToString(), Parse() */
+            ///* ToString(), Parse() */
             //int a = 123;
             //string b = a.ToString();
             //Console.WriteLine(b);
@@ -126,14 +126,14 @@ namespace Net_Framework
             //float h = float.Parse(g);
             //Console.WriteLine(h);
 
-            /* 상수 */
+            ///* 상수 */
             //const int MAX_INT = 2147483647;
             //const int MIN_INT = -2147483648;
 
             //Console.WriteLine(MAX_INT);
             //Console.WriteLine(MIN_INT);
 
-            /* enum */
+            ///* enum */
             //Console.WriteLine((int)ColorCode.RED);
             //Console.WriteLine((int)ColorCode.BLUE);
             //Console.WriteLine(ColorCode.GREEN);
@@ -149,7 +149,7 @@ namespace Net_Framework
             //Console.WriteLine((int)ColorCode.GREEN);
             //Console.WriteLine((int)ColorCode.ORANGE);
 
-            /* nullable 연산자 */
+            ///* nullable 연산자 */
             //int? a = null;  
             //// 참조타입은 null값을 가질 수 있지만, 기본타입은 가질 수 없다.
             //// 기본타입 + ? (nullable 연산자) => 기본타입이 null값을 가질 수 있게
@@ -162,10 +162,10 @@ namespace Net_Framework
             //Console.WriteLine(a.Value); // 값을 가져올 땐 a.Value로 가져와야 함.
             //Console.WriteLine(a);
 
-            /* var 타입
-             * 선언과 동시에 초기화 필요
-             * 로컬 변수로만 사용 가능
-             */
+            ///* var 타입
+            // * 선언과 동시에 초기화 필요
+            // * 로컬 변수로만 사용 가능
+            // */
             //var a = 20;
             //Console.WriteLine("Type: {0}, Value: {1}", a.GetType(), a);
 
@@ -183,7 +183,7 @@ namespace Net_Framework
 
             //Console.WriteLine();
 
-            /* string method */
+            ///* string method */
             //string str = "This is string search sample";
             //WriteLine(str);
             //WriteLine();
@@ -228,9 +228,9 @@ namespace Net_Framework
             //foreach (string element in arr)
             //    WriteLine("{0}", element);
 
-            /* 출력 형태 변경 */
-            // -: 왼쪽정렬, +: 오른쪽정렬
-            // -10: 10칸 잡아서 왼쪽 정렬
+            ///* 출력 형태 변경 */
+            // //-: 왼쪽정렬, +: 오른쪽정렬
+            // //-10: 10칸 잡아서 왼쪽 정렬
             //string fmt = "{0,-10}|{1,-5}|{2,20}";
 
             //WriteLine(fmt, "Type", "Size", "Explain");
@@ -239,7 +239,7 @@ namespace Net_Framework
             //WriteLine(fmt, "int", "4", "int 타입");
             //WriteLine(fmt, "long", "8", "long 타입");
 
-            /* 숫자 출력 형태 */
+            ///* 숫자 출력 형태 */
             //WriteLine("10진수: {0:D}", 123);
             //WriteLine("10진수: {0:D5}", 123); // C의 %5d와 같은 형식
 
@@ -286,7 +286,7 @@ namespace Net_Framework
             //age = 15;
             //WriteLine($"{name}, {(age>20? "성인" : "미성년자")}");
 
-            /* ArrayList */
+            ///* ArrayList */
             //ArrayList a = null;
             //a?.Add("C++");  // null이 아니면 ? 뒤를 실행. null일 경우 a를 리턴. (아무것도 하지 않음) 그래서 아래 전부 null을 리턴
             //a?.Add("C#");
@@ -301,20 +301,20 @@ namespace Net_Framework
             //WriteLine($"{a?[0]}");
             //WriteLine($"{a?[1]}");
 
-            /* null 병합 연산자 */
-            //int? num = null;
-            //WriteLine($"{num ?? 0}");   // num이 null이 아니면 왼쪽(num), null이면 오른쪽(기본값(0))
+            ///* null 병합 연산자 */
+            int? num = null;
+            WriteLine($"{num ?? 0}");   // num이 null이 아니면 왼쪽(num), null이면 오른쪽(기본값(0))
 
-            //num = 10;
-            //WriteLine($"{num ?? 0}");
+            num = 10;
+            WriteLine($"{num ?? 0}");
 
-            //string str = null;
-            //WriteLine($"{str ?? "Default"}");
+            string str = null;
+            WriteLine($"{str ?? "Default"}");
 
-            //str = "I study C#";
-            //WriteLine($"{str ?? "Default"}");
+            str = "I study C#";
+            WriteLine($"{str ?? "Default"}");
 
-            /* switch string */
+            ///* switch string */
             //Write("요일을 입력하세요(월, 화, 수, 목, 금, 토, 일): ");
             //string day = ReadLine();
 
@@ -360,7 +360,7 @@ namespace Net_Framework
             //else
             //    obj = str;
 
-            //switch(obj)
+            //switch (obj)
             //{
             //    case int i:
             //        WriteLine($"{i}는 int 형식입니다.");
@@ -373,7 +373,7 @@ namespace Net_Framework
             //        break;
             //}
 
-            /* foreach */
+            ///* foreach */
             //int[] arr = new int[] { 0, 1, 2, 3, 4 };
 
             //foreach (int i in arr)
@@ -410,9 +410,9 @@ namespace Net_Framework
             //result = Calculator.Minus(10, 4);
             //WriteLine(result);
 
-            /* 참조변수로 swap 
-             * C#은 C++의 포인터 개념은 버렸지만, 레퍼런스 개념은 계속 갖고 있음.
-             */
+            ///* 참조변수로 swap 
+            // * C#은 C++의 포인터 개념은 버렸지만, 레퍼런스 개념은 계속 갖고 있음.
+            // */
             //int x = 3;
             //int y = 5;
 
@@ -437,15 +437,15 @@ namespace Net_Framework
             //WriteLine($"Ref Price: {ref_price}");
             //WriteLine($"Normal Price: {normal_price}");
 
-            /* out */
-            int a = 20;
-            int b = 3;
-            int c;
-            int d;
+            ///* out */
+            //int a = 20;
+            //int b = 3;
+            //int c;
+            //int d;
 
-            Divide(a, b, out c, out d); // out int c, out int d 가능
+            //Divide(a, b, out c, out d); // out int c, out int d 가능
 
-            WriteLine($"a:{a},  b:{b},  a/b:{c},  a%b:{d}");
+            //WriteLine($"a:{a},  b:{b},  a/b:{c},  a%b:{d}");
 
         }
     }

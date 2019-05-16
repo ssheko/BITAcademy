@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3560EFD7-9CDE-4AFB-943D-93280F4CC179}</ProjectGuid>
+    <ProjectGuid>{9C170A6A-1119-431F-A9D0-2DB1A8EA9F5D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Net_Framework</RootNamespace>
-    <AssemblyName>Net Framework</AssemblyName>
+    <RootNamespace>day31_05._15</RootNamespace>
+    <AssemblyName>day31_05.15</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -176,7 +176,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculator.cs" />
     <Compile Include="MainApp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,0 +1,76 @@
+1. 열거, enum 타입
+   day28 31줄, 137줄
+	(int)ColorCode.RED
+	ColorCode.Green
+	ColorCode cCode = ColorCode.RED;
+	cCode == ColorCode.BLUE		// FALSE
+	
+2. 보기 코드. 실행 결과 적기. ? 들어간 것 관련. (nullable)
+   day28 153줄, 290줄
+	1. nullable 연산자
+		int? a = null;	// 기본타입 + ? => 기본타입이 null값 가질 수 있음.
+   day28 290줄
+	2. ArrayList
+		ArrayList a = null;
+		a?.Add("C++");	// null이 아니면 ? 뒤를 실행. null일 경우 a를 리턴 (null값)
+
+		a = new ArrayList();
+		a?.Add("C++");	// a 리스트에 C++이 추가됨.
+
+	3. null 병합 연산자
+		int? num = null;
+		num ?? 0		// num이 null이 아니면 왼쪽(num), null이면 오른쪽(기본값인 0)
+
+
+3. 가장 조상. (상속의 최상위)
+   day29 137줄, 163 줄
+	class Parent
+	{
+		public Parent(string name) {}
+	}
+	class Child : Parent
+	{
+		public Child(string name) : base(name) {}	// 부모 생성자 호출
+	}
+
+4. C# 엔트리 포인트. (메인). main형태
+	static void Main(string[] args) {}
+
+5. C#과 .NET Framework의 비교표 (교재에 있는 것) (6쪽)
+   교재 6쪽
+	bool	System.Boolean
+	float	System.Single
+	int	System.Int32
+	uint	System.UInt32
+	long	System.Int64
+	short	System.Int16
+
+6. ? 관련. int 기본 데이터 타입이 내부적으론 객체. int. 의 여러 property 중 MinValue, MaxValue가 뜻하는 것이 무엇인지?
+
+7. 인터페이스 구성 요소.
+	함수, 속성, 이벤트, 인덱서
+
+8. GetEnumerator 메소드 자체가 enumerator 타입을 리턴. 리턴하기 위해 호출할 때 하나씩 리턴해야 함.  yield
+9. C#의 여러 접근 제한자.
+10. Generic 타입 변수 제한줄 때 where T
+11. 익명타입. 메인에서 직접 정의하던거
+12. new해서 객체 생성하는 문제
+13. 상속과 생성자에 대해.
+   day29 109줄
+	class ThisConstructor
+	{
+		public ThisContructor() {}
+		public ThisConstructor(int b) : this() {}	// default 생성자 호출
+		public ThisConstructor(int b, int c) : this(b) {}	// ThisConstructor(int b) 호출
+	}
+14. thread 중지할 수 있는 3가지 방법. (아닌 것을 고르시오.)
+15. 어셈블리 문제 (dll 생성)
+16-20. thread task 문제
+
+일반 메소드를 
+
+<async, await>
+- async: 메소드, 이벤트처리기, 태스크, 람다식
+- async로 한정하는 메소드는 반드시!!!!!!!!!!!! 반환형식이 Task, Task<TResult> 또는 void여야 함. (문제 하나 나옴)
+- Task, Task<TResult> 타입 메소드는 메소드 내부에 await 연산자를 만나면 호출자에게 제어권 넘김
+	(await 연산자가 없으면 동기방식으로 진행)
