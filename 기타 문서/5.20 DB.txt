@@ -1,0 +1,137 @@
+$ col tname for a20
+	-> tname column의 길이가 20까지 나오게 수정.
+$ clear screen
+	-> 화면 지우기
+
+***** 03.JDBC_SQL_01의 15페이지
+
+Scott / tiger
+
+사용자 계정은 앞에 prefix (C##)을 붙임.
+오라클은 대소문자 구분하지 않지만, 비밀번호는 구분함.
+'CLERK', 'SALESMAN'과 같은 문자열의 경우, 대소문자 구분함.
+
+(ID: c##scott	PW: tiger)
+CREATE USER c##scott IDENTIFIED BY tiger
+DEFAULT TABLESPACE USERS
+TEMPORARY TABLESPACE temp
+QUOTA UNLIMITED ON USERS;
+
+$ ed
+file afiedt.buf(이)가 기록되었습니다.
+
+buff 메모장에 기록, 저장 후 닫음.
+SQL> /
+=> 엔터치면 사용자 생성 완료.
+
+
+
+GRANT CONNECT, RESOURCE, CREATE VIEW TO c##scott
+
+SQL > /
+
+권한이 부여되었습니다.
+
+
+오라클에서 스크립트 실행 명령어: @
+
+SQL> @demobld.sql
+
+$ select * from emp;
+$ select * from tab;
+
+
+# SELECT NAME, JOB, SAL
+FROM EMP
+WHERE SAL >= 1200;
+
+# SELECT NAME, JOB, HIREDATE
+FROM EMP
+WHERE JOB != 'CLERK';
+
+
+VARCHAR2(10)	최대 10자리. 10자리보다 작은 길이의 값이 들어오면 그 길이만큼만 할당.
+
+
+# SELECT ENAME, JOB
+FROM EMP
+WHERE JOB IN ('CLERK', 'SALESMAN');
+
+# SELECT ENAME, JOB, HIREDATE
+FROM EMP
+WHERE HIREDATE BETWEEN '1981-01-01' AND '1981-06-30';
+
+# SELECT *
+FROM EMP
+WHERE ENAME LIKE 'S%';
+	-> ENAME이 S로 시작하는 사람들 추출
+
+# SELECT *
+FROM EMP
+WHERE ENAME LIKE '%S%';
+	-> ENAME의 처음, 또는 중간에 S가 들어있는 사람들 추출
+
+# SELECT ENAME, JOB
+FROM EMP
+WHERE COMM IS NOT NULL;
+
+
+# SELECT ENAME, JOB, SAL
+FROM EMP
+WHERE SAL >= 2000 AND HIREDATE < '1981-06-01';
+
+
+# SELECT ENAME, JOB, SAL
+FROM EMP
+WHERE JOB = 'MANAGER' OR COMM IS NOT NULL;
+
+
+# SELECT ENAME, JOB, SAL
+FROM EMP
+WHERE NOT (SAL >= 2000);
+
+
+# SELECT *
+FROM EMP
+WHERE ENAME LIKE '_A%';
+
+
+# SELECT *
+FROM EMP
+WHERE JOB LIKE 'MANAGE_';
+
+=============================================== ppt 03.JDBC_SQL_01 / p.13
+ename LIKE ‘KOR/%%’ ESCAPE ‘/’ 
+	-> /% = 문자열 %로 인식.
+	-> KOR%로 시작하는 모든 문자열 찾기
+
+
+# SELECT EMPNO, ENAME NAME, JOB
+FROM EMP
+ORDER BY ENAME;
+	-> ENAME 기준으로 오름차순
+
+
+# SELECT EMPNO, ENAME NAME, JOB
+FROM EMP
+ORDER BY 2 DESC;
+	-> 2번째 칼럼을 기준으로 오름차순
+
+
+# SELECT EMPNO, ENAME NAME, JOB
+FROM EMP
+ORDER BY 2 DESC;
+	-> 2번째 컬럼을 기준으로 내림차순
+
+
+'가'
+CHAR(1) -> X
+NCHAR(1) -> 가능.
+
+'가나다'
+VARCHAR2(100) -> 길이 6
+NVARCHAR2(100) -> 길이 3
+
+'abc'
+VARCHAR2(100) -> 길이 3
+NVARCHAR2(100) -> 길이 3

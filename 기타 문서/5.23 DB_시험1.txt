@@ -1,0 +1,258 @@
+HR.png 참고
+
+빨간 별: not null
+점선: 비식별 관계.
+실선: foreign key 참조. 부모가 아니면 생성할 수 없음.
+복합 primary key: 두 개의 primary key가 함께 참조되어야 함.
+
+HP.DEPARTMENTS의 MANAGER_ID = HR.EMPLOYEES의 EMPLOYEE_ID를 참조하는 foreign key
+
+human_resources 폴더 위치
+	D:\Ora18\dbhomeXE\demo\schema\human_resources
+
+기존의 default tablespace => USERS
+temporary tablespace => temp
+
+================================================================= 실습 1
+1. 직책(Job Title)이 Sales Manager인 사원들의 입사년도와 입사년도(hire_date)별 평균 급여를 출력하시오.
+-- 출력 시 년도를 기준으로 오름차순 정렬하시오.
+
+select to_char(hire_date, 'YYYY') HIRE, avg(salary) AVG
+from employees
+where job_id = (select job_id
+	from jobs
+	where job_title = 'Sales Manager')
+group by to_char(hire_date, 'YYYY')
+order by HIRE
+
+
+select to_char(hire_date, 'YYYY') HIRE, avg(salary) AVG
+from employees e join jobs j
+on e.job_id = j.job_id
+where j.job_title = 'Sales Manager'
+group by to_char(e.hire_date, 'YYYY')
+order by HIRE
+
+
+=================================================================== 실습 2
+self join
+2. 자신의 매니저보다 연봉(salary)를 많이 받는 직원들의 성(last_name)과 연봉(salary)를 출력하시오.
+departments
+
+select e.last_name, e.salary
+from employees e join employees m
+on e.manager_id = m.employee_id
+where e.salary > m.salary
+
+
+=================================================================== 실습 3
+테이블 3개 join
+3. Employee_id = 176 직원의 과거 업무 이력을 다음과 같이 출력
+
+select e.first_name || ' ' || e.last_name 이름, j.job_title 업무, h.start_date 시작일, h.end_date 종료일
+from  job_history h join employees e 
+on e.employee_id = 176 and
+e.employee_id = h.employee_id
+join jobs j
+on h.job_id = j.job_id 
+
+
+concat(concat(e.first_name, ' '), e.last_name)
+
+=================================================================== 실습 4
+4. 도시(city)에 있는 모든 부서 직원들의 평균 급여를 조회하고자 한다.
+평균급여가 가장 낮은 도시부터 도시명(city)과 평균 연봉, 해당 도시의 직원수를 출력하시오.
+단, 도시에 근무하는 직원이 최소 2명이상 근무하는 지역만 조회하시오.
+
+select l.city, avg(salary) avgsal, count(*) 
+from employees e join departments d
+ on e.department_id = d.department_id
+join locations l
+on l.location_id = d.location_id
+group by l.city
+having count(e.employee_id) >1
+order by avg(salary)
+
+
+=================================================================== 실습 5
+5. 'Public Accountant'의 직책(job_title)으로 과거에 근무한 적이 있는 모든 사원의 사번과 이름을 출력하시오.
+(현재 'Public Accountant'의 직책"job_title)으로 근무하는 사원은 고려하지 않는다.)
+다음과 같이 출력한다.
+    사번  이름               시작일     종료일
+________  _______________  _________  __________
+
+
+select e.employee_id 사번, e.first_name || ' ' || e.last_name 이름, h.start_date 시작일, h.end_date 종료일
+
+from jobs j join job_history h
+on j.job_title = 'Public Accountant' and j.job_id = h.job_id
+join employees e
+on h.employee_id = e.employee_id
+
+
+
+=================================================================== 실습 6
+6. 2007년에 입사(hire_date)한 직원들의 사번(employee_id), 이름(first_name), 성(last_name), 부서명(department_name)을
+조회합니다. 이때, 부서에 배치되지 않은 직원의 경우, '<Not Assigned>'로 출력하시오.
+
+select e.employee_id 사번, e.first_name 이름, e.last_name, NVL(d.department_name, '<Not Assigned>') 부서명
+from employees e left join departments d
+on e.department_id = d.department_id 
+where to_char(hire_date, 'YYYY') = '2007'
+
+
+select e.employee_id 사번, e.first_name 이름, e.last_name, NVL(d.department_name, '<Not Assigned>') 부서명
+from employees e left join departments d
+on e.department_id = d.department_id 
+and to_char(hire_date, 'YYYY') = '2007'
+	-> 두 조건을 outer join으로 받아옴. (outer join: join 조건을 만족하지 않는 튜플도 null과 함께 나타남)
+
+
+
+=================================================================== 실습 7
+7. 업무명(job_title)이 'Sales Representative'인 직원 중에서 연봉(salary)이 9,000이상, 10,000 이하인
+직원들의 이름(first_name), 성(last_name)과 연봉(salary)를 출력하시오.
+
+select e.first_name 이름, e.last_name 성, e.salary 연봉
+from employees e join jobs j
+on j.job_id = e.job_id
+where salary >=9000 and salary <= 10000
+and j.job_title = 'Sales Representative'
+order by salary
+
+
+where salary between 9000 and 10000
+
+
+=================================================================== 실습 8, 문제 1
+8. 부서별로 가장 적은 급여를 받고 있는 직원의 이름, 부서 이름, 급여를 출력하시오.
+이름은 last_name만 출력하며, 부서 이름으로 오름차순 정렬하고,
+부서가 같은 경우 이름을 기준으로 오름차순 정렬하여 출력합니다.
+
+
+select e.last_name 이름, d.department_name "부서 이름", m.minsal 급여
+from employees e join (SELECT department_id, MIN(salary) minsal from employees group by department_id) m
+on e.salary = m.minsal
+join departments d
+on d.department_id = m.department_id
+where e.department_id = m.department_id
+order by d.department_name, e.last_name
+
+
+select e.last_name 이름, a.department_name "부서 이름", a.minsal 급여
+from employees e join (SELECT d.department_id, d.department_name, MIN(salary) minsal 
+	from employees e join departments d
+	on e.department_id = d.department_id
+	group by d.department_id, d.department_name) a
+on e.department_id = a.department_id and e.salary = a.minsal
+order by a.department_name, e.last_name
+
+
+
+=================================================================== 실습 9, 문제 2
+9. 사원의 부서가 속한 도시(city)가 'Seattle'인 사원의 이름, 해당 사원의 매니저 이름,
+사원의 부서 이름을 출력하시오.
+이때 사원의 매니저가 없을 경우 '<없음>"이라고 출력하시오. 이름은 last_name만 출력하며,
+사원의 이름을 오름차순으로 정렬하시오. (18개)
+
+
+select e.last_name "사원 이름", NVL(m.last_name, '<없음>') "매니저 이름", dc.department_name "부서 이름"
+from employees e join
+	(select d.department_name, d.department_id, l.city
+	from locations l join departments d
+	on l.location_id = d.location_id
+	where city = 'Seattle') dc
+on e.department_id = dc.department_id
+left join employees m
+on e.manager_id = m.employee_id
+order by e.last_name
+
+
+
+(select d.department_id, l.city
+from locations l join departments d
+on l.location_id = d.location_id
+where city = 'Seattle')
+
+
+=================================================================== 실습 10, 문제 9
+국가(country_name)와 도시(city)별 직원수를 조회하시오.
+단, 부서에 속해있지 않은 직원이 있기 때문에 106명의 직원만 출력이 된다.
+부서정보가 없는 직원은 국가명과 도시명 대신에 '<부서없음>'이 출력되도록 하여 107명 모두 출력되게 한다.
+
+select NVL(lc.country_name, '<부서없음>') COUNTRY_NAME, NVL(lc.city, '<부서없음>') CITY, count(*) 직원수
+from employees e left join
+	(select ld.department_id, ld.city, c.country_name
+	from countries c join
+	(select d.department_id, l.country_id, l.city
+	from locations l join departments d
+	on l.location_id = d.location_id) ld
+	on ld.country_id = c.country_id)  lc
+on e.department_id = lc.department_id
+group by lc.country_name, lc.city
+order by lc.country_name, lc.city
+
+
+
+select ld.department_id
+from countries c join
+(select d.department_id, l.country_id
+from locations l join departments d
+on l.location_id = d.location_id) ld
+on ld.country_id = c.country_id
+
+
+=================================================================== 실습 11, 문제 7
+부서별 직원들의 최대, 최소, 평균급여(소수점 이하 절사)를 조회하되,
+평균급여가 'IT' 부서의 평균급여보다 많고, 'Sales' 부서의 평균보다 적은 부서 정보만 출력하시오.
+부서명		최대급여		최소급여		평균급여
+____________________________________________________________________________
+
+select d.department_name 부서명, MAX(e.salary) 최대급여, MIN(e.salary) 최소급여, trunc(a.avgd,0)  평균급여
+from employees e join (select  dd.department_id, AVG(ee.salary) avgd from employees ee join departments dd
+on ee.department_id = dd.department_id
+group by dd.department_id) a
+on e.department_id = a.department_id
+join (select AVG(ee.salary) avgIT from employees ee join departments dd
+	on ee.department_id = dd.department_id
+	where dd.department_name = 'IT') it
+on it.avgIT < avgd
+join (select AVG(ee.salary) avgSales from employees ee join departments dd
+	on ee.department_id = dd.department_id
+	where dd.department_name = 'Sales') s
+on s.avgSales > avgd
+join departments d
+on e.department_id = d.department_id
+group by d.department_name, a.avgd
+
+
+select d.department_name 부서명, MAX(e.salary) 최대급여, MIN(e.salary) 최소급여, trunc(a.avgd,0)  평균급여
+from employees e join (select  dd.department_id, AVG(ee.salary) avgd from employees ee join departments dd
+on ee.department_id = dd.department_id
+group by dd.department_id) a
+on e.department_id = a.department_id
+having (a.avgd > (select AVG(ee.salary) from employees ee join departments dd
+	on ee.department_id = dd.department_id
+	where dd.department_name = 'IT'))
+	and (a.avgd <  (select AVG(ee.salary) from employees ee join departments dd
+	on ee.department_id = dd.department_id
+	where dd.department_name = 'Sales') )
+join departments d
+on e.department_id = d.department_id
+group by d.department_name, a.avgd
+
+
+
+SELECT D.DEPARTMENT_NAME, MAX(E.SALARY), MIN(E.SALARY), TO_CHAR(AVG(E.SALARY), 9999) AVGSAL
+FROM EMPLOYEES E JOIN DEPARTMENTS D 
+ON E.DEPARTMENT_ID = D.DEPARTMENT_ID 
+GROUP BY D.DEPARTMENT_NAME
+HAVING AVG(E.SALARY) > (SELECT AVG(EE.SALARY) 
+FROM EMPLOYEES EE JOIN DEPARTMENTS DD
+ON EE.DEPARTMENT_ID = DD.DEPARTMENT_ID
+WHERE DD.DEPARTMENT_NAME = 'IT'
+GROUP BY DD.DEPARTMENT_ID) AND AVG(E.SALARY) < (SELECT AVG(EE.SALARY) 
+FROM EMPLOYEES EE JOIN DEPARTMENTS DD
+ON EE.DEPARTMENT_ID = DD.DEPARTMENT_ID
+WHERE DD.DEPARTMENT_NAME = 'Sales'
+GROUP BY DD.DEPARTMENT_ID)

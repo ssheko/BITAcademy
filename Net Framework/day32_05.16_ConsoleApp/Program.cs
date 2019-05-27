@@ -10,7 +10,8 @@ using DemoLib;
  * DemoLib.dll 빌드 후
  * [Visual Studio 폴더] -> [Developer Command prompt for VS 2019] (관리자 권한 실행)
  * -> cd C:\Users\bit\Source\Repos\BITAcademy\NET Framework\DemoLib\bin\Debug
- * -> gacutil /i DemoLib.dll
+ * -> gacutil /i DemoLib.dll        (gac: global assembly cache)
+ * -> global assembly cache에 어셈블리 저장.
  * 
  * C:\Windows\Microsoft.NET\assembly\GAC_MSIL\DemoLib\v4.0_1.0.0.0__daac41f1b5545a0b
  * -> DemoLib.dll 추가됨

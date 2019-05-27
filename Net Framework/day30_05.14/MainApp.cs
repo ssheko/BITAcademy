@@ -123,6 +123,7 @@ namespace day30_05._14
     //{
     //    private string name;
     //    private DateTime birthday;
+    //    private int age;
 
     //    public string Name // Property는 반드시 대문자로 시작
     //    {
@@ -142,10 +143,10 @@ namespace day30_05._14
     //        {
     //            return birthday;
     //        }
-    //        set
-    //        {
-    //            birthday = value;
-    //        }
+    //        //set
+    //        //{
+    //        //    birthday = value;
+    //        //}
     //    }
 
     //    public int Age
@@ -153,6 +154,10 @@ namespace day30_05._14
     //        get
     //        {
     //            return new DateTime(DateTime.Now.Subtract(birthday).Ticks).Year;
+    //        }
+    //        set
+    //        {
+    //            age = value;
     //        }
     //    }
     //}
@@ -256,8 +261,8 @@ namespace day30_05._14
     //    public override DateTime ProductDate { get; set; }
     //}
 
-        /// MyList
-        /// public int this[int index]
+    /// MyList
+    /// public int this[int index]
     //class MyList
     //{
     //    private int[] array;

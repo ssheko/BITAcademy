@@ -1,0 +1,15 @@
+3번 PPT - 13 ,  LIKE
+3번 PPT - 16 ,  ORDER BY
+3번 PPT - 20, 문자열 함수
+3번 PPT - 22, 숫자함수
+3번 PPT - 24, Date 함수
+3번 PPT - 31, CASE, DECODE
+
+4번 PPT - 1, JOIN
+4번 PPT - 16, 집계합수(AVG, SUM, COUNT)
+4번 PPT - 19, GROUP BY, HAVING
+4번 PPT - 24, ROLLUP & CUBE
+4번 PPT - 26, Subquery
+4번 PPT - 31, Top-K Query
+
+

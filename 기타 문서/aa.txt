@@ -1,0 +1,11 @@
+select distinct(nls_charset_name(charsetid)) CHARACTERSET,
+	decode(type#, 1, decode(charsetform, 1, 'VARCHAR2', 2, 'NVARCHAR2','UNKOWN'),
+	9, decode(charsetform, 1, 'VARCHAR', 2, 'NCHAR VARYING', 'UNKOWN'),
+	96, decode(charsetform, 1, 'CHAR', 2, 'NCHAR', 'UNKOWN'),
+	112, decode(charsetform, 1, 'CLOB', 2, 'NCLOB', 'UNKOWN')) TYPES_USED_IN
+from sys.col$
+where charsetform in (1,2)
+	and type# in (1, 9, 96, 112);
+
+
+https://secuinfo.tistory.com/entry/WEB-Server-14

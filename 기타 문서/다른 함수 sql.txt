@@ -1,0 +1,18 @@
+ROW_NUMBER - 일반적인 순위
+
+select 
+	ROW_NUMBER() OVER(oreder by avg(salary) "[연봉순위]",
+	department_id, 
+	avg(salary) 
+from employees 
+group by department_id
+/
+PARTITION by - id별 순위
+select 
+	last_name, 
+	ROW_NUMBER() OVER(PARTITION BY department_id order by salary desc, last_name) 
+	from employees
+	where salary = (select MAX(salary) from employees group by department_id) 
+
+DENSE_RANK() - 공동순위 (1 2 2 3)
+RANK() - 공동순위 (1 2 2 4)

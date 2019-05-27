@@ -434,90 +434,90 @@ namespace day32_05._16
             //Console.WriteLine(counter.Count);
 
             /// 비동기 copy
-            //string srcFile = args[0];
-            //Action<object> FileCopyAction = (object state) =>
-            //{
-            //    string[] paths = (string[])state;
-            //    File.Copy(paths[0], paths[1]);
+            string srcFile = args[0];
+            Action<object> FileCopyAction = (object state) =>
+            {
+                string[] paths = (string[])state;
+                File.Copy(paths[0], paths[1]);
 
-            //    Console.WriteLine("TaskID:{0}, ThreadID: {1}, {2} was copied to {3}",
-            //        Task.CurrentId, Thread.CurrentThread.ManagedThreadId,
-            //        paths[0], paths[1]);
-            //};
+                Console.WriteLine("TaskID:{0}, ThreadID: {1}, {2} was copied to {3}",
+                    Task.CurrentId, Thread.CurrentThread.ManagedThreadId,
+                    paths[0], paths[1]);
+            };
 
-            //Task t1 = new Task(FileCopyAction, new string[] { srcFile, srcFile + ".copy1" });
-            //t1.Start(); // 비동기적으로 실행시키고 아래 코드로 넘어감.
-
-
-            //Task t2 = Task.Run(() =>
-            //{
-            //    FileCopyAction(new string[] { srcFile, srcFile + ".copy2" });
-            //});
+            Task t1 = new Task(FileCopyAction, new string[] { srcFile, srcFile + ".copy1" });
+            t1.Start(); // 비동기적으로 실행시키고 아래 코드로 넘어감.
 
 
-            //Task t3 = new Task(FileCopyAction, new string[] { srcFile, srcFile + ".copy3" });
-            //t3.RunSynchronously();  // 동기방식으로 실행
+            Task t2 = Task.Run(() =>
+            {
+                FileCopyAction(new string[] { srcFile, srcFile + ".copy2" });
+            });
 
-            //t1.Wait();
-            //t2.Wait();
+
+            Task t3 = new Task(FileCopyAction, new string[] { srcFile, srcFile + ".copy3" });
+            t3.RunSynchronously();  // 동기방식으로 실행
+
+            t1.Wait();
+            t2.Wait();
 
             /// Task List
-            //long from = Convert.ToInt64(args[0]);
-            //long to = Convert.ToInt64(args[1]);
-            //int taskCount = Convert.ToInt32(args[2]);
+            long from = Convert.ToInt64(args[0]);
+            long to = Convert.ToInt64(args[1]);
+            int taskCount = Convert.ToInt32(args[2]);
 
-            //Func<object, List<long>> FindPrimeFunc = (objRange) =>
-            //{
-            //    long[] range = (long[])objRange;
-            //    List<long> found = new List<long>();
+            Func<object, List<long>> FindPrimeFunc = (objRange) =>
+            {
+                long[] range = (long[])objRange;
+                List<long> found = new List<long>();
 
-            //    for (long i = range[0]; i <= range[1]; i++)
-            //    {
-            //        if (IsPrime(i))
-            //            found.Add(i);
-            //    }
+                for (long i = range[0]; i <= range[1]; i++)
+                {
+                    if (IsPrime(i))
+                        found.Add(i);
+                }
 
-            //    return found;
-            //};
-            //Task<List<long>>[] tasks = new Task<List<long>>[taskCount];
-            //long currentFrom = from;
-            //long currentTo = from + (to - from) / tasks.Length;
+                return found;
+            };
+            Task<List<long>>[] tasks = new Task<List<long>>[taskCount];
+            long currentFrom = from;
+            long currentTo = from + (to - from) / tasks.Length;
 
-            //for(int i=0; i<tasks.Length; i++)
-            //{
-            //    Console.WriteLine("Task[{0}] :: {1} ~ {2}", i, currentFrom, currentTo);
+            for (int i = 0; i < tasks.Length; i++)
+            {
+                Console.WriteLine("Task[{0}] :: {1} ~ {2}", i, currentFrom, currentTo);
 
-            //    tasks[i] = new Task<List<long>>(FindPrimeFunc, new long[] { currentFrom, currentTo });
-            //    currentFrom = currentTo + 1;
+                tasks[i] = new Task<List<long>>(FindPrimeFunc, new long[] { currentFrom, currentTo });
+                currentFrom = currentTo + 1;
 
-            //    if (i == tasks.Length - 2)
-            //        currentTo = to;
-            //    else
-            //        currentTo += ((to - from) / tasks.Length);
-            //}
+                if (i == tasks.Length - 2)
+                    currentTo = to;
+                else
+                    currentTo += ((to - from) / tasks.Length);
+            }
 
-            //Console.WriteLine("Please press enter to start... ");
+            Console.WriteLine("Please press enter to start... ");
 
-            //Console.ReadLine();
-            //Console.WriteLine("Started...");
+            Console.ReadLine();
+            Console.WriteLine("Started...");
 
-            //DateTime startTime = DateTime.Now;
+            DateTime startTime = DateTime.Now;
 
-            //foreach (Task<List<long>> task in tasks)
-            //    task.Start();
+            foreach (Task<List<long>> task in tasks)
+                task.Start();
 
-            //List<long> total = new List<long>();
+            List<long> total = new List<long>();
 
-            //foreach(Task<List<long>> task in tasks)
-            //{
-            //    total.AddRange(task.Result.ToArray());
-            //}
-            //DateTime endTime = DateTime.Now;
+            foreach (Task<List<long>> task in tasks)
+            {
+                total.AddRange(task.Result.ToArray());
+            }
+            DateTime endTime = DateTime.Now;
 
-            //TimeSpan ellapsed = endTime - startTime;
+            TimeSpan ellapsed = endTime - startTime;
 
-            //Console.WriteLine("Prime number count between {0} and {1} : {2}", from, to, total.Count);
-            //Console.WriteLine("Ellapsed time : {0}", ellapsed);
+            Console.WriteLine("Prime number count between {0} and {1} : {2}", from, to, total.Count);
+            Console.WriteLine("Ellapsed time : {0}", ellapsed);
 
             /// Task List Parllel.For
             //long from = Convert.ToInt64(args[0]);
