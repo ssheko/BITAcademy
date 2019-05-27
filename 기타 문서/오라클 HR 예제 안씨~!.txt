@@ -1,0 +1,682 @@
+--오라클 11g hr계정 연습문제
+ 
+--1. 직책(Job Title)이 Sales Manager인 사원들의 입사년도와 입사년도(hire_date)별 평균 급여를 출력하시오. 
+--   출력 시 년도를 기준으로 오름차순 정렬하시오. 
+SELECT 
+	TO_CHAR(e.HIRE_DATE, 'YYYY') AS HIRE_DATE,
+	AVG(e.salary) AS AVG
+FROM EMPLOYEES e join JOBS j
+ON e.JOB_ID = j.JOB_ID 
+WHERE j.JOB_TITLE = 'Sales Manager' 
+GROUP BY TO_CHAR(e.HIRE_DATE,'YYYY')
+ORDER BY TO_CHAR(e.HIRE_DATE,'YYYY') ASC
+;
+ 
+결과 ====================================================
+HIRE_DATE                   AVG
+-------------------- ----------
+2004                      14000
+2005                      12750
+2007                      11000
+2008                      10500
+
+4 행이 선택되었습니다.
+========================================================
+--2. 각 도시(city)에 있는 모든 부서 직원들의 평균급여를 조회하고자 한다. 
+--   평균급여가 가장 낮은 도시부터 도시명(city)과 평균연봉, 해당 도시의 직원수를 출력하시오. 
+--   단, 도시에 근 무하는 직원이 10명 이상인 곳은 제외하고 조회하시오.
+SELECT 
+	l.CITY ,
+	AVG(e.SALARY) ,
+	COUNT(*)
+FROM DEPARTMENTS d join EMPLOYEES e 
+ON  e.DEPARTMENT_ID = d.DEPARTMENT_ID
+join LOCATIONS l
+ON d.LOCATION_ID = l.LOCATION_ID
+GROUP BY l.CITY
+HAVING COUNT(*) < 10
+ORDER BY AVG(e.SALARY) ASC
+;
+  
+결과 ====================================================
+CITY                           AVG(E.SALARY)   COUNT(*)
+------------------------------ ------------- ----------
+Southlake                               5760          5
+London                                  6500          1
+Toronto                                 9500          2
+Munich                                 10000          1
+
+4 행이 선택되었습니다.
+========================================================
+
+--3. ‘Public  Accountant’의 직책(job_title)으로 과거에 근무한 적이 있는 모든 사원의 사번과 이름을 출력하시오. 
+--   (현재 ‘Public Accountant’의 직책(job_title)으로 근무하는 사원은 고려 하지 않는다.)      
+--   이름은 first_name, last_name을 아래의 실행결과와 같이 출력한다.
+SELECT 
+	e.EMPLOYEE_ID , 
+	CONCAT(CONCAT(e.FIRST_NAME,' '), 
+	e.LAST_NAME) 
+FROM JOB_HISTORY h join JOBS j
+ON h.JOB_ID = j.JOB_ID
+join EMPLOYEES e
+ON e.EMPLOYEE_ID = h.EMPLOYEE_ID
+WHERE j.JOB_TITLE = 'Public Accountant'
+;
+
+결과 ====================================================
+EMPLOYEE_ID CONCAT(CONCAT(E.FIRST_NAME,''),E.LAST_NAME)
+----------- ----------------------------------------------
+        101 Neena Kochhar
+        200 Jennifer Whalen
+
+2 행이 선택되었습니다.
+========================================================
+
+--4. 자신의 매니저보다 연봉(salary)를 많이 받는 직원들의 성(last_name)과 연봉(salary)를 출 력하시오. 
+SELECT
+	e.LAST_NAME, 
+	e.SALARY
+FROM EMPLOYEES e join EMPLOYEES m
+ON e.MANAGER_ID = m.EMPLOYEE_ID
+WHERE e.SALARY > m.SALARY   
+;      
+ 결과 ====================================================
+LAST_NAME                     SALARY
+------------------------- ----------
+Ozer                           11500
+Abel                           11000
+
+2 행이 선택되었습니다.
+========================================================
+
+
+--5. 2007년에 입사(hire_date)한 직원들의 사번(employee_id), 이름(first_name), 성(last_name), 
+--   부서명(department_name)을 조회합니다.  
+--   이때, 부서에 배치되지 않은 직원의 경우, ‘<Not Assigned>’로 출력하시오. 
+SELECT 
+	e.EMPLOYEE_ID ,
+	e.LAST_NAME , 
+	e.FIRST_NAME , 
+	NVL(d.DEPARTMENT_NAME, '<Not Assigned>')
+  FROM EMPLOYEES e
+  LEFT JOIN DEPARTMENTS d
+  ON e.DEPARTMENT_ID = d.DEPARTMENT_ID
+  WHERE TO_CHAR(e.HIRE_DATE, 'YYYY') = '2007'
+  ORDER BY e.EMPLOYEE_ID ASC
+;  
+
+결과 ====================================================
+EMPLOYEE_ID LAST_NAME                 FIRST_NAME           NVL(D.DEPARTMENT_NAME,'<NOTASS
+----------- ------------------------- -------------------- ------------------------------
+        104 Ernst                     Bruce                IT
+        107 Lorentz                   Diana                IT
+        113 Popp                      Luis                 Finance
+        119 Colmenares                Karen                Purchasing
+        124 Mourgos                   Kevin                Shipping
+        127 Landry                    James                Shipping
+        132 Olson                     TJ                   Shipping
+        135 Gee                       Ki                   Shipping
+        148 Cambrault                 Gerald               Sales
+        155 Tuvault                   Oliver               Sales
+        163 Greene                    Danielle             Sales
+        171 Smith                     William              Sales
+        172 Bates                     Elizabeth            Sales
+        178 Grant                     Kimberely            <Not Assigned>
+        182 Sullivan                  Martha               Shipping
+        187 Cabrio                    Anthony              Shipping
+        191 Perkins                   Randall              Shipping
+        195 Jones                     Vance                Shipping
+        198 OConnell                  Donald               Shipping
+
+19 행이 선택되었습니다.
+========================================================
+ 
+--6. 업무명(job_title)이 ‘Sales Representative’인 직원 중에서 연봉(salary)이 9,000이상, 10,000 이하인 
+--   직원들의 이름(first_name), 성(last_name)과 연봉(salary)를 출력하시오
+SELECT 
+	e.FIRST_NAME, 
+	e.LAST_NAME, 
+	e.SALARY
+FROM EMPLOYEES e join JOBS j
+ON e.JOB_ID = j.JOB_ID
+WHERE e.SALARY BETWEEN 9000 AND 10000 AND j.JOB_TITLE = 'Sales Representative'
+;
+ 
+결과 ====================================================
+FIRST_NAME           LAST_NAME                     SALARY
+-------------------- ------------------------- ----------
+Peter                Tucker                         10000
+David                Bernstein                       9500
+Peter                Hall                            9000
+Janette              King                           10000
+Patrick              Sully                           9500
+Allan                McEwen                          9000
+Danielle             Greene                          9500
+Harrison             Bloom                          10000
+Tayler               Fox                             9600
+
+9 행이 선택되었습니다.
+========================================================
+
+--7. 부서별로 가장 적은 급여를 받고 있는 직원의 이름, 부서이름, 급여를 출력하시오. 
+--   이름은 last_name만 출력하며, 부서이름으로 오름차순 정렬하고, 
+--   부서가 같은 경우 이름을 기준 으로 오름차순 정렬하여 출력합니다. 
+SELECT 
+	E.LAST_NAME, 
+	A.*
+FROM EMPLOYEES E, 
+      (
+      SELECT 
+             d.DEPARTMENT_NAME, 
+	MIN(e.SALARY) AS MIN_SALARY
+        FROM EMPLOYEES e join DEPARTMENTS d 
+       ON e.DEPARTMENT_ID = d.DEPARTMENT_ID 
+       GROUP BY d.DEPARTMENT_NAME
+      ) A 
+WHERE E.SALARY = A.MIN_SALARY
+ORDER BY A.DEPARTMENT_NAME ASC, E.LAST_NAME ASC
+;
+ 
+결과 ====================================================
+LAST_NAME                 DEPARTMENT_NAME                MIN_SALARY
+------------------------- ------------------------------ ----------
+Gietz                     Accounting                           8300
+Whalen                    Administration                       4400
+De Haan                   Executive                           17000
+Kochhar                   Executive                           17000
+Popp                      Finance                              6900
+Mavris                    Human Resources                      6500
+Vollman                   Human Resources                      6500
+Lorentz                   IT                                   4200
+Sarchand                  IT                                   4200
+Ernst                     Marketing                            6000
+Fay                       Marketing                            6000
+Baer                      Public Relations                    10000
+Bloom                     Public Relations                    10000
+King                      Public Relations                    10000
+Tucker                    Public Relations                    10000
+Colmenares                Purchasing                           2500
+Marlow                    Purchasing                           2500
+Patel                     Purchasing                           2500
+Perkins                   Purchasing                           2500
+Sullivan                  Purchasing                           2500
+Vargas                    Purchasing                           2500
+Kumar                     Sales                                6100
+Olson                     Shipping                             2100
+
+23 행이 선택되었습니다.
+========================================================
+
+--8. EMPLOYEES 테이블에서 급여를 많이 받는 순서대로 조회했을 때 결과처럼 6번째부터 10 번째까지 
+--   5명의 last_name, first_name, salary를 조회하는 sql문장을 작성하시오.
+SELECT 
+       * 
+  FROM
+       (
+       SELECT 
+		RANK() OVER (ORDER BY TRUNC(SALARY, -1) DESC) AS RANKING, 
+		LAST_NAME, 
+		FIRST_NAME, TRUNC(SALARY, -1) AS SALARY
+       FROM EMPLOYEES 
+       ORDER BY SALARY DESC
+       )
+  WHERE RANKING 
+  BETWEEN 6 AND 10
+ ;
+ 
+결과 ====================================================
+   RANKING LAST_NAME                 FIRST_NAME               SALARY
+---------- ------------------------- -------------------- ----------
+         6 Hartstein                 Michael                   13000
+         7 Greenberg                 Nancy                     12000
+         7 Higgins                   Shelley                   12000
+         7 Errazuriz                 Alberto                   12000
+        10 Ozer                      Lisa                      11500
+========================================================
+
+--9. 사원의 부서가 속한 도시(city)가 ‘Seattle’인 사원의 이름, 해당 사원의 매니저 이름, 사원 의 부서이름을 출력하시오. 
+--   이때 사원의 매니저가 없을 경우 ‘<없음>’이라고 출력하시오. 이름은 last_name만 출력하며, 
+--   사원의 이름을 오름차순으로 정렬하시오. 
+SELECT 
+       E.E_NAME, NVL(E.M_NAME, '<없음>'), D.DEPARTMENT_NAME
+  FROM 
+      (
+       SELECT 
+		A.LAST_NAME AS E_NAME, 
+		B.LAST_NAME AS M_NAME, 
+		A.DEPARTMENT_ID 
+       FROM EMPLOYEES A 
+       LEFT JOIN EMPLOYEES B 
+       ON A.MANAGER_ID = B.EMPLOYEE_ID
+      ) E join DEPARTMENTS D 
+ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+join LOCATIONS L
+ON D.LOCATION_ID = L.LOCATION_ID
+WHERE L.CITY = 'Seattle'
+ORDER BY E.E_NAME ASC
+;  
+
+결과 ====================================================
+E_NAME                    NVL(E.M_NAME,'<없음>')    DEPARTMENT_NAME
+------------------------- ------------------------- ------------------------------
+Baida                     Raphaely                  Purchasing
+Chen                      Greenberg                 Finance
+Colmenares                Raphaely                  Purchasing
+De Haan                   King                      Executive
+Faviet                    Greenberg                 Finance
+Gietz                     Higgins                   Accounting
+Greenberg                 Kochhar                   Finance
+Higgins                   Kochhar                   Accounting
+Himuro                    Raphaely                  Purchasing
+Khoo                      Raphaely                  Purchasing
+King                      <없음>                    Executive
+Kochhar                   King                      Executive
+Popp                      Greenberg                 Finance
+Raphaely                  King                      Purchasing
+Sciarra                   Greenberg                 Finance
+Tobias                    Raphaely                  Purchasing
+Urman                     Greenberg                 Finance
+Whalen                    Kochhar                   Administration
+
+18 행이 선택되었습니다.
+========================================================
+ 
+--10. 각 업무(job) 별로 연봉(salary)의 총합을 구하고자 한다. 연봉 총합이 가장 높은 업무부터 
+--    업무명(job_title)과 연봉 총합을 조회하시오. 단 연봉총합이 30,000보다 큰 업무만 출력하시오. 
+SELECT 
+	J.JOB_TITLE,
+	SUM(E.SALARY)
+FROM JOBS J join EMPLOYEES E
+ON E.JOB_ID = J.JOB_ID
+GROUP BY J.JOB_TITLE
+HAVING SUM(E.SALARY) > 30000
+ORDER BY SUM(E.SALARY) DESC
+;
+ 
+결과 ====================================================
+JOB_TITLE                           SUM(E.SALARY)
+----------------------------------- -------------
+Sales Representative                       250500
+Shipping Clerk                              64300
+Sales Manager                               61000
+Stock Clerk                                 55700
+Accountant                                  39600
+Stock Manager                               36400
+Administration Vice President               34000
+
+7 행이 선택되었습니다.
+========================================================
+
+--11. 각 사원(employee)에 대해서 사번(employee_id), 이름(first_name), 업무명(job_title), 
+--    부서 명(department_name)을 조회하시오. 
+--    단 도시명(city)이 ‘Seattle’인 지역(location)의 부서 (department)에 근무하는 직원을 사원번호 오름차순순으로 출력하시오.
+SELECT 
+	E.EMPLOYEE_ID, 
+	E.FIRST_NAME, 
+	J.JOB_TITLE, 
+	D.DEPARTMENT_NAME
+FROM EMPLOYEES E join DEPARTMENTS D 
+ON E.DEPARTMENT_ID = D.DEPARTMENT_ID 
+join LOCATIONS L 
+ON D.LOCATION_ID = L.LOCATION_ID
+join JOBS J
+ON J.JOB_ID = E.JOB_ID
+WHERE L.CITY = 'Seattle'
+ORDER BY E.EMPLOYEE_ID ASC
+;
+ 
+결과 ====================================================
+EMPLOYEE_ID FIRST_NAME           JOB_TITLE                           DEPARTMENT_NAME
+----------- -------------------- ----------------------------------- ------------------------------
+        100 Steven               President                           Executive
+        101 Neena                Administration Vice President       Executive
+        102 Lex                  Administration Vice President       Executive
+        108 Nancy                Finance Manager                     Finance
+        109 Daniel               Accountant                          Finance
+        110 John                 Accountant                          Finance
+        111 Ismael               Accountant                          Finance
+        112 Jose Manuel          Accountant                          Finance
+        113 Luis                 Accountant                          Finance
+        114 Den                  Purchasing Manager                  Purchasing
+        115 Alexander            Purchasing Clerk                    Purchasing
+        116 Shelli               Purchasing Clerk                    Purchasing
+        117 Sigal                Purchasing Clerk                    Purchasing
+        118 Guy                  Purchasing Clerk                    Purchasing
+        119 Karen                Purchasing Clerk                    Purchasing
+        200 Jennifer             Administration Assistant            Administration
+        205 Shelley              Accounting Manager                  Accounting
+        206 William              Public Accountant                   Accounting
+
+18 행이 선택되었습니다.
+========================================================
+
+--12. 2001~20003년사이에 입사한 직원의 이름(first_name), 입사일(hire_date), 관리자사번 (employee_id), 
+--    관리자 이름(fist_name)을 조회합니다. 단, 관리자가 없는 사원정보도 출력 결과에 포함시켜 출력한다.
+SELECT 
+	E.FIRST_NAME, 
+	TO_CHAR(E.HIRE_DATE, 'YYYY-MM-DD AM HH12:MI:SS') AS HIRE_DATE, 
+	E.MANAGER_ID, 
+	M.FIRST_NAME
+FROM EMPLOYEES E LEFT JOIN EMPLOYEES M 
+ON E.MANAGER_ID = M.EMPLOYEE_ID 
+WHERE TO_CHAR(E.HIRE_DATE, 'YYYY') BETWEEN '2001' AND '2003'
+;
+ 
+결과 ====================================================
+FIRST_NAME           HIRE_DATE            MANAGER_ID FIRST_NAME
+-------------------- -------------------- ---------- --------------------
+Steven               2003-06-17 오전 12:0
+                     0:00
+
+Lex                  2001-01-13 오전 12:0        100 Steven
+                     0:00
+
+Nancy                2002-08-17 오전 12:0        101 Neena
+                     0:00
+
+Daniel               2002-08-16 오전 12:0        108 Nancy
+                     0:00
+
+Den                  2002-12-07 오전 12:0        100 Steven
+                     0:00
+
+Alexander            2003-05-18 오전 12:0        114 Den
+                     0:00
+
+Payam                2003-05-01 오전 12:0        100 Steven
+                     0:00
+
+Renske               2003-07-14 오전 12:0        123 Shanta
+                     0:00
+
+Trenna               2003-10-17 오전 12:0        124 Kevin
+                     0:00
+
+Jennifer             2003-09-17 오전 12:0        101 Neena
+                     0:00
+
+Susan                2002-06-07 오전 12:0        101 Neena
+                     0:00
+
+Hermann              2002-06-07 오전 12:0        101 Neena
+                     0:00
+
+Shelley              2002-06-07 오전 12:0        101 Neena
+                     0:00
+
+William              2002-06-07 오전 12:0        205 Shelley
+                     0:00
+
+
+14 행이 선택되었습니다.
+========================================================
+
+--13. ‘Sales’ 부서에 속한 직원의 이름(first_name), 급여(salary), 부서이름(department_name)을 조회하시오. 
+--    단, 급여는 100번 부서의 평균보다 적게 받는 직원 정보만 출력되어야 한다. 
+SELECT 
+	E.FIRST_NAME, 
+	E.SALARY, 
+	D.DEPARTMENT_NAME 
+FROM EMPLOYEES E join DEPARTMENTS D
+ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+WHERE  D.DEPARTMENT_NAME = 'Sales'
+AND E.SALARY < (
+                   SELECT 
+                          AVG(SALARY) 
+                    FROM EMPLOYEES 
+                    WHERE DEPARTMENT_ID = 100
+                  )
+; 
+ 
+결과 ====================================================
+FIRST_NAME               SALARY DEPARTMENT_NAME
+-------------------- ---------- ------------------------------
+Christopher                8000 Sales
+Nanette                    7500 Sales
+Oliver                     7000 Sales
+Lindsey                    8000 Sales
+Louise                     7500 Sales
+Sarath                     7000 Sales
+Mattea                     7200 Sales
+David                      6800 Sales
+Sundar                     6400 Sales
+Amit                       6200 Sales
+William                    7400 Sales
+Elizabeth                  7300 Sales
+Sundita                    6100 Sales
+Jonathon                   8600 Sales
+Jack                       8400 Sales
+Charles                    6200 Sales
+
+16 행이 선택되었습니다.
+========================================================
+
+--14. Employees 테이블에서 입사한달(hire_date)별로 인원수를 조회하시오.
+SELECT 
+	CONCAT(TO_CHAR(E.HIRE_DATE, 'MM'), '월') AS HIRE_DATE, 
+	COUNT(*)
+FROM EMPLOYEES E
+GROUP BY TO_CHAR(E.HIRE_DATE, 'MM')
+ORDER BY TO_CHAR(E.HIRE_DATE, 'MM') ASC
+;  
+  
+결과 ====================================================
+HIRE_DATE              COUNT(*)
+-------------------- ----------
+01월                         14
+02월                         13
+03월                         17
+04월                          7
+05월                          6
+06월                         11
+07월                          7
+08월                          9
+09월                          5
+10월                          6
+11월                          5
+12월                          7
+========================================================
+
+--15. 부서별 직원들의 최대, 최소, 평균급여를 조회하되, 
+--    평균급여가 ‘IT’ 부서의 평균급여보다 많고, ‘Sales’ 부서의 평균보다 적은 부서 정보만 출력하시오. 
+SELECT 
+	D.DEPARTMENT_NAME, 
+	MAX(E.SALARY), 
+	MIN(E.SALARY), 
+	TRUNC(AVG(E.SALARY), 0)
+FROM EMPLOYEES E join DEPARTMENTS D
+ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+GROUP BY D.DEPARTMENT_NAME
+HAVING TRUNC(AVG(E.SALARY), 0) > (
+                                  SELECT 
+                                         TRUNC(AVG(E.SALARY), 0)
+                                  FROM EMPLOYEES E join DEPARTMENTS D
+                                  ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
+		         WHERE D.DEPARTMENT_NAME = 'IT'
+                                   )
+   AND  TRUNC(AVG(E.SALARY), 0) < (
+                                   SELECT 
+                                          TRUNC(AVG(E.SALARY), 0)
+                                   FROM EMPLOYEES E join DEPARTMENTS D
+                                   ON D.DEPARTMENT_ID = E.DEPARTMENT_ID
+                                   WHERE D.DEPARTMENT_NAME = 'Sales'
+		          )
+;
+
+결과 ====================================================
+DEPARTMENT_NAME                MAX(E.SALARY) MIN(E.SALARY) TRUNC(AVG(E.SALARY),0)
+------------------------------ ------------- ------------- ----------------------
+Finance                                12008          6900                   8601
+Human Resources                         6500          6500                   6500
+========================================================
+ 
+--16. 각 부서별로 직원이 한명만 있는 부서만 조회하시오. 
+--    단, 직원이 없는 부서에 대해서는 ‘<신생부서>’라는 문자열이 출력되도록 하고,
+--    출력결과는 다음과 같이 부서명이 내림차순 으로 정렬되어야한다. 
+SELECT 
+	NVL(D.DEPARTMENT_NAME, '<신생부서>') AS DEPARTMENT_NAME , 
+	COUNT(*)
+FROM EMPLOYEES E LEFT JOIN DEPARTMENTS D
+ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+GROUP BY D.DEPARTMENT_NAME
+HAVING COUNT(*) = 1
+ORDER BY D.DEPARTMENT_NAME DESC
+;
+
+ 
+결과 ====================================================
+DEPARTMENT_NAME                  COUNT(*)
+------------------------------ ----------
+<신생부서>                              1
+Public Relations                        1
+Human Resources                         1
+Administration                          1
+========================================================
+
+--17. 부서별 입사월별 직원수를 출력하시오. 
+--    단, 직원수가 5명 이상인 부서만 출력되어야 하며 출력결과는 부서이름 순으로 한다.
+SELECT 
+	D.DEPARTMENT_NAME, 
+	TO_CHAR(E.HIRE_DATE, 'MON', 'NLS_DATE_LANGUAGE=ENGLISH') AS HIRE_DATE, 
+	COUNT(*)
+FROM DEPARTMENTS D join EMPLOYEES E
+ON E.DEPARTMENT_ID = D.DEPARTMENT_ID 
+GROUP BY D.DEPARTMENT_NAME, TO_CHAR(E.HIRE_DATE, 'MON', 'NLS_DATE_LANGUAGE=ENGLISH')
+HAVING COUNT (*) >= 5
+ORDER BY D.DEPARTMENT_NAME ASC;
+ 
+결과 ====================================================
+DEPARTMENT_NAME                HIRE_DATE              COUNT(*)
+------------------------------ -------------------- ----------
+Sales                          JAN                           7
+Sales                          MAR                          12
+Shipping                       FEB                           8
+Shipping                       JAN                           5
+Shipping                       JUL                           6
+Shipping                       JUN                           5
+
+6 행이 선택되었습니다.
+========================================================
+
+--18. 국가(country_name) 별 도시(city)별 직원수를 조회하시오. 
+--    단, 부서에 속해있지 않은 직원 이 있기 때문에 106명의 직원만 출력이 된다. 
+--    부서정보가 없는 직원은 국가명과 도시명 대신에 ‘<부서없음>’이 출력되도록 하여 107명 모두 출력되게 한다.
+SELECT 
+	NVL(C.COUNTRY_NAME, '<부서없음>') AS COUNTRY_NAME, 
+	NVL(L.CITY, '<부서없음>') AS CITY, 
+	COUNT(*)
+FROM EMPLOYEES E LEFT JOIN DEPARTMENTS D 
+ON E.DEPARTMENT_ID = D.DEPARTMENT_ID 
+LEFT JOIN LOCATIONS L 
+ON D.LOCATION_ID = L.LOCATION_ID
+LEFT JOIN COUNTRIES C 
+ON L.COUNTRY_ID = C.COUNTRY_ID 
+GROUP BY COUNTRY_NAME, CITY
+ORDER BY COUNTRY_NAME ASC, CITY ASC
+;  
+
+결과 ====================================================
+COUNTRY_NAME                             CITY                             COUNT(*)
+---------------------------------------- ------------------------------ ----------
+<부서없음>                               <부서없음>                              1
+Canada                                   Toronto                                 2
+Germany                                  Munich                                  1
+United Kingdom                           London                                  1
+United Kingdom                           Oxford                                 34
+United States of America                 Seattle                                18
+United States of America                 South San Francisco                    45
+United States of America                 Southlake                               5
+
+8 행이 선택되었습니다.
+========================================================
+ 
+--19. 각 부서별 최대 급여자의 아이디(employee_id), 이름(first_name), 급여(salary)를 출력하시오. 
+--    단, 최대 급여자가 속한 부서의 평균급여를 마지막으로 출력하여 평균급여와 비교할 수 있게 할 것.
+SELECT 
+	E.EMPLOYEE_ID, 
+	E.FIRST_NAME, 
+	A.SALARY, 
+	A.AVG
+FROM 
+       EMPLOYEES E join (
+                      SELECT 
+			E.DEPARTMENT_ID, 
+			MAX(E.SALARY) AS SALARY, 
+			TRUNC(AVG(E.SALARY),2) AS AVG
+                       FROM 
+                             EMPLOYEES E join DEPARTMENTS D
+                       ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+                       GROUP BY E.DEPARTMENT_ID
+                    ) A
+ON E.DEPARTMENT_ID = A.DEPARTMENT_ID
+WHERE E.SALARY = A.SALARY
+ORDER BY E.EMPLOYEE_ID ASC
+;
+ 
+결과 ====================================================
+EMPLOYEE_ID FIRST_NAME               SALARY        AVG
+----------- -------------------- ---------- ----------
+        100 Steven                    24000   19333.33
+        103 Alexander                  9000       5760
+        108 Nancy                     12008    8601.33
+        114 Den                       11000       4150
+        121 Adam                       8200    3475.55
+        145 John                      14000    8955.88
+        200 Jennifer                   4400       4400
+        201 Michael                   13000       9500
+        203 Susan                      6500       6500
+        204 Hermann                   10000      10000
+        205 Shelley                   12008      10154
+
+11 행이 선택되었습니다.
+========================================================
+
+--20. 커미션(commission_pct)별 직원수를 조회하시오. 
+--    커미션은 아래실행결과처럼 0.2, 0.25는 모두 .2로, 0.3, 0.35는 .3 형태로 출력되어야 한다. 
+--    단, 커미션 정보가 없는 직원들도 있는 데 커미션이 없는 직원 그룹은 ‘<커미션 없음>’이 출력되게 한다.
+SELECT 
+	NVL(TO_CHAR(TRUNC(E.COMMISSION_PCT,1)), '<커미션없음>') AS COMMISSION, 
+	COUNT(*)
+FROM 
+       EMPLOYEES E 
+GROUP BY NVL(TO_CHAR(TRUNC(E.COMMISSION_PCT,1)), '<커미션없음>')
+ORDER BY NVL(TO_CHAR(TRUNC(E.COMMISSION_PCT,1)), '<커미션없음>') DESC
+;
+ 
+결과 ====================================================
+COMMISSION                                 COUNT(*)
+---------------------------------------- ----------
+<커미션없음>                                     72
+.4                                                1
+.3                                               10
+.2                                               13
+.1                                               11
+========================================================
+
+--21. 커미션(commission_pct)을 가장 많이 받은 상위 4명의 부서명(department_name), 
+--    직원명 (first_name), 급여(salary), 커미션(commission_pct) 정보를 조회하시오. 
+--    출력결과는 커미션 을 많이 받는 순서로 출력하되 동일한 커미션에 대해서는 급여가 높은 직원이 먼저 출력 되게 한다.
+SELECT 
+       * 
+FROM
+       (
+        SELECT 
+		D.DEPARTMENT_NAME, 
+		E.FIRST_NAME, E.SALARY, 
+		E.COMMISSION_PCT
+        FROM 
+               EMPLOYEES E join DEPARTMENTS D
+        ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+        ORDER BY E.COMMISSION_PCT DESC NULLS LAST, E.SALARY DESC
+       )
+WHERE ROWNUM <= 4
+;
+
+결과 ====================================================
+DEPARTMENT_NAME                FIRST_NAME               SALARY COMMISSION_PCT
+------------------------------ -------------------- ---------- --------------
+Sales                          John                      14000             .4
+Sales                          Janette                   10000            .35
+Sales                          Patrick                    9500            .35
+Sales                          Allan                      9000            .35
+========================================================

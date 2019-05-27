@@ -1,0 +1,343 @@
+================================================================== 03.p.20
+SELECT INITCAP(ENAME), JOB FROM EMP;
+	-> 첫글자만 대문자로 변경
+
+SELECT LPAD(ENAME, 10, '*') FROM EMP;
+	-> 문자열의 왼쪽 채움 (ENAME의 문자열의 10개 길이를 '*'로 채움 (현재 문자열 포함 10개)
+
+SELECT SUBSTR(HIREDATE, 4, 2) FROM EMP;
+	-> HIREDATE의 문자열의 4번째부터 길이 2인 문자열 반환 (0번쨰 위치는 없음)
+
+SELECT REPLACE(HIREDATE, '8', '198') FROM EMP;
+	-> HIREDATE의 '8' 문자열을 '198'로 치환
+
+SELECT TRANSLATE(JOB, 'CAL', '123') FROM EMP;
+	-> JOB에서 'CAL' 문자열의 각 문자를 '123' 문자열의 각 문자로 변환
+	    (C를 1로, A를 2로, L을 3으로)
+	-> (JOB, 'CAL', '12')로 할 경우 L은 빈칸으로 변환
+
+SELECT INSTR(JOB, 'LE', 3, 1) FROM EMP;
+	-> 문자열 검색. JOB의 3번째부터 'LE' 문자열이 나타나는 1번째 위치 반환 (0번쨰 위치는 없음)
+
+SELECT ADD_MONTHS(HIREDATE, 6) FROM EMP;
+	-> HIREDATE 날짜에 6달 더함
+
+================================================================== 03.p.24
+DESC DUAL
+	-> 더미 테이블. 막 쓰는 용도의 테이블
+	테이블에 아무 것도 없는 상태. SYSDATE 함수는 날짜니까 테이블이 필요 없으니까 임시로 사용하는 테이블.
+
+SELECT SYSDATE FROM DUAL;
+	-> 오늘 날짜 반환.
+	이 쿼리문을 사용하기 전에 DESC DUAL을 반드시 사용해야 한다.
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD';
+
+
+SELECT TO_DATE('20190521', 'YYYY-MM-DD') FROM DUAL;
+
+
+SELECT TO_CHAR(HIREDATE, 'YYYY-MM-DD HH24:MI:SS') FROM EMP;
+
+
+SELECT COALESCE(COMM, 1), COMM FROM EMP;
+	-> COMM의 값이 NULL이면 1로 바꿔줌.
+
+
+================================================================== 03.p.30
+SELECT ENAME, NVL(TO_CHAR(MGR), 'No Manager') FROM EMP;
+	-> MGR에서 NULL인 값을 No Manager로 바꿈.
+	MGR이 NUMBER(4)여서 TO_CHAR로 바꿔야함.
+
+TO_CHAR(문자값, '형식')
+숫자를 문자로 변환: 
+	TO_CHAR(350000, '$999,999')    ->  $350,000
+숫자를 날짜로 변환: 
+	TO_CHAR(SYSDATE, 'YY/MM/DD')   ->  95/05/25
+TO_DATE(문자값, '형식');
+	TO_DATE('10 SEPTEMBER 1992', 'DD MONTH YYYY')   -> 10-SEP-92
+TO_NUMBER(문자값): 
+	TO_NUMBER('1234')   ->   1234
+
+
+================================================================== 03.p.31
+SELECT ename, job, sal, CASE job WHEN 'CLERK' THEN 1.10 * sal
+				WHEN 'MANAGER' THEN 1.15 * sal
+				WHEN 'PRESIDENT' THEN 1.20 * sal
+				ELSE sal END REVISED_SALARY
+FROM emp;
+
+
+SELECT ename, job, sal, DECODE(job, 	'CLERK', 1.10* sal,
+			'MANAGER', 1.15*sal,
+			'PRESIDENT', 1.20 *sal,
+			sal) REVISED_SALARY
+FROM emp;
+	-> ORACLE에선 CASE문보다 DECODE문을 훨씬 많이 쓴다. 문법 반드시 알아두기.
+	DECODE(case, when1, then1, ..., else) <REVISED_NAME>
+
+
+
+================================================================== 04.p.2 Cartesian Product
+Cartesian Product
+-> join 중 하나. 실제로는 쓸모 없음. 조건을 걸어줘야 쓸모있는 join이 된다.
+-> X x Y
+<Student>	<Product>
+aaa 111		00 A
+bbb 222		11 B
+
+=> <Student> X <Product>
+aaa 111 00 A
+aaa 111 11 B
+bbb 222 00 A
+bbb 222 11 B
+
+두 테이블을 카티젼 프로덕트할 경우, Student테이블의 갯수 x Product 테이블의 갯수 만큼 생성된다.
+Cartesian Product를 막기 위해서는 올바른 join조건을 where절에 부여해야 함.
+
+
+SELECT COUNT(*) FROM EMP;
+SELECT COUNT(*) FROM DEPT;
+
+SELECT *
+FROM EMP, DEPT;
+	-> old style
+
+SELECT * FROM EMP CROSS JOIN DEPT;
+	-> ANSI 표준.
+	EMP 데이터가 나온 후, DEPT 데이터가 같이 나옴
+
+SELECT * FROM EMP, DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO
+	-> EMP 테이블 갯수만큼 반환됨.
+
+SELECT EMP.EMPNO, EMP.ENAME, EMP.SAL, DEPT.DNAME
+FROM EMP, DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO
+	-> old style INNER JOIN. 조건에 맞는 경우만 반환하는 것.
+
+SELECT EMP.EMPNO, EMP.ENAME, EMP.SAL, DEPT.DNAME
+FROM EMP INNER JOIN DEPT
+ON EMP.DEPTNO = DEPT.DEPTNO
+	-> INNER JOIN의 ANSI 표준
+	FROM (table1) INNER JOIN (table2)
+	ON (join 조건)
+
+SELECT EMP.EMPNO, EMP.ENAME, EMP.SAL, DEPT.DNAME
+FROM EMP, DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO
+AND EMP.SAL >= 3000
+	-> old style
+
+SELECT EMP.EMPNO, EMP.ENAME, EMP.SAL, DEPT.DNAME
+FROM EMP JOIN DEPT
+ON EMP.DEPTNO = DEPT.DEPTNO
+AND EMP.SAL >= 3000
+	-> ANSI 표준.
+	default가 inner join이기 때문에 join만 해줘도 됨.
+
+
+SELECT EMP.EMPNO, EMP.ENAME, EMP.SAL, DEPT.DNAME
+FROM EMP JOIN DEPT
+ON EMP.DEPTNO = DEPT.DEPTNO
+AND EMP.SAL >= 3000
+ORDER BY EMP.SAL
+	-> ANSI 표준
+	EMP.SAL 기준으로 오름차순 정렬
+
+================================================================== 04.p.9 Theta Join
+SELECT e.ename, e.sal, s.grade
+FROM emp e, salgrade s
+WHERE e.sal BETWEEN s.losal AND s.hisal
+	-> old style
+	e.sal이 s.losal과 s.hisal 사이의 값 중 해당하는 s.grade 값을 띄운다.
+
+SELECT e.ename, e.sal, s.grade
+FROM emp e JOIN salgrade s
+ON e.sal BETWEEN s.losal AND s.hisal
+	-> ANSI 표준. inner join
+	theta join: 조건에 의한 join. 조건에 의해 데이터가 추출됐지만 조건이 equal이 아닌 것.
+
+
+================================================================== 04.p.9 
+SELECT * FROM EMP, DEPT
+WHERE EMP.DEPTNO = DEPT.DEPTNO
+
+
+SELECT * FROM EMP, DEPT
+WHERE EMP.DEPTNO (+)= DEPT.DEPTNO
+	-> old style
+	(+)는 = 기준이 아님. 칼럼명 뒤에 붙음.
+	WHERE EMP.DEPTNO = DEPT.DEPTNO(+)
+
+SELECT E.EMPNO, E.ENAME, D.DNAME, D.LOC
+FROM EMP E RIGHT JOIN DEPT D
+ON E.DEPTNO = D.DEPTNO
+	-> ANSI
+	(+)랑 섞어쓰지 말 것.	***************************************************** (중요)
+
+
+SELECT E1.EMPNO, E1.ENAME, E2.EMPNO, E2.ENAME
+FROM EMP E1, EMP E2
+WHERE E1.MGR = E2.EMPNO
+	-> E1: 직원, E2: 직원의 매니저 이름
+	-> old style
+
+SELECT E1.EMPNO, E1.ENAME, E2.EMPNO, E2.ENAME
+FROM EMP E1 JOIN EMP E2
+ON E1.MGR = E2.EMPNO
+	-> ANSI
+
+SELECT E1.EMPNO, E1.ENAME, NVL(E2.EMPNO, 0), NVL(E2.ENAME, '없음')
+FROM EMP E1 LEFT JOIN EMP E2
+ON E1.MGR = E2.EMPNO
+	-> ANSI
+	E2.EMPNO가 null이면 0으로, E2.ENAME이 NULL이면 '없음'으로 출력
+
+
+
+
+SELECT EMP.ENAME 이름, EMP.JOB 담당업무, EMP.SAL 급여, DECODE(SALGRADE.GRADE, '1', '일반',
+							'2', '기능사' , '3', '일반기사', '4', '특급기사', '5', '기술사', '일반') 등급
+FROM EMP JOIN SALGRADE
+ON EMP.SAL BETWEEN SALGRADE.LOSAL AND SALGRADE.HISAL
+	-> salgrade의 grade에 따라 1. 일반, 기능사, 3. 일반기사, 4. 특급기사, 5. 기술사 로 출력되도록 함.
+
+SELECT DEPTNO, AVG(SAL)
+FROM EMP
+GROUP BY DEPTNO
+ORDER BY DEPTNO
+	-> 부서별 평균 급여
+
+
+SELECT DEPTNO, ENAME, AVG(SAL)
+FROM EMP
+GROUP BY DEPTNO, ENAME
+ORDER BY DEPTNO
+	-> 부서별 평균 급여와 이름을 출력하고 싶지만 이를 GROUP BY에 넣을 경우 엉뚱한 결과값이 나온다.
+
+SELECT DEPTNO, AVG(SAL)
+FROM EMP
+WHERE AVG(SAL) > 2000
+GROUP BY DEPTNO, ENAME (X. 오류)
+	-> GROUPING되지 않았기 때문에 AVG(SAL)을 WHERE에서 사용할 수 없음.
+	GROUP을 끝내고 조건을 걸어야함. 이 때 WHERE절이 아닌 HAVING절을 써야 함.
+
+SELECT DEPTNO, AVG(SAL)
+FROM EMP
+GROUP BY DEPTNO, ENAME
+HAVING AVG(SAL) > 2000				***************************************************** (중요)
+
+
+
+================================================================== 04.p.24 ROLLUP
+SELECT loc, yr, sum(sales)
+FROM salesdata
+GROUP BY ROLLUP(loc, yr)
+	-> 각 지역별 합, 그 합의 합
+
+SELECT loc, yr, sum(sales)
+FROM salesdata
+GROUP BY CUBE(loc, yr)
+	-> 지역별 합, 연도별 합, 합의 합
+
+
+
+================================================================== 04.p.24 SUBQUERY
+SELECT ENAME
+FROM EMP
+WHERE SAL > (SELECT SAL
+		FROM EMP
+		WHERE ENAME = 'SCOTT')
+	-> SCOTT보다 SAL을 더 많이 받는 사람 반환.
+
+
+SELECT ENAME, SAL, DEPTNO
+FROM EMP
+WHERE ENAME = (SELECT MIN(ENAME) FROM EMP)
+	-> ENAME이 가장 작은 값을 갖는 사람 출력
+
+
+SELECT ENAME, SAL
+FROM EMP
+WHERE SAL < (SELECT AVG(SAL) FROM EMP)
+	-> 평균 SAL값보다 작은 사람 출력
+
+
+SELECT ENAME, DEPTNO
+FROM EMP
+WHERE DEPTNO = (SELECT DEPTNO
+		FROM DEPT
+		WHERE DNAME = 'SALES')
+	-> SALES 부서 사람 출력
+
+
+================================================================== 04.p.28 MULTI-ROW QUERY
+SELECT ENAME, SAL, DEPTNO
+FROM EMP
+WHERE ENAME IN (SELECT MIN(ENAME) FROM EMP GROUP BY DEPTNO)
+	->
+
+
+SELECT ENAME, SAL, DEPTNO
+FROM EMP
+WHERE ENAME = ANY (SELECT MIN(ENAME) FROM EMP GROUP BY DEPTNO)
+	->
+
+================================================================== 04.p.28 CORRELATED QUERY
+SELECT ENAME, SAL, DEPTNO
+FROM EMP OUTER
+WHERE SAL > (SELECT AVG(SAL)
+		FROM EMP
+		WHERE DEPTNO = OUTER.DEPTNO)
+	-> 부서 평균 급여보다 많이 받는 사람 출력
+	바깥쪽 select문의 emp와 안쪽 select문의 emp를 비교.
+	DBMS에서 한 번 뽑아낸 AVG(SAL)값을 캐시에 저장해 두고 사용.
+
+
+================================================================== 04.p.29 CORRELATED QUERY
+	-> 각 부서별 최고 급여를 받는 사원 출력
+SELECT DEPTNO, EMPNO, ENAME, SAL
+FROM EMP
+WHERE (DEPTNO, SAL) IN (SELECT DEPTNO, MAX(SAL)
+			FROM EMP GROUP BY DEPTNO)
+
+SELECT E.DEPTNO, E.EMPNO, E.ENAME, E.SAL
+FROM EMP E, (SELECT S.DEPTNO, MAX(S.SAL) MSAL
+		FROM EMP S GROUP BY DEPTNO) M
+WHERE E.DEPTNO = M.DEPTNO AND E.SAL = M.MSAL
+	-> OLD STYLE
+
+SELECT DEPTNO, EMPNO, ENAME, SAL
+FROM EMP E
+WHERE E.SAL = (SELECT MAX(SAL)
+		FROM EMP WHERE DEPTNO = E.DEPTNO)
+
+SELECT E.DEPTNO, E.EMPNO, E.ENAME, E.SAL
+FROM EMP E JOIN (SELECT S.DEPTNO, MAX(S.SAL) MSAL
+		FROM EMP S GROUP BY DEPTNO) M
+ON E.DEPTNO = M.DEPTNO AND E.SAL = M.MSAL
+	-> ANSI
+
+
+SELECT D.DNAME, E.ENAME, (SELECT AVG(SAL) AVG_SAL FROM EMP GROUP BY DEPTNO)
+FROM EMP E JOIN DEPT D
+ON E.DEPTNO = D.DEPTNO
+GROUP BY D.DNAME, E.ENAME 
+
+WHERE E.ENAME = (SELECT ENAME
+		FROM EMP M
+		WHERE E.DEPTNO = M.DEPTNO)
+
+
+SELECT D.DEPTNO, E.ENAME, D.AVGSAL
+FROM EMP E JOIN (SELECT DEPTNO, AVG(SAL) AVGSAL FROM EMP GROUP BY DEPTNO) D
+ON E.DEPTNO = D.DEPTNO
+	-> 부서별 평균 급여, 부서별 이름, 부서에 속한 사원 이름 출력
+
+SELECT DEP.DNAME, E.ENAME, D.AVGSAL
+FROM EMP E JOIN (SELECT DEPTNO, AVG(SAL) AVGSAL FROM EMP GROUP BY DEPTNO) D
+ON E.DEPTNO = D.DEPTNO
+JOIN DEPT DEP
+ON DEP.DEPTNO = E.DEPTNO
+	-> 부서별 평균 급여, 부서별 이름, 부서에 속한 사원 이름 출력

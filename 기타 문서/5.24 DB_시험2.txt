@@ -1,0 +1,186 @@
+3. 각 업무(job) 별로 연봉(salary)의 총합을 구하고자 한다. 연봉 총합이 가장 높은 업무부터 
+--    업무명(job_title)과 연봉 총합을 조회하시오. 단 연봉총합이 30,000보다 큰 업무만 출력하시오. 
+
+select 
+	j.job_title 업무명,
+	sum(e.salary) "연봉 총합"
+from employees e
+join jobs j
+on j.job_id =e.job_id
+group by j.job_title
+having sum(e.salary) > 30000
+order by sum(e.salary) desc
+
+
+
+4. 2001~20003년사이에 입사한 직원의 이름(first_name), 입사일(hire_date)-'YYYY-MM-DD', 관리자사번 (employee_id), 
+--    관리자 이름(fist_name)을 조회합니다. 단, 관리자가 없는 사원정보도 출력 결과에 포함시켜 출력한다.
+
+select
+	e.first_name 이름, 
+	to_char(e.hire_date, 'YYYY-MM-DD') 입사일, 
+	m.employee_id "관리자 사번"
+	m.employee_name "관리자 이름"
+from employees e
+left join employees m
+on e.manager_id = m.employee_id
+where to_char(e.hire_date, 'YYYY')  between 2001 and 2003
+
+
+5. ‘Sales’ 부서에 속한 직원의 이름(first_name), 급여(salary), 부서이름(department_name)을 조회하시오. 
+--    단, 급여는 100번 부서의 평균보다 적게 받는 직원 정보만 출력되어야 한다. 
+
+
+select
+	e.first_name 이름,
+	e.salary 급여,
+	d.department_name 부서이름
+from employees e
+join departments d
+on d.department_id = e.department_id
+join (select
+		AVG(salary) avgsal
+		from employees
+		where department_id = 100) a
+on e.salary < a.avgsal
+where d.department_name = 'Sales'
+
+
+6. Employees 테이블에서 입사한달(hire_date)별로 인원수를 조회하시오.
+	입사월 순으로 정렬
+
+select
+	to_char(hire_date, 'MM') "입사한 달",
+	count(*) 인원수
+from employees
+group by to_char(hire_date, 'MM')
+order by to_char(hire_date, 'MM')
+
+
+
+7. 부서별 직원들의 최대, 최소, 평균급여(소수점 이하 절사)를 조회하되, 
+--    평균급여가 ‘IT’ 부서의 평균급여보다 많고, ‘Sales’ 부서의 평균보다 적은 부서 정보만 출력하시오. 
+
+select
+	d.department_name 부서명,
+	max(e.salary) 최대급여,
+	min(e.salary) 최소급여,
+	avg(e.salary) 평균급여
+from employees e
+join departments d
+on e.department_id = d.department_id
+group by d.department_name
+having avg(e.salary) > (select
+				avg(ei.salary)
+				from employees ei
+				join departments di
+				on ei.department_id = di.department_id
+				where di.department_name = 'IT'
+				group by di.department_id)
+and avg(e.salary) < (select
+			avg(es.salary)
+			from employees es
+			join departments ds
+			on es.department_id = ds.department_id
+			where ds.department_name = 'Sales'
+			group by ds.department_id)
+
+
+8. 각 부서별로 직원이 한명만 있는 부서만 조회하시오. (부서명, 직원수)
+--    단, 직원이 없는 부서에 대해서는 ‘<신생부서>’라는 문자열이 출력되도록 하고,
+--    출력결과는 다음과 같이 부서명이 내림차순 으로 정렬되어야한다. 
+
+select
+	NVL(d.department_name, '<신생부서>') 부서명,
+	count(d.department_name) 직원수
+from employees e
+left join departments d
+on e.department_id = d.department_id
+group by d.department_name
+having count(*) = 1
+order by 부서명 desc
+;
+
+select
+	NVL(d.department_name, '<신생부서>') 부서명,
+	decode(d.department_name, null, 0,
+	count(*)) 직원수
+from employees e
+left join departments d
+on e.department_id = d.department_id
+group by d.department_name
+having count(*) = 1
+order by 부서명 desc
+;
+
+
+9. 국가(country_name)와 도시(city)별 직원수를 조회하시오. 
+--    단, 부서에 속해있지 않은 직원 이 있기 때문에 106명의 직원만 출력이 된다. 
+--    부서정보가 없는 직원은 국가명과 도시명 대신에 ‘<부서없음>’이 출력되도록 하여 107명 모두 출력되게 한다.
+
+select 
+	NVL(lc.country_name, '<부서없음>') COUNTRY_NAME, 
+	NVL(lc.city, '<부서없음>') CITY, 
+	count(*) 직원수
+from employees e 
+left join (select 
+		ld.department_id, 
+		ld.city, 
+		c.country_name
+	from countries c join (select 
+				  d.department_id, 
+				  l.country_id, 
+				  l.city
+			     from locations l 
+			     join departments d
+			     on l.location_id = d.location_id) ld
+	 on ld.country_id = c.country_id)  lc
+on e.department_id = lc.department_id
+group by lc.country_name, lc.city
+order by lc.country_name asc, lc.city asc
+
+
+select 
+	NVL(c.country_name, '<부서없음>') COUNTRY_NAME, 
+	NVL(l.city, '<부서없음>') CITY, 
+	count(*) 직원수
+from employees e 
+left join departments d
+on e.department_id = d.department_id
+left join locations l
+on l.location_id = d.location_id
+left join countries c
+on c.country_id = l.country_id
+group by country_name, city
+order by country_name, city
+
+
+10. 입사일이 2005년 이전 직원들의 부서, 이름, 입사일, 부서 주소를 다음과 같이 출력,
+	출력시 입사일 빠른 순으로 정렬하시오 (street_address, city, country_name, region_name)
+
+부서                 이름                           입사일       주소
+-------------------- ------------------------------ ------------ ----------------------------------------------------------------------------------------------------
+Executive            Lex De Haan                    13-JAN-01    2004 Charade Rd, Seattle , Washington, United States of America, Americas
+Accounting           Shelley Higgins                07-JUN-02    2004 Charade Rd, Seattle , Washington, United States of America, Americas
+Accounting           William Gietz                  07-JUN-02    2004 Charade Rd, Seattle , Washington, United States of America, Americas
+Human Resources      Susan Mavris                   07-JUN-02    8204 Arthur St, London , , United Kingdom, Europe
+Public Relations     Hermann Baer                   07-JUN-02    Schwanthalerstr. 7031, Munich , Bavaria, Germany, Europe
+
+
+
+select
+		d.department_name 부서,
+		e.first_name || ' ' || e.last_name 이름,
+		e.hire_date 입사일,
+		l.street_address || ', ' || l.city || ', ' || l.state_province || ', ' ||c.country_name || ', ' || r.region_name 주소
+from employees e
+join departments d
+on e.department_id = d.department_id
+join locations l
+on d.location_id = l.location_id
+join countries c
+on c.country_id = l.country_id
+join regions r
+on r.region_id = c.region_id
+where to_char(e.hire_date, 'YYYY') < 2005
+order by e.hire_date, d.department_name, e.first_name
