@@ -1,0 +1,298 @@
+﻿<Window x:Class="C03_Layout.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:C03_Layout"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+
+    <!-- case 1 -->
+    <!--<DockPanel LastChildFill="True">
+        <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right"
+Orientation="Horizontal">
+            <Button Margin="10,10,2,10" Padding="3">OK</Button>
+            <Button Margin="2,10,10,10" Padding="3">Cancel</Button>
+        </StackPanel>
+        <TextBox DockPanel.Dock="Top" Margin="10">This is a test.</TextBox>
+    </DockPanel>-->
+
+    
+    
+    <!-- case 2 -->
+    <!--<Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="0" Grid.Column="0">Top Left</Button>
+        <Button Grid.Row="0" Grid.Column="1">Middle Left</Button>
+        <Button Grid.Row="1" Grid.Column="2">Bottom Right</Button>
+        <Button Grid.Row="1" Grid.Column="1">Bottom Middle</Button>
+
+    </Grid>-->
+
+
+
+    <!-- case 3 -->
+    <!--<Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox Margin="10" Grid.Row="0">This is a test.</TextBox>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Margin="10,10,2,10" Padding="3">OK</Button>
+            <Button Margin="2,10,10,10" Padding="3">Cancel</Button>
+        </StackPanel>
+    </Grid>-->
+    
+    
+    
+    <!-- case 4 -->
+    <!--<Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBox Margin="10" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            This is a test.</TextBox>
+        <Button Margin="10,10,2,10" Padding="3"
+Grid.Row="1" Grid.Column="1">OK</Button>
+        <Button Margin="2,10,10,10" Padding="3"
+Grid.Row="1" Grid.Column="2">Cancel</Button>
+    </Grid>-->
+
+
+
+
+    <!-- SplitWindow -->
+    <!--<Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="100"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition MinWidth="50"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="0" Margin="3">Left</Button>
+        <Button Grid.Row="0" Grid.Column="2" Margin="3">Right</Button>
+        <Button Grid.Row="1" Grid.Column="0" Margin="3">Left</Button>
+        <Button Grid.Row="1" Grid.Column="2" Margin="3">Right</Button>
+
+        <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"                
+                  Width="3" VerticalAlignment="Stretch" HorizontalAlignment="Center"
+                  ShowsPreview="False" Background="Aquamarine"></GridSplitter>
+
+    </Grid>-->
+
+
+
+
+    <!-- DoubleSplitWindow -->
+    <!--<Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Button Margin="3" Grid.Row="0">Top Left</Button>
+            <Button Margin="3" Grid.Row="1">Bottom Left</Button>
+        </Grid>
+
+        <GridSplitter Grid.Column="1" 
+                  Width="3" VerticalAlignment="Stretch" HorizontalAlignment="Center" 
+                  ShowsPreview="False"></GridSplitter>
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0" Margin="3">Top Right</Button>
+            <Button Grid.Row="2" Margin="3">Bottom Right</Button>
+
+            <GridSplitter Grid.Row="1" 
+                  Height="3" VerticalAlignment="Center" 
+                  HorizontalAlignment="Stretch" 
+                  ShowsPreview="False"></GridSplitter>
+        </Grid>
+
+
+
+    </Grid>-->
+
+
+
+
+    <!-- SharedSizeGroup -->
+    <!--<Grid Grid.IsSharedSizeScope="True" Margin="3">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="3" Background="LightYellow" ShowGridLines="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="TextLabel"></ColumnDefinition>  --><!-- SharedSizeGroup을 공유하면 크기가 같이 늘어남.--><!--
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Margin="5">A very long bit of text.</Label>
+            --><!-- <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="10"></GridSplitter> --><!--
+            <Label Grid.Column="1" Margin="5">More text</Label>
+            <TextBox Grid.Column="2" Margin="5">A text box</TextBox>
+        </Grid>
+        <Label Grid.Row="1" >Some text in between the two grids...</Label>
+        <Grid Grid.Row="2" Margin="3" Background="LightYellow"  ShowGridLines="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="TextLabel"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Label Margin="5">Short</Label>
+            <TextBox Grid.Column="1" Margin="5">A text box</TextBox>
+        </Grid>
+    </Grid>-->
+    
+    
+    
+    
+    <!-- Simple Canvas -->
+    <!--<Canvas>
+        <Button Canvas.Left="10" Canvas.Top="10">(10,10)</Button>
+        <Button Canvas.Left="120" Canvas.Top="30">(120,30)</Button>
+        <Button Canvas.Left="60" Canvas.Top="80" Width="50" Height="50">(60,80)</Button>
+        <Button Canvas.Left="70" Canvas.Top="120" Width="100" Height="50">(70,120)</Button>
+    </Canvas>-->
+
+
+
+
+    <!-- TextBoxColumn -->
+    <!--<Grid Margin="3,3,10,3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*" MinWidth="50" MaxWidth="800"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Margin="3"
+             VerticalAlignment="Center">Home:</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="3"
+             Height="Auto"  VerticalAlignment="Center"></TextBox>
+        <Button Grid.Row="0" Grid.Column="2" Margin="3" Padding="2">Browse</Button>
+
+        <Label Grid.Row="1" Grid.Column="0" Margin="3"
+             VerticalAlignment="Center">Network:</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="3"
+             Height="Auto"  VerticalAlignment="Center"></TextBox>
+        <Button Grid.Row="1" Grid.Column="2" Margin="3" Padding="2">Browse</Button>
+
+        <Label Grid.Row="2" Grid.Column="0" Margin="3"
+             VerticalAlignment="Center">Web:</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="3"
+             Height="Auto"  VerticalAlignment="Center"></TextBox>
+        <Button Grid.Row="2" Grid.Column="2" Margin="3" Padding="2">Browse</Button>
+
+        <Label Grid.Row="3" Grid.Column="0" Margin="3"
+             VerticalAlignment="Center">Secondary:</Label>
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="3"
+             Height="Auto"  VerticalAlignment="Center"></TextBox>
+        <Button Grid.Row="3" Grid.Column="2" Margin="3" Padding="2">Browse</Button>
+
+    </Grid>-->
+    
+    
+    
+    
+    <!-- Modular Content -->
+    <ScrollViewer>
+        <StackPanel>
+            <WrapPanel Background="LightSteelBlue" Name="pnlList">
+                <CheckBox Margin="5" IsChecked="True">Panel1</CheckBox>
+                <CheckBox Margin="5" IsChecked="True">Panel2</CheckBox>
+                <CheckBox Margin="5" IsChecked="True">Panel3</CheckBox>
+                <CheckBox Margin="5" IsChecked="True">Panel4</CheckBox>
+            </WrapPanel>
+
+            <WrapPanel>
+                <StackPanel Name="Panel1" >
+                    <Border Padding="5" BorderBrush="Yellow" BorderThickness="2">
+                        <UniformGrid Rows="2" Columns="2">
+                            <Button Margin="10" Padding="10">1</Button>
+                            <Button Margin="10" Padding="10">2</Button>
+                            <Button Margin="10" Padding="10">3</Button>
+                            <Button Margin="10" Padding="10">4</Button>
+                        </UniformGrid>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Name="Panel2">
+                    <Border Padding="15" BorderBrush="Yellow" BorderThickness="2">
+                        <TabControl>
+                            <TabItem Header="Page1">
+                                <Button Padding="100,50,100,50">Tabs</Button>
+                            </TabItem>
+                            <TabItem Header="Page2">
+                            </TabItem>
+                        </TabControl>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Name="Panel3">
+                    <Border Padding="15" BorderBrush="Yellow" BorderThickness="2">
+                        <StackPanel>
+                            <TextBox MinLines="5" MaxWidth="150" TextWrapping="Wrap">This is a test of a text box that contains wrapped text.</TextBox>
+                            <StackPanel Orientation="Horizontal">
+                                <Button>OK</Button>
+                                <Button>Cancel</Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <StackPanel Name="Panel4">
+                    <Border Padding="15" BorderBrush="Yellow" BorderThickness="2">
+                        <UniformGrid Rows="2" Columns="2">
+                            <Button Margin="10" Padding="10">1</Button>
+                            <Button Margin="10" Padding="10">2</Button>
+                            <Button Margin="10" Padding="10">3</Button>
+                            <Button Margin="10" Padding="10">4</Button>
+                        </UniformGrid>
+                    </Border>
+                </StackPanel>
+            </WrapPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</Window>
