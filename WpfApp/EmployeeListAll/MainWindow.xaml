@@ -1,0 +1,39 @@
+﻿<Window x:Class="EmployeeListAll.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmployeeListAll"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:Converter x:Key="HireDateConverter"></local:Converter>
+    </Window.Resources>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="5">
+            <Button Name="btnGetEmployees" Padding="3" HorizontalAlignment="Right" Click="BtnGetEmployees_Click">Get Employees</Button>
+        </StackPanel>
+        <DataGrid Grid.Row="1" Name="gridEmployees" Margin="5" AutoGenerateColumns="False"
+                  RowBackground="BurlyWood" AlternatingRowBackground="Beige">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="사번" Binding="{Binding Path=Employee_id}"/>
+                <DataGridTextColumn Header="이름" Binding="{Binding Path=First_name}"/>
+                <DataGridTextColumn Header="성" Binding="{Binding Path=Last_name}"/>
+                <DataGridTextColumn Header="이메일" Binding="{Binding Path=Email}"/>
+                <DataGridTextColumn Header="전화번호" Binding="{Binding Path=Phone_number}"/>
+                <DataGridTextColumn Header="입사일" Binding="{Binding Path=Hire_date, Converter={StaticResource HireDateConverter}}"/>
+                <DataGridTextColumn Header="직업 번호" Binding="{Binding Path=Job_id}"/>
+                <DataGridTextColumn Header="급여" Binding="{Binding Path=Salary}"/>
+                <DataGridTextColumn Header="커미션율" Binding="{Binding Path=Commission_pct}"/>
+                <DataGridTextColumn Header="매니저 사번" Binding="{Binding Path=Manager_id}"/>
+                <DataGridTextColumn Header="부서 번호" Binding="{Binding Path=Department_id}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</Window>
