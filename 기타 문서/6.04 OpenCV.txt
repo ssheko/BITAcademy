@@ -1,0 +1,47 @@
+1. 영상 처리
+* 저 수준 영상처리
+	영상 -> 영상
+	화소 영역 처리
+	화소 기하학 처리
+	화소 변환영역 처리
+	영상 압축
+
+* 고 수준 영상 처리
+	영상 -> 영상 feature
+	영상 분할
+	특징 추출
+	영상 표현
+	영상 인식
+
+
+
+* 샘플링과 양자화
+	2차원 영상 공간을 M*N으로 샘플링 (M*N을 해상도라 부름)
+	명암을 L 단계로 양자화 (L을 명암 단계라 부름, 즉 명암은 [0, L-1] 사이 분포)
+	-> 샘플링을 얼마나 적게 하냐에 따라 정확도가 높아지지만 저장해야 하는 양은 많아짐.
+
+* 영상 좌표계
+	화소 위치는 x=(j,i) 또는 x=(y,x)로 표기
+	영상은 f(x) 또는 f(j,i), 0<= j <= M-1, 0<= j <= N-1 로 표기
+
+
+
+2. OpenCV
+Open Source Computer Vision Library
+2500 여개의 알고리즘으로 구성
+C, C++, Python Library
+Windows, Linux, Android, OSX
+Intel CPU의 MMX, SSE 지원
+nVIDIA CUDA Library 지원
+	-> 그래픽 관련 함수를 architecutre로 만든 것 = GPU. 그래픽 전용 CPU
+
+
+OpenCV Download (v3.4.5)
+https://opencv.org/releases/
+
+시스템 Path에 경로 추가
+opencv\build\x64\vc15\bin
+
+속성 시트 설정
+[보기] - [속성관리자] 선택
+Debug와 Release 모드에 별도의 DLL 설정 (64비트만 사용)
