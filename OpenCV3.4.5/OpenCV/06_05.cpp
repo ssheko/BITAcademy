@@ -8,7 +8,7 @@ using namespace std;
 /// reshape
 /* reshape(int cn, int rows) // 채널 개수, row 개수
 	변경 전, 후 행렬 전체 원소 수가 맞아야 함
-
+	
 	create(int rows, int cols, int type, int ndims, int* sizes)
 	기존에 존재하는 행렬의 차원, 행, 열, 자료형을 변경하여 다시 생성
 	기존 행렬과 크기와 자료형이 다르면 기존 메모리를 해제하고 새로운 데이터를 생성
@@ -107,7 +107,7 @@ int main(void)
 	/* resize(size_t sz, Scalar &s)
 		기존 행렬의 행의 수보다 작으면 자르고, 많으면 행 추가
 	*/
-	//Mat m = (Mat_<uchar>(2, 4) << 1, 2, 3, 4, 5, 6, 7, 8);
+	//Mat m = (Mat_<uchar>(2, 6) << 1, 2, 3, 4, 5, 6, 7, 8);
 	//cout << "[m] = " << endl << m << endl << endl;
 
 	//m.resize(1);
@@ -190,23 +190,23 @@ int main(void)
 
 
 	/// vector
-	//vector<Point> v1;
-	//v1.push_back(Point(10, 20));
-	//v1.push_back(Point(20, 30));
-	//v1.push_back(Point(50, 60));
+	vector<Point> v1;
+	v1.push_back(Point(10, 20));
+	v1.push_back(Point(20, 30));
+	v1.push_back(Point(50, 60));
 
-	//vector<float> v2(3, 9.25);
-	//Size arr_size[] = { Size(2, 2), Size(3, 3), Size(4, 4) };
-	//int arr_int[] = { 10, 20, 30, 40, 50 };
+	vector<float> v2(3, 9.25);
+	Size arr_size[] = { Size(2, 2), Size(3, 3), Size(4, 4) };
+	int arr_int[] = { 10, 20, 30, 40, 50 };
 
-	//vector<Size> v3(arr_size, arr_size + sizeof(arr_size) / sizeof(Size));
-	//vector<int> v4(arr_int + 2, arr_int + sizeof(arr_int) / sizeof(int));	// 0번쨰, 1번째를 제외하고 배열 다시 만듬.
+	vector<Size> v3(arr_size, arr_size + sizeof(arr_size) / sizeof(Size));
+	vector<int> v4(arr_int + 2, arr_int + sizeof(arr_int) / sizeof(int));	// 0번쨰, 1번째를 제외하고 배열 다시 만듬.
 
-	//cout << "[v1] " << (Mat)v1 << endl << endl;
-	//cout << "[v2] " << ((Mat)v2).reshape(1,1) << endl;
-	//cout << "[v3] " << ((Mat)v3).reshape(1,1) << endl;
-	//cout << "[v4] " << ((Mat)v4).reshape(1,1) << endl;	// 1*1 행렬로 만듬
-	//cout << "[v4] " << (Mat)v4 << endl << endl;			// 3*1 행렬
+	cout << "[v1] " << (Mat)v1 << endl << endl;
+	cout << "[v2] " << ((Mat)v2).reshape(1,1) << endl;
+	cout << "[v3] " << ((Mat)v3).reshape(1,1) << endl;
+	cout << "[v4] " << ((Mat)v4).reshape(1,1) << endl;	// 1*1 행렬로 만듬
+	cout << "[v4] " << (Mat)v4 << endl << endl;			// 3*1 행렬
 
 
 	/// vector 2
@@ -420,31 +420,31 @@ int main(void)
 
 
 	/// CV_Error
-	String msg1 = "a is one";
-	String msg2 = "a is two";
-	String msg3 = "a is three";
-	int a;
+	//String msg1 = "a is one";
+	//String msg2 = "a is two";
+	//String msg3 = "a is three";
+	//int a;
 
-	while (true)
-	{
-		cout << "input a : ";
-		cin >> a;
+	//while (true)
+	//{
+	//	cout << "input a : ";
+	//	cin >> a;
 
-		try {
-			if (a == 0) CV_Error(Error::StsDivByZero, "a is zero");
-			if (a == 1) CV_Error(Error::StsBadSize, msg1);
-			if (a == 2) CV_Error_(Error::StsOutOfRange, ("%s : %d", msg2.c_str(), a));	// CV_ERROR_: 두 번째 인자값에 string format 사용 가능.
-			if (a == 3) CV_Error_(Error::StsBadArg, ("%s : %d", msg3.c_str(), a));
-			CV_Assert(a != 4);
-		}
-		catch (cv::Exception& e)
-		{
-			cout << "Exception code (" << e.code << "):" << e.what();
-			cout << endl;
-			if (e.code == Error::StsAssert)
-				break;
-		}
-	}
+	//	try {
+	//		if (a == 0) CV_Error(Error::StsDivByZero, "a is zero");
+	//		if (a == 1) CV_Error(Error::StsBadSize, msg1);
+	//		if (a == 2) CV_Error_(Error::StsOutOfRange, ("%s : %d", msg2.c_str(), a));	// CV_ERROR_: 두 번째 인자값에 string format 사용 가능.
+	//		if (a == 3) CV_Error_(Error::StsBadArg, ("%s : %d", msg3.c_str(), a));
+	//		CV_Assert(a != 4);
+	//	}
+	//	catch (cv::Exception& e)
+	//	{
+	//		cout << "Exception code (" << e.code << "):" << e.what();
+	//		cout << endl;
+	//		if (e.code == Error::StsAssert)
+	//			break;
+	//	}
+	//}
 
 
 	return 0;
