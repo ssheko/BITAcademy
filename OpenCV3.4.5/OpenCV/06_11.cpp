@@ -183,26 +183,26 @@ int main()
 	//waitKey();
 
 	/// 채널 임의 조합
-	//Mat ch0(3, 4, CV_8U, Scalar(10));
-	//Mat ch1(3, 4, CV_8U, Scalar(20));
-	//Mat ch2(3, 4, CV_8U, Scalar(30));
-	//Mat ch_012;	// 3채널 matrix
+	Mat ch0(3, 4, CV_8U, Scalar(10));
+	Mat ch1(3, 4, CV_8U, Scalar(20));
+	Mat ch2(3, 4, CV_8U, Scalar(30));
+	Mat ch_012;	// 3채널 matrix
 
-	//vector<Mat> vec_012;
-	//vec_012.push_back(ch0);
-	//vec_012.push_back(ch1);
-	//vec_012.push_back(ch2);
-	//merge(vec_012, ch_012);
+	vector<Mat> vec_012;
+	vec_012.push_back(ch0);
+	vec_012.push_back(ch1);
+	vec_012.push_back(ch2);
+	merge(vec_012, ch_012);
 
-	//Mat ch_13(ch_012.size(), CV_8UC2);	// ch_012와 같은 사이즈, 2채널짜리
-	//Mat ch_2(ch_012.size(), CV_8UC1);	// ch_012와 다른 1채널짜리 
-	//Mat out[] = { ch_13, ch_2 };	// source: ch_13, target: ch_2
-	//int from_to[] = { 0,0,	2,1,	1,2 };	// source의 0번째 채널을 target의 0번째 채널에 넣고, source의 2번째 채널을 target의 1번째 채널에, source의 1번째 채널을 target의 2번째 채널에 넣어라.
-	//mixChannels(&ch_012, 1, out, 2, from_to, 3);	// 3은 페어 갯수.
+	Mat ch_13(ch_012.size(), CV_8UC2);	// ch_012와 같은 사이즈, 2채널짜리
+	Mat ch_2(ch_012.size(), CV_8UC1);	// ch_012와 다른 1채널짜리 
+	Mat out[] = { ch_13, ch_2 };	// source: ch_13, target: ch_2
+	int from_to[] = { 0,0,	2,1,	1,2 };	// source의 0번째 채널을 target의 0번째 채널에 넣고, source의 2번째 채널을 target의 1번째 채널에, source의 1번째 채널을 target의 2번째 채널에 넣어라.
+	mixChannels(&ch_012, 1, out, 2, from_to, 3);	// 3은 페어 갯수.
 
-	//cout << "[cd_123] = " << endl << ch_012 << endl << endl;
-	//cout << "[ch_13] = " << endl << ch_13 << endl;
-	//cout << "[ch_2] = " << endl << ch_2 << endl;
+	cout << "[cd_123] = " << endl << ch_012 << endl << endl;
+	cout << "[ch_13] = " << endl << ch_13 << endl;
+	cout << "[ch_2] = " << endl << ch_2 << endl;
 
 	/// Mat add
 	//Mat m1(3, 6, CV_8UC1, Scalar(10));
@@ -266,7 +266,7 @@ int main()
 	//phase(x_vec, y_vec, v_ang, true);	// 각도 계산(true: degree, false, radian (default값))
 
 	//Mat m_mag, m_ang, x_mat, y_mat;
-	//cartToPolar(x_vec, y_vec, m_mag, m_ang);
+	//cartToPolar(x_vec, y_vec, m_mag, m_ang);	// x,y 벡터 -> 거리, 각도 한번에 구함
 	//polarToCart(m_mag, m_ang, x_mat, y_mat);	// m_mag 길이, m_ang 각도 -> x, y 벡터 뽑기
 
 	//cout << "[x_vec] = " << ((Mat)x_vec).reshape(1, 1) << endl;
@@ -382,27 +382,27 @@ int main()
 	//waitKey();
 
 	/// gemm
-	Matx23f src1(1, 2, 3, 4, 5, 1);
-	Matx23f src2(5, 4, 2, 3, 2, 1);
-	Matx32f src3(5, 4, 2, 3, 2, 1);
-	Mat dst1, dst2, dst3;
+	//Matx23f src1(1, 2, 3, 4, 5, 1);
+	//Matx23f src2(5, 4, 2, 3, 2, 1);
+	//Matx32f src3(5, 4, 2, 3, 2, 1);
+	//Mat dst1, dst2, dst3;
 
-	double alpha = 1.0, beta = 1.0;
+	//double alpha = 1.0, beta = 1.0;
 
-	// gemm: 행렬곱셈
-	gemm(src1, src2, alpha, Mat(), beta, dst1, GEMM_1_T);	// Mat(): 빈 matrix // Mat에 들어올 값에 beta 가중치 줄 수 있음.
-	// dst1 = alpha * (src1)(src2) + beta*Mat()	// alpha값은 가중치를 줄 수 있다.
-	gemm(src1, src2, alpha, noArray(), beta, dst2, GEMM_2_T);	// 어차피 빈 Mat이라 noArray()
-	gemm(src1, src3, alpha, noArray(), beta, dst3);
+	//// gemm: 행렬곱셈
+	//gemm(src1, src2, alpha, Mat(), beta, dst1, GEMM_1_T);	// Mat(): 빈 matrix // Mat에 들어올 값에 beta 가중치 줄 수 있음.
+	//// dst1 = alpha * (src1)(src2) + beta*Mat()	// alpha값은 가중치를 줄 수 있다.
+	//gemm(src1, src2, alpha, noArray(), beta, dst2, GEMM_2_T);	// 어차피 빈 Mat이라 noArray()
+	//gemm(src1, src3, alpha, noArray(), beta, dst3);
 
-	cout << "[src1] = " << endl << src1 << endl;
-	cout << "[src2] = " << endl << src2 << endl;
-	cout << "[src3] = " << endl << src3 << endl << endl;
+	//cout << "[src1] = " << endl << src1 << endl;
+	//cout << "[src2] = " << endl << src2 << endl;
+	//cout << "[src3] = " << endl << src3 << endl << endl;
 
-	cout << "[dst1] = " << endl << dst1 << endl;
-	cout << "[dst2] = " << endl << dst2 << endl;
-	cout << "[dst3] = " << endl << dst3 << endl << endl;
-	
+	//cout << "[dst1] = " << endl << dst1 << endl;
+	//cout << "[dst2] = " << endl << dst2 << endl;
+	//cout << "[dst3] = " << endl << dst3 << endl << endl;
+	//
 
 
 	return 0;

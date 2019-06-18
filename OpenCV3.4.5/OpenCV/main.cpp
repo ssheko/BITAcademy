@@ -75,23 +75,23 @@ int main(void)
 
 
 	/// Rect
-	//Size2d sz(100.5, 60.6);
-	//Point2f pt1(20.f, 30.f), pt2(100.f, 200.f);
+	Size2d sz(100.5, 60.6);
+	Point2f pt1(20.f, 30.f), pt2(100.f, 200.f);
 
-	//Rect_<int> rect1(10, 10, 30, 50);	// x, y, width, height
-	//Rect_<float> rect2(pt1, pt2);
-	//Rect_<double> rect3(Point2d(20.5, 10), sz);	// x, y, width, height
+	Rect_<int> rect1(10, 10, 30, 50);	// x, y, width, height
+	Rect_<float> rect2(pt1, pt2);		// Point가 들어가면 (left top, right bottom). (Point, Size)일 경우 x, y, width, height
+	Rect_<double> rect3(Point2d(20.5, 10), sz);	// x, y, width, height
 
-	//Rect rect4 = rect1 + (Point)pt1;
-	//Rect2f rect5 = rect2 + (Size2f)sz;
-	//Rect2d rect6 = rect1 & (Rect)rect2;			// and연산(&) -> rect1과 rect2 겹치는 영역
-	//											// or연산(|) -> rect1, rect2 모두 포함하는 새 rect 그림
+	Rect rect4 = rect1 + (Point)pt1;
+	Rect2f rect5 = rect2 + (Size2f)sz;	// tl = (20, 30), br = (100, 200)인 rect (width = 80, height = 170)에 Size = (100.5, 60.6)를 더해 width = (180.5, 230.6) 이 된다.
+	Rect2d rect6 = rect1 & (Rect)rect2;			// and연산(&) -> rect1과 rect2 겹치는 영역
+												// or연산(|) -> rect1, rect2 모두 포함하는 새 rect 그림
 
-	//cout << "rect3 = " << rect3.x << ", " << rect3.y << ", ";		// 20.5, 10, 
-	//cout << rect3.width << "x" << rect3.height << endl;				// 100.5x60.6
-	//cout << "rect4 = " << rect4.tl() << " " << rect4.br() << endl;	// [30, 40] [60, 90]	// tl: left top,	br: right bottom   (10, 10), (40, 60) + (20, 30) = (30, 40), (60, 90)
-	//cout << "rect5 크기 = " << rect5.size() << endl;				// 180.5 x 230.6
-	//cout << "[rect6] = " << rect6 << endl;							// 20 x 30 from (20, 30)
+	cout << "rect3 = " << rect3.x << ", " << rect3.y << ", ";		// 20.5, 10, 
+	cout << rect3.width << "x" << rect3.height << endl;				// 100.5x60.6
+	cout << "rect4 = " << rect4.tl() << " " << rect4.br() << endl;	// [30, 40] [60, 90]	// tl: left top,	br: right bottom   (10, 10), (40, 60) + (20, 30) = (30, 40), (60, 90)
+	cout << "rect5 크기 = " << rect5.size() << endl;				// 180.5 x 230.6
+	cout << "[rect6] = " << rect6 << endl;							// 20 x 30 from (20, 30)
 
 
 	/// vector
@@ -117,7 +117,7 @@ int main(void)
 	//cout << "v8[1] = " << v8[1] << endl;			// 4605
 	//cout << "v8[2] = " << v8[2] << endl;			// 10512
 	//cout << "v8[3] = " << v8[3] << endl;			// 0		// 안 넣어준 값은 자동으로 0
-	//cout << "[v2] = " << v3 << endl;				// [10, 10]
+	//cout << "[v2] = " << v2 << endl;				// [40, 130.7, 125.6]
 	//cout << "[pt2] = " << pt2 << endl;				// [40, 131, 126]
 
 
@@ -146,7 +146,7 @@ int main(void)
 
 
 
-	/// Matx<_Tp, int, int> 고정행렬 클래스
+	/// Matx<_Tp, int, int> 고정행렬 클래스. 작은 행렬들만.
 	//Matx<int, 3, 3> m1(1, 2, 3, 4, 5, 6, 7, 8, 9);
 	//Matx<float, 2, 3> m2(1, 2, 3, 4, 5, 6);
 	//Matx<double, 3, 5> m3(3, 4, 5, 7);
@@ -173,23 +173,23 @@ int main(void)
 		헤더: 자기 자신에 저장되어 있는 이미지에 대한 정보를 담는 곳.
 		데이터 포인터: 이미지 하나하나의 픽셀이 담겨있는 메모리 주소에 대한 정보를 가지고 있는 곳.
 	*/
-	//float data[] = { 1.2f, 2.3f, 3.2f, 4.5f, 5.f, 6.5f };
+	float data[] = { 1.2f, 2.3f, 3.2f, 4.5f, 5.f, 6.5f };
 
-	//Mat m1(2, 3, CV_8U);	
-	//Mat m2(2, 3, CV_8U, Scalar(300));
-	//Mat m3(2, 3, CV_16S, Scalar(300));
-	//Mat m4(2, 3, CV_32F, Scalar(300));
+	Mat m1(2, 3, CV_8U);	
+	Mat m2(2, 3, CV_8U, Scalar(300));
+	Mat m3(2, 3, CV_16S, Scalar(300));
+	Mat m4(2, 3, CV_32F, Scalar(300));
 
-	//Size sz(2, 3);
-	//Mat m5(Size(2, 3), CV_64F);
-	//Mat m6(sz, CV_32F, data);
+	Size sz(2, 3);
+	Mat m5(Size(2, 3), CV_64F);
+	Mat m6(sz, CV_32F, data);
 
-	//cout << "[m1] = " << endl << m1 << endl;
-	//cout << "[m2] = " << endl << m2 << endl;	// 300으로 채웠지만 CV_8U라 overflow. 따라서 최대값인 255로 넣음.
-	//cout << "[m3] = " << endl << m3 << endl;
-	//cout << "[m4] = " << endl << m4 << endl << endl;
-	//cout << "[m5] = " << endl << m5 << endl;
-	//cout << "[m6] = " << endl << m6 << endl << endl;
+	cout << "[m1] = " << endl << m1 << endl;
+	cout << "[m2] = " << endl << m2 << endl;	// 300으로 채웠지만 CV_8U라 overflow. 따라서 최대값인 255로 넣음.
+	cout << "[m3] = " << endl << m3 << endl;
+	cout << "[m4] = " << endl << m4 << endl << endl;
+	cout << "[m5] = " << endl << m5 << endl;
+	cout << "[m6] = " << endl << m6 << endl << endl;
 
 
 	/// Mat CV_8UC1

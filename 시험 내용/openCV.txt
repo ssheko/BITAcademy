@@ -4,3 +4,33 @@ Chapter 05 (수업 시간에 다룬 내용만). Array Operations
 Chapter 06. Drawing and Annotating
 Chapter 08. Image, Video, and Data Files
 Chapter 10 (수업 시간에 다룬 내용만). Filters and Convolution
+
+flip, magnitude, merge, morph
+객관식 12개 주관식 8개
+
+기본 템플릿 - 별칭
+
+각 type별로 호환되는 type들 (Rect 클래스 객체 -> Point, Size 넣고)
+	Vec<T,2> Point_
+	Vec<T,3> Point3_
+	Vec<T,4> Scalar, CvScalar
+
+Matx, Mat 둘의 차이. 둘 다 Mat이다보니까 기본 method는 있다. 각각 뭐 하는지 알아야할 것.
+
+CV_어쩌고는 당연히 나옴.
+
+Mat 클래스에서 타입변환하는 method 쓰는 법
+	convertTo()
+
+이미지 핸들링하는 여러 method. 대부분 인자가 복잡함. 공통적으로 들어가는 것? (src, dst)
+이외에 간단한 인자값들 채워넣는 문제.
+
+Color space에서 한 문제.
+
+엣지검출. 엣지 알고리즘의 기본 골격? 가로 엣지, 세로 엣지 검출 후 합성
+
+모폴로지 연산에서 한 문제. (함수 자세히 보지 마세요)
+
+
+1. flip     (6.11)
+2. merge (6.11)

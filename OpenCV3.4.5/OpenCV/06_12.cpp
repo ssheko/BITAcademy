@@ -119,6 +119,8 @@ void differOp(Mat img, Mat& dst, int mask_size)
 		}
 	}
 }
+
+
 int main()
 {
 	/// matrix transform
@@ -461,17 +463,15 @@ int main()
 	//waitKey();
 
 	/// Edge 검출 2 (차 연산자 기법)
-	Mat image = imread("image/edge_test.jpg", IMREAD_GRAYSCALE);
-	CV_Assert(image.data);
+	//Mat image = imread("image/edge_test.jpg", IMREAD_GRAYSCALE);
+	//CV_Assert(image.data);
 
-	Mat edge;
-	differOp(image, edge, 3);
+	//Mat edge;
+	//differOp(image, edge, 3);
 
-	imshow("image", image);
-	imshow("edge", edge);
-	waitKey();
-
-
+	//imshow("image", image);
+	//imshow("edge", edge);
+	//waitKey();
 
 
 	return 0;
